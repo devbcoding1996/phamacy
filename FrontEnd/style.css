@@ -83,7 +83,7 @@
   --bs-dark-border-subtle: #adb5bd;
   --bs-white-rgb: 255, 255, 255;
   --bs-black-rgb: 0, 0, 0;
-  --bs-font-sans-serif: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --bs-font-sans-serif: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji", "Kanit";
   --bs-font-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   --bs-gradient: linear-gradient(180deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0));
   --bs-body-font-family: var(--bs-font-sans-serif);
@@ -203,6 +203,10 @@
   :root {
     scroll-behavior: smooth;
   }
+}
+
+.font-bebas {
+  font-family: 'Bebas Neue', sans-serif;
 }
 
 body {
@@ -13287,8 +13291,8 @@ textarea.form-control-lg {
   --cnvs-black:	#000;
   --cnvs-headings-font-weight:	600;
   /* Font Families */
-  --cnvs-body-font:	"Inter", sans-serif;
-  --cnvs-primary-font:	"Inter", sans-serif;
+  --cnvs-body-font:	"Kanit", sans-serif;
+  --cnvs-primary-font:	"Kanit", sans-serif;
   --cnvs-secondary-font:	"Playfair Display", serif;
   --cnvs-line-height-base:	1.5;
   --cnvs-line-height-content:	1.65;
@@ -13710,7 +13714,7 @@ em {
 body {
   line-height: 1.5;
   font-size: var(--cnvs-font-size-body);
-  font-family: var(--cnvs-body-font);
+  font-family: 'Kanit', sans-serif;
   background: var(--cnvs-body-bg);
 }
 body:not(.stretched) {
@@ -13758,7 +13762,7 @@ h6,
   font-weight: var(--cnvs-headings-font-weight);
   line-height: var(--cnvs-line-height-base);
   margin: 0 0 30px 0;
-  font-family: var(--cnvs-primary-font);
+  font-family: 'Kanit', sans-serif;
 }
 
 h5, .h5,
@@ -14222,15 +14226,15 @@ span.middot {
 	Font Families
 -----------------------------------------------------------------*/
 .font-body {
-  font-family: var(--cnvs-body-font);
+  font-family: 'Kanit', sans-serif;
 }
 
 .font-primary {
-  font-family: var(--cnvs-primary-font);
+  font-family: 'Kanit', sans-serif;
 }
 
 .font-secondary {
-  font-family: var(--cnvs-secondary-font);
+  font-family: 'Kanit', sans-serif;
 }
 
 .bg-icon {
@@ -17214,7 +17218,7 @@ img.lazy:not([src]) {
   --cnvs-primary-menu-color:	var(--cnvs-contrast-900);
   --cnvs-primary-menu-hover-color: var(--cnvs-themecolor);
   --cnvs-primary-menu-active-color:	var(--cnvs-primary-menu-hover-color);
-  --cnvs-primary-menu-font:	var(--cnvs-primary-font);
+  --cnvs-primary-menu-font:	'Kanit', sans-serif;
   --cnvs-primary-menu-font-weight:	700;
   --cnvs-primary-menu-font-size:	0.8125rem;
   --cnvs-primary-menu-tt:	uppercase;
@@ -17462,7 +17466,7 @@ body:not(.is-expanded-menu):not(.primary-menu-open) .semi-transparent.transparen
 }
 #logo a {
   color: #000;
-  font-family: var(--cnvs-primary-font);
+  font-family: 'Kanit', sans-serif;
   font-size: 36px;
   width: 100%;
 }
@@ -18172,7 +18176,7 @@ body:not(.is-expanded-menu) .mobile-menu-overlay .menu-container {
   --cnvs-primary-menu-submenu-tt: uppercase;
   --cnvs-primary-menu-submenu-font-weight: 700;
   --cnvs-primary-menu-submenu-hover-font-weight: 700;
-  --cnvs-primary-menu-font: var(--cnvs-primary-font);
+  --cnvs-primary-menu-font: 'Kanit', sans-serif;
   font-size: calc(var(--cnvs-primary-menu-submenu-font-size) * 1.1);
   letter-spacing: 1px;
   margin-bottom: 0.5rem;
@@ -18850,7 +18854,7 @@ body:not(.is-expanded-menu) .mobile-menu-overlay .menu-container {
   color: var(--cnvs-primary-menu-color) !important;
   font-weight: 500;
   margin-top: 0 !important;
-  font-family: var(--cnvs-primary-font);
+  font-family: 'Kanit', sans-serif;
 }
 
 @media (min-width: 992px) {
@@ -21480,7 +21484,7 @@ body:not(.has-plugin-html5video) .video-wrap video {
   --cnvs-post-entry-link-bg: var(--cnvs-contrast-100);
   --cnvs-post-entry-link-padding: 2rem 0;
   --cnvs-post-entry-link-color: var(--cnvs-heading-color);
-  --cnvs-post-entry-link-font-family: var(--cnvs-primary-font);
+  --cnvs-post-entry-link-font-family: 'Kanit', sans-serif;
   --cnvs-post-entry-link-text-transform: none;
   --cnvs-post-entry-link-letter-spacing: 0;
   --cnvs-post-entry-link-font-size: 1.75rem;
@@ -21863,7 +21867,7 @@ body:not(.has-plugin-html5video) .video-wrap video {
   font-weight: bold;
   letter-spacing: 1px;
   text-transform: uppercase;
-  font-family: var(--cnvs-primary-font);
+  font-family: 'Kanit', sans-serif;
 }
 
 @media (min-width: 992px) {
@@ -22056,7 +22060,7 @@ body:not(.has-plugin-html5video) .video-wrap video {
 .comment-content .comment-author span a {
   font-size: 0.75rem;
   font-weight: normal;
-  font-family: var(--cnvs-primary-font);
+  font-family: 'Kanit', sans-serif;
   color: var(--cnvs-contrast-500);
 }
 
@@ -23932,7 +23936,7 @@ td.actions {
 .fbox-content h3, .fbox-content .h3 {
   font-size: var(--cnvs-featured-box-font-size);
   font-weight: var(--cnvs-featured-box-font-weight);
-  font-family: var(--cnvs-primary-font);
+  font-family: 'Kanit', sans-serif;
   text-transform: var(--cnvs-featured-box-font-tt);
   margin-bottom: 0;
   color: var(--cnvs-featured-box-font-color);
@@ -27065,7 +27069,7 @@ td.actions {
 .counter {
   --cnvs-counter-font-size: 42px;
   --cnvs-counter-font-weight: 700;
-  --cnvs-counter-font-family: var(--cnvs-primary-font);
+  --cnvs-counter-font-family: 'Kanit', sans-serif;
   --cnvs-counter-caption-size: 1.125rem;
   --cnvs-counter-sm-font-size: 28px;
   --cnvs-counter-lg-font-size: 56px;
@@ -29116,7 +29120,7 @@ blockquote.float-end {
   padding: 8px 0;
   color: var(--cnvs-heading-color);
   font-size: 1rem;
-  font-family: var(--cnvs-primary-font);
+  font-family: 'Kanit', sans-serif;
   transition: transform;
 }
 .nav-tree li li a {
@@ -29155,7 +29159,7 @@ blockquote.float-end {
   line-height: 1;
   font-size: 80px;
   text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.15);
-  font-family: var(--cnvs-primary-font);
+  font-family: 'Kanit', sans-serif;
 }
 .wedding-head .first-name,
 .wedding-head .last-name,
@@ -30213,7 +30217,7 @@ label.error {
 .widget-filter-links li a {
   display: block;
   color: var(--cnvs-heading-color);
-  font-family: var(--cnvs-primary-font);
+  font-family: 'Kanit', sans-serif;
   font-weight: 500;
 }
 .widget-filter-links li span {
