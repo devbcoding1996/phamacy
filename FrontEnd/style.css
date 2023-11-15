@@ -17809,7 +17809,7 @@ body:not(.top-search-open) .top-search-parent .primary-menu-trigger {
   font-weight: var(--cnvs-primary-menu-submenu-font-weight);
   color: var(--cnvs-primary-menu-submenu-color);
   letter-spacing: var(--cnvs-primary-menu-submenu-spacing);
-  font-family: var(--cnvs-primary-menu-submenu-font);
+  font-family: 'Kanit', 'sans-serif';
 }
 .sub-menu-container .menu-item > .menu-link div {
   position: relative;
