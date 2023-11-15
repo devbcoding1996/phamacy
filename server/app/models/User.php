@@ -13,7 +13,7 @@ class User extends Database
   public function list($id)
   {
     try {
-      $stm = $this->pdo->prepare("SELECT id, name, email FROM users WHERE id = ?");
+      $stm = $this->pdo->prepare("SELECT id, name,mobileNumber, email FROM users WHERE id = ?");
       $stm->execute([$id]);
 
       if($stm->rowCount() > 0) {
@@ -29,8 +29,8 @@ class User extends Database
   public function create($data)
   {
     try {
-      $stm = $this->pdo->prepare("INSERT INTO users (name, email, passwd) VALUES (?, ?, ?)");
-      $stm->execute([$data[0], $data[1], password_hash($data[2], PASSWORD_DEFAULT)]);
+      $stm = $this->pdo->prepare("INSERT INTO users (name,mobileNumber, email, passwd) VALUES (?, ?, ?, ?)");
+      $stm->execute([$data[0], $data[1], $data[2], password_hash($data[3], PASSWORD_DEFAULT)]);
 
       return true;
     } catch(PDOException $err) {

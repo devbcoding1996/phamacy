@@ -1,5 +1,4 @@
 <?php
-
 error_reporting(0);
 
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {

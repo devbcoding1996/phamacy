@@ -56,9 +56,10 @@ class UserService extends Requests
     $result = [];
 
     if ($method === 'POST') {
-      if (!empty($body['name']) && !empty($body['email']) && !empty($body['password'])) {
+      if (!empty($body['name']) && !empty($body['email']) && !empty($body['mobileNumber']) && !empty($body['password'])) {
 
         $name = $body['name'];
+        $mobileNumber = strval($body['mobileNumber']); //แปลงค่าให้เป็นข้อความ
         $email = $body['email'];
         $password = $body['password'];
 
@@ -66,7 +67,7 @@ class UserService extends Requests
 
           if (!$user_model->emailAlreadyExists($email)) {
 
-            $create_user = $user_model->create([$name, $email, $password]);
+            $create_user = $user_model->create([$name, $mobileNumber, $email, $password]);
 
             if ($create_user) {
 
@@ -111,6 +112,9 @@ class UserService extends Requests
     $jwt = new JWT();
 
     if ($method == 'POST') {
+
+      // print_r($body);
+      // exit();
 
       if (!empty($body['email']) && !empty($body['password'])) {
         $email = $body['email'];
