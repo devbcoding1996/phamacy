@@ -27,7 +27,7 @@ class Core
         array_shift($matches);
         
         $routerFound = true;
-
+        
         [$currentService, $action] = explode('@', $serviceAndAction);
 
         require_once __DIR__ . "/../services/$currentService.php";

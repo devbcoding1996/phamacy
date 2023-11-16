@@ -49,7 +49,7 @@ class UserService extends Requests
   public function index()
   {
     $method = $this->getMethod();
-    $body = $this->parseBodyInput();
+    $body = $this->parseBodyInput();    
 
     $user_model = new User();
 
@@ -105,7 +105,7 @@ class UserService extends Requests
   {
     $method = $this->getMethod();
     $body = $this->parseBodyInput();
-
+    
     $result = [];
 
     $user_model = new User();
@@ -130,7 +130,7 @@ class UserService extends Requests
           $cookies = array();
           $cookies['isAdmin'] = $this->isAdmin($email) ? 'true' : 'false';
           setcookie('isAdmin', $cookies['isAdmin'], time() + 3600, '/');
-          
+
         } else {
           http_response_code(401);
           $result['error'] = "Unauthorized";
@@ -200,6 +200,7 @@ class UserService extends Requests
 
     echo json_encode($result);
   }
+
   public function isAdmin($email) {
     $user_model = new User();
     return $user_model->isAdmin($email);
