@@ -12,6 +12,15 @@ class HomeService extends Requests
         "message" => "Hey There! 🦍",
         "guide" => "wakeupcoding/pharmacyAPI"
       ];
+
+      $authorization = new Authorization();
+      $is_admin = $authorization->isAdmin();
+
+      if ($is_admin) {
+          // แสดงหน้าบ้านสำหรับ admin
+      } else {
+          // แสดงหน้าบ้านสำหรับผู้ใช้ทั่วไป
+      }
     } else {
       http_response_code(405);
       $result['error'] = "HTTP Method not allowed";

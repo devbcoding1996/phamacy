@@ -16,4 +16,10 @@ class Authorization
       return false;
     }
   }
+  public function isAdmin()
+  {
+      $is_admin = $_COOKIE['isAdmin'];
+
+      return $is_admin === 'true';
+  }
 }
