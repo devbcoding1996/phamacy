@@ -13,7 +13,7 @@ class User extends Database
   public function list($id)
   {
     try {
-      $stm = $this->pdo->prepare("SELECT id, name,mobileNumber, email FROM users WHERE id = ?");
+      $stm = $this->pdo->prepare("SELECT id, name,mobileNumber, email, isAdmin FROM users WHERE id = ?");
       $stm->execute([$id]);
 
       if($stm->rowCount() > 0) {
@@ -90,5 +90,17 @@ class User extends Database
     } catch (PDOException $err) {
       return false;
     }
+  }
+  public function isAdmin(string $email): bool {
+      $sql = "SELECT isAdmin FROM users WHERE email = :email";
+      $stmt = $this->pdo->prepare($sql);
+      $stmt->bindParam(':email', $email);
+      $stmt->execute();
+
+      if ($user = $stmt->fetch()) {
+          return $user['isAdmin'] === 1;
+      }
+
+      return false;
   }
 }

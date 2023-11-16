@@ -113,9 +113,6 @@ class UserService extends Requests
 
     if ($method == 'POST') {
 
-      // print_r($body);
-      // exit();
-
       if (!empty($body['email']) && !empty($body['password'])) {
         $email = $body['email'];
         $password = $body['password'];
@@ -128,6 +125,12 @@ class UserService extends Requests
             "message" => "successfully",
             "token" => $jwt->generateJWT(["id" => $user])
           ];
+
+          //ฟังก์ชัน setcookie() จะตั้งค่าค่า isAdmin เป็นค่า true หรือ false ลงใน Cookies โดยมีเวลาหมดอายุ 1 ชั่วโมง และใช้ได้กับทุกเส้นทางในเว็บไซต์
+          $cookies = array();
+          $cookies['isAdmin'] = $this->isAdmin($email) ? 'true' : 'false';
+          setcookie('isAdmin', $cookies['isAdmin'], time() + 3600, '/');
+          
         } else {
           http_response_code(401);
           $result['error'] = "Unauthorized";
@@ -197,4 +200,9 @@ class UserService extends Requests
 
     echo json_encode($result);
   }
+  public function isAdmin($email) {
+    $user_model = new User();
+    return $user_model->isAdmin($email);
+  }
+
 }
