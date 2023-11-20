@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-US">
+
+<head>
+
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta http-equiv="x-ua-compatible" content="IE=edge">
+    <meta name="author" content="SemiColonWeb">
+    <meta name="description"
+        content="Create Shop, Store &amp; eCommerce Websites with Canvas Template. Get Canvas to build powerful websites easily with the Highly Customizable &amp; Best Selling Bootstrap Template, today.">
+
+    <link rel="icon" type="image/x-icon" href="./favicon.png">
+    <!-- Font Imports -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;1,400&family=Montserrat:wght@300;400;500;600;700&family=Merriweather:ital,wght@0,300;0,400;1,300;1,400&display=swap"
+        rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
+
+    <!-- Core Style -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Font Icons -->
+    <link rel="stylesheet" href="css/font-icons.css">
+
+    <!-- Plugins/Components CSS -->
+    <link rel="stylesheet" href="css/swiper.css">
+
+    <!-- Niche Demos -->
+    <link rel="stylesheet" href="demos/shop/shop.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/custom.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Document Title
+	============================================= -->
+    <title>Narumon | Pharmacy</title>
+
+</head>
+
+<body class="stretched">
+
+    <!-- Document Wrapper
+	============================================= -->
+    <div id="wrapper">
+
+        <!-- Login Modal -->
+        <div class="modal1 mfp-hide" id="modal-register">
+            <div class="card mx-auto" style="max-width: 540px;">
+                <div class="card-header py-3 bg-transparent text-center">
+                    <h3 class="mb-0 fw-normal">สวัสดี, ยินดีต้อนรับกลับ</h3>
+                </div>
+                <div class="card-body mx-auto py-5" style="max-width: 70%;">
+                    <form id="login-form" name="login-form" class="mb-0 row" action="#" method="post">
+
+                        <div class="col-12">
+                            <input type="text" id="login-form-username" name="login-form-username" value=""
+                                class="form-control not-dark" placeholder="บัญชีผู้ใช้">
+                        </div>
+
+                        <div class="col-12 mt-4">
+                            <input type="password" id="login-form-password" name="login-form-password" value=""
+                                class="form-control not-dark" placeholder="รหัสผ่าน">
+                        </div>
+
+                        <div class="col-12 text-end">
+                            <a href="#" class="text-dark fw-light mt-2">ลืมรหัสผ่าน?</a>
+                        </div>
+
+                        <div class="col-12 mt-4">
+                            <button class="button w-100 m-0" id="login-form-submit" name="login-form-submit"
+                                value="login">เข้าสู่ระบบ</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="card-footer py-4 text-center">
+                    <p class="mb-0">ท่านมีบัญชีแล้วหรือยัง? <a href="#"><u>สมัครสมาชิก</u></a></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Header
+		============================================= -->
+        <header id="header" class="full-header header-size-md">
+            <div id="header-wrap">
+                <div class="container">
+                    <div class="header-row justify-content-lg-between">
+
+                        <!-- Logo
+						============================================= -->
+                        <div id="logo" class="me-lg-4">
+                            <a href="index.html">
+                                <!-- <img class="logo-default"
+									srcset="demos/shop/images/logo.png, demos/shop/images/logo@2x.png 2x"
+									src="demos/shop/images/logo@2x.png" alt="Canvas Logo"> -->
+                                <h2 class="logo-default font-bebas m-0">Narumon Pharmacy</h2>
+                            </a>
+                        </div><!-- #logo end -->
+
+                        <div class="header-misc">
+
+                            <!-- Top Search
+							============================================= -->
+                            <div id="top-account">
+                                <a href="#modal-register" data-lightbox="inline">
+                                    <i class="bi-person me-1 position-relative" style="top: 1px;"></i>
+                                    <span class="d-none d-sm-inline-block font-primary fw-medium">เข้าสู่ระบบ</span>
+                                </a>
+                            </div><!-- #top-search end -->
+
+                            <!-- Top Cart
+							============================================= -->
+                            <div id="top-cart" class="header-misc-icon d-none d-sm-block">
+                                <a href="#" id="top-cart-trigger">
+                                    <i class="uil uil-shopping-bag"></i><span class="top-cart-number">5</span>
+                                </a>
+                                <div class="top-cart-content">
+                                    <div class="top-cart-title">
+                                        <h4>ตะกร้าสินค้า</h4>
+                                    </div>
+                                    <div class="top-cart-items">
+                                        <div class="top-cart-item">
+                                            <div class="top-cart-item-image">
+                                                <a href="#">
+                                                    <img src="images/shop/small/1.jpg" alt="Blue Round-Neck Tshirt">
+                                                </a>
+                                            </div>
+                                            <div class="top-cart-item-desc">
+                                                <div class="top-cart-item-desc-title">
+                                                    <a href="#">Blue Round-Neck Tshirt with a Button</a>
+                                                    <span class="top-cart-item-price d-block">$19.99</span>
+                                                </div>
+                                                <div class="top-cart-item-quantity">x 2</div>
+                                            </div>
+                                        </div>
+                                        <div class="top-cart-item">
+                                            <div class="top-cart-item-image">
+                                                <a href="#"><img src="images/shop/small/6.jpg"
+                                                        alt="Light Blue Denim Dress"></a>
+                                            </div>
+                                            <div class="top-cart-item-desc">
+                                                <div class="top-cart-item-desc-title">
+                                                    <a href="#">Light Blue Denim Dress</a>
+                                                    <span class="top-cart-item-price d-block">$24.99</span>
+                                                </div>
+                                                <div class="top-cart-item-quantity">x 3</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="top-cart-action">
+                                        <span class="top-checkout-price">$114.95</span>
+                                        <a href="#" class="button button-3d button-small m-0">ดูสินค้าในตะกร้า</a>
+                                    </div>
+                                </div>
+                            </div><!-- #top-cart end -->
+
+                            <!-- Top Search
+							============================================= -->
+                            <div id="top-search" class="header-misc-icon">
+                                <a href="#" id="top-search-trigger"><i class="uil uil-search"></i><i
+                                        class="bi-x-lg"></i></a>
+                            </div><!-- #top-search end -->
+
+                        </div>
+
+                        <div class="primary-menu-trigger">
+                            <button class="cnvs-hamburger" type="button" title="Open Mobile Menu">
+                                <span class="cnvs-hamburger-box"><span class="cnvs-hamburger-inner"></span></span>
+                            </button>
+                        </div>
+
+                        <!-- Primary Navigation
+						============================================= -->
+                        <nav class="primary-menu with-arrows me-lg-auto">
+
+                            <ul class="menu-container">
+                                <li class="menu-item current">
+                                    <a class="menu-link" href="index.html">
+                                        <div>หน้าหลัก</div>
+                                    </a>
+                                </li>
+                                <li class="menu-item mega-menu">
+                                    <a class="menu-link" href="all-produch.html">
+                                        <div>สินค้าทั้งหมด</div>
+                                    </a>
+                                </li>
+                                <li class="menu-item current">
+                                    <a class="menu-link" href="how-to-buy.html">
+                                        <div>วิธีสั่งซื้อและชำระเงิน</div>
+                                    </a>
+                                </li>
+                                <li class="menu-item current">
+                                    <a class="menu-link" href="contact-us.html">
+                                        <div>ติดต่อเรา</div>
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav><!-- #primary-menu end -->
+
+                        <form class="top-search-form" action="search.html" method="get">
+                            <input type="text" name="q" class="form-control" value=""
+                                placeholder="Type &amp; Hit Enter.." autocomplete="off">
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+            <div class="header-wrap-clone"></div>
+        </header><!-- #header end -->
+
+        <section id="content">
+            <div class="content-wrap" style="padding-top: 0.5rem;">
+                <!-- New Arrivals Men
+				============================================= -->
+                <div class="container">
+                    <div class="fancy-title title-border mt-4 title-center">
+                        <h4>วิธีการสั่งซื้อ และ ชำระเงิน</h4>
+                    </div>
+
+                    <div class="row col-mb-30">
+                        <div class="col-lg-3 col-md-4 col-6 px-2">
+                            <div class="product">
+                                <div class="product-image" style="border-radius: 0;">
+                                    <a href="#"><img style="border: 2px solid #000;"
+                                            src="./images/shopping-guild/choose.png" alt="Image 1"></a>
+                                </div>
+                                <div class="product-desc">
+                                    <h4 class="mb-0">1. เลือกสินค้าที่ต้องการ</h4>
+                                    <h5 class="fw-light">
+                                        กดเลือกสินค้าที่ต้องการได้จากรูปหรือช่องค้นหา และเลือกสินค้าที่ต้องการ
+                                    </h5>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-4 col-6 px-2">
+                            <div class="product">
+                                <div class="product-image" style="border-radius: 0;">
+                                    <a href="#">
+                                        <img style="border: 2px solid #000;" src="./images/shopping-guild/cart.png"
+                                            alt="Image 2">
+                                    </a>
+                                </div>
+                                <div class="product-desc">
+                                    <h4 class="mb-0">2. กดที่ตระกร้าสินค้าเพื่อตรวจสอบ</h4>
+                                    <h5 class="fw-light">ตรวจสอบควมคบถ้วนของสินค้า และกดถัดไป
+                                    </h5>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-4 col-6 px-2">
+                            <div class="product">
+                                <div class="product-image" style="border-radius: 0;">
+                                    <a href="#"><img style="border: 2px solid #000;"
+                                            src="./images/shopping-guild/address.png" alt="Image 3"></a>
+                                </div>
+                                <div class="product-desc">
+                                    <h4 class="mb-0">3. กรอกข้อมูลจัดส่ง</h4>
+                                    <h5 class="fw-light">กรอกข้อมูลผู้ซื้อ ให้ครบถ้วนตามช่องที่มีเครื่องหมายดอกจันทร์
+                                        แล้วกดปุ่ม ”ชำระเงิน” ได้เลย</h5>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-4 col-6 px-2">
+                            <div class="product">
+                                <div class="product-image" style="border-radius: 0;">
+                                    <a href="#"><img style="border: 2px solid #000;"
+                                            src="./images/shopping-guild/payment.png" alt="Image 4"></a>
+                                </div>
+                                <div class="product-desc">
+                                    <h4 class="mb-0">4. ชำระเงิน</h4>
+                                    <h5 class="fw-light">ตรวจสอบสินค้า ราคาสินค้าให้ถูกต้องแล้วแสกน QRCode
+                                        หรือโอนผ่านช่องทางธนาคาร</h5>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-4 col-6 px-2">
+                            <div class="product">
+                                <div class="product-image" style="border-radius: 0;">
+                                    <a href="#"><img style="border: 2px solid #000;"
+                                            src="./images/shopping-guild/send-slip.png" alt="Image 5"></a>
+                                </div>
+                                <div class="product-desc">
+                                    <h4 class="mb-0">5. ยืนยันการชำระเงิน</h4>
+                                    <h5 class="fw-light">
+                                        หลังจากลูกค้าได้ทำการชำระเงินเรีบยร้อยแล้ว ให้แจ้งสลิปการโอนเงินมาที่ LINE
+                                        @NarumonPharmacyShop
+                                    </h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="clear"></div>
+            </div>
+        </section><!-- #content end -->
+
+
+        <!-- Footer
+		============================================= -->
+        <footer id="footer" class="bg-gray border-0">
+
+            <!-- Copyrights
+			============================================= -->
+            <div id="copyrights" class="bg-gray">
+
+                <div class="container">
+
+                    <div class="row justify-content-between align-items-center">
+                        <div class="col-md-6">
+                            Copyrights &copy; 2023 All Rights Reserved by Canvas Inc.<br>
+                            <div class="copyright-links"><a href="#">Terms of Use</a> / <a href="#">Privacy Policy</a>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 d-md-flex flex-md-column align-items-md-end mt-4 mt-md-0">
+                            <div class="copyrights-menu copyright-links">
+                                <a href="#">About</a>/<a href="#">Features</a>/<a href="#">FAQs</a>/<a
+                                    href="#">Contact</a>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div><!-- #copyrights end -->
+
+        </footer><!-- #footer end -->
+
+    </div><!-- #wrapper end -->
+
+    <!-- Go To Top
+	============================================= -->
+    <div id="gotoTop" class="bi-arrow-up"></div>
+
+    <!-- JavaScripts
+	============================================= -->
+    <script src="js/plugins.min.js"></script>
+    <script src="js/functions.bundle.js"></script>
+
+</body>
+
+</html>
