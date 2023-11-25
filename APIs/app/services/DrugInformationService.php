@@ -64,7 +64,7 @@ class DrugInformationService extends Requests
 
           if (!empty($body['name']) && !empty($body['size']) && !empty($body['properties']) && !empty($body['quantity']) && !empty($body['price'])) {
 
-            $create_book = $drugInfo->create([$body['name'],
+            $create_drugInfo = $drugInfo->create([$body['name'],
              $body['size'],
              $body['useMedicine'],
              $body['contraindications'],
@@ -79,7 +79,7 @@ class DrugInformationService extends Requests
              $body['keyword'],
              $body['linkImages']]);
 
-            if ($create_book) {
+            if ($create_drugInfo) {
               http_response_code(200);
               $result['message'] = "DrugInfo created";
             } else {

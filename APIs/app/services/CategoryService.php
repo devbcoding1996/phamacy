@@ -1,12 +1,12 @@
 <?php
 
-class DrugTypeService extends Requests
+class CategoryService extends Requests
 {
   public function index()
   {
     $method = $this->getMethod();
 
-    $drugType = new DrugType();
+    $category = new Category();
 
     $jwt = new JWT();
     $authorization = new Authorization();
@@ -22,8 +22,8 @@ class DrugTypeService extends Requests
         if ($user) {
 
           $result = [
-            'quantity' => count($drugType->list()),
-            'drugType' => $drugType->list()
+            'quantity' => count($category->list()),
+            'category' => $category->list()
           ];
 
         } else {
@@ -47,7 +47,7 @@ class DrugTypeService extends Requests
     $method = $this->getMethod();
     $body = $this->parseBodyInput();
 
-    $drugType = new DrugType();
+    $category = new Category();
 
     $jwt = new JWT();
     $authorization = new Authorization();
@@ -64,11 +64,11 @@ class DrugTypeService extends Requests
 
           if (!empty($body['name'])) {
 
-            $create_drugType = $drugType->create([$body['name']]);
+            $create_category = $category->create([$body['name']]);
 
-            if ($create_drugType) {
+            if ($create_category) {
               http_response_code(200);
-              $result['message'] = "DrugType created";
+              $result['message'] = "Category created";
             } else {
               http_response_code(406);
               $result['error'] = "Sorry, something went wrog, verify the fields";
@@ -97,7 +97,7 @@ class DrugTypeService extends Requests
   {
     $method = $this->getMethod();
 
-    $drugType = new DrugType();
+    $category = new Category();
 
     $jwt = new JWT();
     $authorization = new Authorization();
@@ -113,13 +113,13 @@ class DrugTypeService extends Requests
         if ($user) {
 
           $drugType_id = $id[0];
-          $book_exists = $drugType->listById([$drugType_id]);
+          $book_exists = $category->listById([$drugType_id]);
 
           if ($book_exists) {
             $result['drugInfo'] = $book_exists;
           } else {
             http_response_code(404);
-            $result['error'] = "DrugType not found";
+            $result['error'] = "Category not found";
           }
         } else {
           http_response_code(401);
@@ -142,7 +142,7 @@ class DrugTypeService extends Requests
     $method = $this->getMethod();
     $body = $this->parseBodyInput();
 
-    $drugType = new DrugType();
+    $category = new Category();
 
     $jwt = new JWT();
     $authorization = new Authorization();
@@ -159,10 +159,10 @@ class DrugTypeService extends Requests
 
           if (!empty($body['id']) && !empty($body['name'])) {
 
-            $updated = $drugType->update([$body['id'], $body['name']]);
+            $updated = $category->update([$body['id'], $body['name']]);
 
             if ($updated) {
-              $result['message'] = "DrugType updated";
+              $result['message'] = "Category updated";
             } else {
               http_response_code(406);
               $result = [
@@ -195,7 +195,7 @@ class DrugTypeService extends Requests
   {
     $method = $this->getMethod();
 
-    $drugType = new DrugType();
+    $category = new Category();
 
     $jwt = new JWT();
     $authorization = new Authorization();
@@ -212,10 +212,10 @@ class DrugTypeService extends Requests
 
           $drug_type_id = $id[0];
 
-          $delete_book = $drugType->remove([$drug_type_id,]);
+          $delete_book = $category->remove([$drug_type_id,]);
 
           if ($delete_book) {
-            $result['message'] = "DrugType deleted";
+            $result['message'] = "Category deleted";
           } else {
             http_response_code(406);
             $result['error'] = "Sorry, something went wrog, drugInfo not exists";

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 25, 2023 at 08:47 AM
+-- Generation Time: Nov 25, 2023 at 04:52 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -73,7 +73,11 @@ CREATE TABLE `customer` (
 --
 
 INSERT INTO `customer` (`customer_id`, `f_name`, `l_name`, `address`, `phone_number`, `email`, `discount`, `status`) VALUES
-(1, 'ทดสอบ', 'ลูกค้า', '17/4 หมู่ 5 ถนนบำรุงราษฎร์ ตำบลพิบูลสงคราม อำเภอเมือง กรุงเทพมหานคร 10400', '0989997788', 'test@gmail.com', 0.00, 'Active');
+(1, 'ทดสอบ', 'ลูกค้า', '17/4 หมู่ 5 ถนนบำรุงราษฎร์ ตำบลพิบูลสงคราม อำเภอเมือง กรุงเทพมหานคร 10400', '0989997788', 'test@gmail.com', 0.00, 'Active'),
+(2, 'ทดสอบ', 'ลูกค้า2', '8 อาคาร ทรู ทาวเวอร์ ถนนรัชดาภิเษก แขวงห้วยขวาง เขตห้วยขวาง กรุงเทพฯ 10310', '0989997788', 'test@gmail.com', 0.99, 'Active'),
+(3, 'ทดสอบ', 'ลูกค้า3', '899 ห้อง E101 ชั้น 1 เดอะซีซันส์มอลล์ ถนนพหลโยธิน สามเสนใน พญาไท กรุงเทพมหานคร 10400', '0989995589', 'test3@gmail.com', 0.99, 'Active'),
+(4, 'ทดสอบ', 'ลูกค้า4', '552 ห้อง S10 ชั้น 9 เดอะซีซันส์มอลล์ ถนนพหลโยธิน สามเสนใน พญาไท กรุงเทพมหานคร 10400', '0989995522', 'test4@gmail.com', 0.99, 'Active'),
+(5, 'ทดสอบ', 'ลูกค้า5', '784 ห้อง S10 ชั้น 9 เดอะซีซันส์มอลล์ ถนนพหลโยธิน สามเสนใน พญาไท กรุงเทพมหานคร 10400', '0989995522', 'test5@gmail.com', 0.89, 'Active');
 
 -- --------------------------------------------------------
 
@@ -237,7 +241,8 @@ INSERT INTO `drug_information` (`id`, `name`, `size`, `use_medicine`, `contraind
 (130, 'Bromhexine', '8 มก.', 'ผู้ใหญ่-รับประทานยาในปริมาณ 8 มิลลิกรัม วันละ 3 ครั้ง หากอาการไม่ดีขึ้นหลังรับประทานครบ 7 วัน อาจเพิ่มปริมาณได้ถึง 16 มิลลิกรัม วันละ 3 ครั้งและเด็ก-อายุ 2-5 ปี รับประทานยาครั้งละ 2 มิลลิกรัม วันละ 3 ครั้ง หรือครั้งละ 4 มิลลิกรัม วันละ 2 ครั้ง รวมรับประทา', 'ผลข้างเคียง - หลังการรับประทานยาอาจทำให้ผู้ป่วยเกิดความผิดปกติขึ้นได้ในบางราย เช่น ปวดท้อง ท้องอืด ท้องเสีย คลื่นไส้ อาเจียน เหงื่อออกมาก เวียนศีรษะ', 'ช่วยละลายเสมหะในระบบทางเดินหายใจ บรรเทาอาการไอจากโรคหวัด ไอมีเสมหะ', 7, 6, 3, 1, '0000-00-00', '0000-00-00', 40.00, 'ยาละลายเสมหะ', 'https://medthai.com/wp-content/uploads/2016/09/%E0%B9%84%E0%B8%9A%E0%B9%82%E0%B8%8B%E0%B8%A5%E0%B8%A7%E0%B8%AD%E0%B8%99.jpg'),
 (131, 'Bromso Elixir', '8 มก.', 'รับประทาน 1 ช้อนชา 3 เวลา', '-ควรหลีกเลี่ยงการใช้ยานี้ในสตรีมีครรภ์ และกำลังให้นมบุตร-ควรระมัดระวังใช้ยานี้ในผู้ป่วยที่มีแผลในกระเพาะอาหารโดยเฉพาะชนิดเม็ด-การรับประทานยานี้ร่วมกับยาปฏิชีวนะ เช่น amoxicillin, cefuroxime, erythromycin, doxycycline จะทำให้ระดับยาปฏิชีวนะในเนื้อเยื่อปอดเพิ่มขึ้นได้-ระวังการใช้ยาในผู้ที่มีประวัติเป็นโรคกระเพาะอาหาร - ลำไส้ ด้วยยามีฤทธิ์ระคายเคืองกระเพาะอาหาร - ลำไส้-ระวังการใช้ยาในผู้ที่มีประวัติเป็นโรคหืด ด้วยยาอาจก่อให้เกิดภาวะหลอดลมตีบ-ระวังการใช้ยากับผู้ที่มีภาวะตับ - ไตผิดปกติ', 'บรรเทาอาการไอ หวัด ฆ่าเชื้อแบคทีเรียนในลำคอ', 7, 6, 3, 1, '0000-00-00', '0000-00-00', 50.00, 'แก้ไข้หวัด', 'https://www.petz.world/wp-content/uploads/2023/07/414679.jpeg.webp'),
 (132, 'Bronal Syrup', '60 มล.', '-ผู้ใหญ่และเด็กอายุมากกว่า 12 ปี : รับประทานครั้งละ 10 มล. วันละ 3 ครั้ง-เด็กอายุมากกว่า 2 ปี : ขนาดยาทานครั้งละ 0.16 มก./น้ำหนักตัว 1 กก. วันละ 3 ครั้งขนาดยาทานที่ใช้ทั้งหมดเท่ากับ 3 มก./น้ำหนักตัว 1 กก./วัน', '-เด็กอายุน้อยกว่าหรือเท่ากับ 2 ปี: ไม่มีการศึกษาการใช้ยาในผู้ป่วยกลุ่มนี้ จึงไม่ควรใช้ยาในผู้ป่วยกลุ่มนี้-สตรีมีครรภ์: ไม่ควรใช้ยาในผู้ป่วยกลุ่มนี้-สตรีให้นมบุตร: ไม่ควรใช้ยาในผู้ป่วยกลุ่มนี้-ผู้ป่วยที่มีภาวะการทำงานของตับบกพร่อง: ห้ามใช้ยานี้-ผู้ป่วยที่มีภาวะการทำงานของไตบกพร่อง: ควรระมัดระวังการใช้ยาในผู้ป่วยกลุ่มนี้', 'บรรเทาอาการไอ', 7, 6, 3, 1, '0000-00-00', '0000-00-00', 99.99, 'แก้ไอ', 'https://i.ytimg.com/vi/zdP3j-5Fbxc/sddefault.jpg'),
-(133, 'Bronpect-D', NULL, 'ครั้งละ 1 เม็ด วันละ 3 ครั้ง', NULL, 'บรรเทาอาการไอ เนื่องจากการระคายคอ บรรเทาอาการไอ และขับเสมหะที่เกิดร่วมกับหวัด และหลอดลมอักเสบ', NULL, NULL, NULL, NULL, '0000-00-00', '0000-00-00', NULL, NULL, NULL);
+(133, 'Bronpect-D', NULL, 'ครั้งละ 1 เม็ด วันละ 3 ครั้ง', NULL, 'บรรเทาอาการไอ เนื่องจากการระคายคอ บรรเทาอาการไอ และขับเสมหะที่เกิดร่วมกับหวัด และหลอดลมอักเสบ', NULL, NULL, NULL, NULL, '0000-00-00', '0000-00-00', NULL, NULL, NULL),
+(134, 'spider man', '10,000 กรัม', NULL, NULL, 'บรรเทาอาการท้องผูก ขับลม', 0, 0, 0, 9910, NULL, NULL, 99.99, 'แก้ท้องผูก', NULL);
 
 -- --------------------------------------------------------
 
@@ -323,17 +328,16 @@ CREATE TABLE `users` (
   `mobileNumber` varchar(10) NOT NULL,
   `email` varchar(100) NOT NULL,
   `passwd` varchar(255) NOT NULL,
-  `isAdmin` int(1) NOT NULL,
-  `customer_id` char(36) NOT NULL
+  `isAdmin` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `name`, `mobileNumber`, `email`, `passwd`, `isAdmin`, `customer_id`) VALUES
-('b807eb20-8b5c-11ee-843a-38f3ab9049a5', 'admin naja', '0978887799', 'Admin@gamil.com', '$2y$10$UOcZOErcWCsTnTfT2QnRo.PVZv7ErMHhypt5H0htFE3CA8xk0Jrxe', 1, '0'),
-('bba2121d-83de-11ee-823b-38f3ab9049a5', 'John', '0978885566', 'Pokz@gamil.com', '$2y$10$5ES.3KNSInIBex7Sdv4pRu1wHCRbhmfukl8lCmz/6fX9pcr5bTBNW', 0, '1');
+INSERT INTO `users` (`id`, `name`, `mobileNumber`, `email`, `passwd`, `isAdmin`) VALUES
+('b807eb20-8b5c-11ee-843a-38f3ab9049a5', 'admin naja', '0978887799', 'Admin@gamil.com', '$2y$10$UOcZOErcWCsTnTfT2QnRo.PVZv7ErMHhypt5H0htFE3CA8xk0Jrxe', 1),
+('bba2121d-83de-11ee-823b-38f3ab9049a5', 'John', '0978885566', 'Pokz@gamil.com', '$2y$10$5ES.3KNSInIBex7Sdv4pRu1wHCRbhmfukl8lCmz/6fX9pcr5bTBNW', 0);
 
 -- --------------------------------------------------------
 
@@ -342,7 +346,7 @@ INSERT INTO `users` (`id`, `name`, `mobileNumber`, `email`, `passwd`, `isAdmin`,
 --
 
 CREATE TABLE `user_customer` (
-  `uc_id` char(36) NOT NULL,
+  `uc_id` char(36) NOT NULL DEFAULT uuid(),
   `user_id` char(36) NOT NULL,
   `customer_id` char(36) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -352,7 +356,7 @@ CREATE TABLE `user_customer` (
 --
 
 INSERT INTO `user_customer` (`uc_id`, `user_id`, `customer_id`) VALUES
-('9b02cc43-8ae7-11ee-bc01-38f3ab9049a5', '1', '1');
+('8d7a7110-8baa-11ee-b489-38f3ab9049a5', 'b807eb20-8b5c-11ee-843a-38f3ab9049a5', '5');
 
 --
 -- Indexes for dumped tables
@@ -400,15 +404,7 @@ ALTER TABLE `package`
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `customer_id` (`customer_id`);
-
---
--- Indexes for table `user_customer`
---
-ALTER TABLE `user_customer`
-  ADD PRIMARY KEY (`uc_id`),
-  ADD KEY `user_id` (`user_id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -424,13 +420,13 @@ ALTER TABLE `category`
 -- AUTO_INCREMENT for table `customer`
 --
 ALTER TABLE `customer`
-  MODIFY `customer_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `customer_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `drug_information`
 --
 ALTER TABLE `drug_information`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=134;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=135;
 
 --
 -- AUTO_INCREMENT for table `drug_type`
@@ -455,17 +451,18 @@ ALTER TABLE `package`
 --
 
 --
+-- Constraints for table `drug_information`
+--
+ALTER TABLE `drug_information`
+  ADD CONSTRAINT `drug_information_ibfk_1` FOREIGN KEY (`drug_type_id`) REFERENCES `drug_type` (`id`),
+  ADD CONSTRAINT `drug_information_ibfk_2` FOREIGN KEY (`category_id`) REFERENCES `category` (`id`);
+
+--
 -- Constraints for table `order_drug`
 --
 ALTER TABLE `order_drug`
   ADD CONSTRAINT `order_drug_ibfk_1` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`customer_id`),
   ADD CONSTRAINT `order_drug_ibfk_2` FOREIGN KEY (`drug_id`) REFERENCES `drug_information` (`id`);
-
---
--- Constraints for table `user_customer`
---
-ALTER TABLE `user_customer`
-  ADD CONSTRAINT `user_customer_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`customer_id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
