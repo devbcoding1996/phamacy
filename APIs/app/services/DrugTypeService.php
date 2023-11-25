@@ -116,7 +116,7 @@ class DrugTypeService extends Requests
           $book_exists = $drugType->listById([$drugType_id]);
 
           if ($book_exists) {
-            $result['drugInfo'] = $book_exists;
+            $result['drugType'] = $book_exists;
           } else {
             http_response_code(404);
             $result['error'] = "DrugType not found";
@@ -212,13 +212,13 @@ class DrugTypeService extends Requests
 
           $drug_type_id = $id[0];
 
-          $delete_book = $drugType->remove([$drug_type_id,]);
+          $delete_drugType = $drugType->remove([$drug_type_id,]);
 
-          if ($delete_book) {
+          if ($delete_drugType) {
             $result['message'] = "DrugType deleted";
           } else {
             http_response_code(406);
-            $result['error'] = "Sorry, something went wrog, drugInfo not exists";
+            $result['error'] = "Sorry, something went wrog, drugType not exists";
           }
 
         } else {

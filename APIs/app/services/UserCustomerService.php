@@ -1,12 +1,12 @@
 <?php
 
-class PackageService extends Requests
+class UserCustomerService extends Requests
 {
   public function index()
   {
     $method = $this->getMethod();
 
-    $package = new Package();
+    $userCustomer = new UserCustomer();
 
     $jwt = new JWT();
     $authorization = new Authorization();
@@ -22,8 +22,8 @@ class PackageService extends Requests
         if ($user) {
 
           $result = [
-            'quantity' => count($package->list()),
-            'package' => $package->list()
+            'quantity' => count($userCustomer->list()),
+            'userCustomer' => $userCustomer->list()
           ];
 
         } else {
@@ -47,7 +47,7 @@ class PackageService extends Requests
     $method = $this->getMethod();
     $body = $this->parseBodyInput();
 
-    $package = new Package();
+    $userCustomer = new UserCustomer();
 
     $jwt = new JWT();
     $authorization = new Authorization();
@@ -62,13 +62,13 @@ class PackageService extends Requests
 
         if ($user) {
 
-          if (!empty($body['name'])) {
+          if (!empty($body['userId']) && !empty($body['customerId'])) {
 
-            $create_package = $package->create([$body['name']]);
+            $create_userCustomer = $userCustomer->create([$body['userId'],$body['customerId']]);
 
-            if ($create_package) {
+            if ($create_userCustomer) {
               http_response_code(200);
-              $result['message'] = "Package created";
+              $result['message'] = "UserCustomer created";
             } else {
               http_response_code(406);
               $result['error'] = "Sorry, something went wrog, verify the fields";
@@ -97,7 +97,7 @@ class PackageService extends Requests
   {
     $method = $this->getMethod();
 
-    $package = new Package();
+    $userCustomer = new UserCustomer();
 
     $jwt = new JWT();
     $authorization = new Authorization();
@@ -112,14 +112,14 @@ class PackageService extends Requests
 
         if ($user) {
 
-          $package_id = $id[0];
-          $book_exists = $package->listById([$package_id]);
+          $uc_id = $id[0];
+          $userCustomer_exists = $userCustomer->listById([$uc_id]);
 
-          if ($book_exists) {
-            $result['package'] = $book_exists;
+          if ($userCustomer_exists) {
+            $result['userCustomer'] = $userCustomer_exists;
           } else {
             http_response_code(404);
-            $result['error'] = "Package not found";
+            $result['error'] = "UserCustomer not found";
           }
         } else {
           http_response_code(401);
@@ -142,7 +142,7 @@ class PackageService extends Requests
     $method = $this->getMethod();
     $body = $this->parseBodyInput();
 
-    $package = new Package();
+    $userCustomer = new UserCustomer();
 
     $jwt = new JWT();
     $authorization = new Authorization();
@@ -157,12 +157,12 @@ class PackageService extends Requests
 
         if ($user) {
 
-          if (!empty($body['id']) && !empty($body['name'])) {
+          if (!empty($body['ucId']) && !empty($body['userId']) && !empty($body['customerId'])) {
 
-            $updated = $package->update([$body['id'], $body['name']]);
+            $updated = $userCustomer->update([$body['ucId'],$body['userId'], $body['customerId']]);
 
             if ($updated) {
-              $result['message'] = "Package updated";
+              $result['message'] = "UserCustomer updated";
             } else {
               http_response_code(406);
               $result = [
@@ -195,7 +195,7 @@ class PackageService extends Requests
   {
     $method = $this->getMethod();
 
-    $package = new Package();
+    $userCustomer = new UserCustomer();
 
     $jwt = new JWT();
     $authorization = new Authorization();
@@ -210,15 +210,15 @@ class PackageService extends Requests
 
         if ($user) {
 
-          $drug_type_id = $id[0];
+          $uc_id = $id[0];
 
-          $delete_package = $package->remove([$drug_type_id,]);
+          $delete_userCustomer = $userCustomer->remove([$uc_id]);
 
-          if ($delete_package) {
-            $result['message'] = "Package deleted";
+          if ($delete_userCustomer) {
+            $result['message'] = "UserCustomer deleted";
           } else {
             http_response_code(406);
-            $result['error'] = "Sorry, something went wrog, package not exists";
+            $result['error'] = "Sorry, something went wrog, userCustomer not exists";
           }
 
         } else {

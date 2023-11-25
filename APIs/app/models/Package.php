@@ -32,7 +32,7 @@ class Package extends Database
       $stmt = $this->pdo->prepare($sql);
 
       // Bind the parameters
-      $stmt->bindParam(':name', $data[1]);
+      $stmt->bindParam(':name', $data[0]);
 
       // Execute the INSERT statement
       $stmt->execute();

@@ -16,7 +16,7 @@ class Customer extends Database
       $authorization = new Authorization();
       $is_admin = $authorization->isAdmin();
       if(!$is_admin){
-        return [];
+        return ["Has rights only for Admin!"];
       }
       $stm = $this->pdo->prepare("SELECT * FROM customer ORDER BY customer_id DESC");
       $stm->execute();

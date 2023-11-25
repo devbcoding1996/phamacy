@@ -44,4 +44,10 @@ $routes = [
   '/customer/list/{id}'   => 'CustomerService@listById',
   '/customer/update/{id}' => 'CustomerService@update',
   '/customer/remove/{id}' => 'CustomerService@remove',
+
+  '/userCustomer'             => 'UserCustomerService@index',
+  '/userCustomer/create'      => 'UserCustomerService@create',
+  '/userCustomer/list/{id}'   => 'UserCustomerService@listById',
+  '/userCustomer/update/{id}' => 'UserCustomerService@update',
+  '/userCustomer/remove/{id}' => 'UserCustomerService@remove',
 ];

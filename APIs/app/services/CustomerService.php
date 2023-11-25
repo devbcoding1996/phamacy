@@ -116,7 +116,7 @@ class CustomerService extends Requests
           $book_exists = $customer->listById([$drugType_id]);
 
           if ($book_exists) {
-            $result['drugInfo'] = $book_exists;
+            $result['customer'] = $book_exists;
           } else {
             http_response_code(404);
             $result['error'] = "Category not found";
@@ -212,13 +212,13 @@ class CustomerService extends Requests
 
           $drug_type_id = $id[0];
 
-          $delete_book = $customer->remove([$drug_type_id,]);
+          $delete_customer = $customer->remove([$drug_type_id,]);
 
-          if ($delete_book) {
+          if ($delete_customer) {
             $result['message'] = "Category deleted";
           } else {
             http_response_code(406);
-            $result['error'] = "Sorry, something went wrog, drugInfo not exists";
+            $result['error'] = "Sorry, something went wrog, customer not exists";
           }
 
         } else {

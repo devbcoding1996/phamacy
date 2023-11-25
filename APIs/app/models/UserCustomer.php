@@ -1,6 +1,6 @@
 <?php
 
-class Category extends Database
+class UserCustomer extends Database
 {
 
   private $pdo;
@@ -13,7 +13,12 @@ class Category extends Database
   public function list()
   {
     try {
-      $stm = $this->pdo->prepare("SELECT * FROM category ORDER BY id DESC");
+      $authorization = new Authorization();
+      $is_admin = $authorization->isAdmin();
+      if(!$is_admin){
+        return ["Has rights only for Admin!"];
+      }
+      $stm = $this->pdo->prepare("SELECT * FROM user_customer ORDER BY uc_id DESC");
       $stm->execute();
       if($stm->rowCount() > 0) {
         return $stm->fetchAll(PDO::FETCH_ASSOC);
@@ -28,11 +33,12 @@ class Category extends Database
   public function create($data)
   {
     try {
-      $sql = "INSERT INTO category (`name`) VALUES (:name)";
+      $sql = "INSERT INTO user_customer (`user_id`,`customer_id`) VALUES (:user_id,:customer_id)";
       $stmt = $this->pdo->prepare($sql);
 
       // Bind the parameters
-      $stmt->bindParam(':name', $data[0]);
+      $stmt->bindParam(':user_id', $data[0]);
+      $stmt->bindParam(':customer_id', $data[1]);
 
       // Execute the INSERT statement
       $stmt->execute();
@@ -46,7 +52,7 @@ class Category extends Database
   public function listById($data)
   {
     try {
-      $stmt = $this->pdo->prepare("SELECT * FROM category WHERE id = :id");
+      $stmt = $this->pdo->prepare("SELECT * FROM user_customer WHERE uc_id = :id");
       // Bind the parameters
       $stmt->bindParam(':id', $data[0]);
 
@@ -66,7 +72,7 @@ class Category extends Database
   public function listByName($data)
   {
     try {
-      $stmt = $this->pdo->prepare("SELECT * FROM category WHERE `name` = LIKE '%:name%'");
+      $stmt = $this->pdo->prepare("SELECT * FROM user_customer WHERE `name` = LIKE '%:name%'");
       // Bind the parameters
       $stmt->bindParam(':name', $data[0]);
 
@@ -86,7 +92,7 @@ class Category extends Database
   public function listByKeyword($data)
   {
     try {
-      $stmt = $this->pdo->prepare("SELECT * FROM category WHERE keyword = LIKE '%:keyword%'");
+      $stmt = $this->pdo->prepare("SELECT * FROM user_customer WHERE keyword = LIKE '%:keyword%'");
       // Bind the parameters
       $stmt->bindParam(':keyword', $data[0]);
 
@@ -107,12 +113,13 @@ class Category extends Database
   {
     try {
       // Prepare the UPDATE statement
-      $sql = "UPDATE category SET `name` = :name WHERE id = :id";
+      $sql = "UPDATE user_customer SET `user_id` = :user_id,`customer_id` = :customer_id WHERE uc_id = :uc_id";
       $stmt = $this->pdo->prepare($sql);
 
       // Bind the parameters
-      $stmt->bindParam(':name', $data[1]);
-      $stmt->bindParam(':id', $data[0]);
+      $stmt->bindParam(':user_id', $data[1]);
+      $stmt->bindParam(':customer_id ', $data[2]);
+      $stmt->bindParam(':uc_id', $data[0]);
 
       // Execute the UPDATE statement
       $stmt->execute();
@@ -130,9 +137,9 @@ class Category extends Database
   public function remove($data) 
   {
     try {
-      $stmt = $this->pdo->prepare("DELETE FROM category WHERE id = :id");
+      $stmt = $this->pdo->prepare("DELETE FROM user_customer WHERE uc_id = :uc_id");
       // Bind the parameters
-      $stmt->bindParam(':id', $data[0]);
+      $stmt->bindParam(':uc_id', $data[0]);
 
       // Execute the DELETE statement
       $stmt->execute();

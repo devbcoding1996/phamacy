@@ -225,9 +225,9 @@ class DrugInformationService extends Requests
 
           $drug_info_id = $id[0];
 
-          $delete_book = $drugInfo->remove([$drug_info_id]);
+          $delete_drugInfo = $drugInfo->remove([$drug_info_id]);
 
-          if ($delete_book) {
+          if ($delete_drugInfo) {
             $result['message'] = "DrugInfo deleted";
           } else {
             http_response_code(406);
