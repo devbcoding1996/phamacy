@@ -206,4 +206,28 @@ class UserService extends Requests
     return $user_model->isAdmin($email);
   }
 
+  public function logout()
+  {
+      $method = $this->getMethod();
+
+      $result = [];
+
+      if ($method == 'POST') {
+          // Remove the isAdmin cookie
+          setcookie('isAdmin', '', time() - 3600, '/');
+
+          // Set a success message
+          $result['message'] = "Logged out";
+
+          // Send the response
+          echo json_encode($result);
+      } else {
+          http_response_code(405);
+          $result['error'] = "HTTP Method not allowed";
+
+          echo json_encode($result);
+      }
+  }
+
+
 }
