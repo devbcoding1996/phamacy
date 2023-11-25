@@ -1,12 +1,12 @@
 <?php
 
-class DrugInformationService extends Requests
+class DrugTypeService extends Requests
 {
   public function index()
   {
     $method = $this->getMethod();
 
-    $drugInfo = new DrugInformation();
+    $drugType = new DrugType();
 
     $jwt = new JWT();
     $authorization = new Authorization();
@@ -22,8 +22,8 @@ class DrugInformationService extends Requests
         if ($user) {
 
           $result = [
-            'quantity' => count($drugInfo->list()),
-            'drugInformation' => $drugInfo->list()
+            'quantity' => count($drugType->list()),
+            'drugType' => $drugType->list()
           ];
 
         } else {
@@ -47,7 +47,7 @@ class DrugInformationService extends Requests
     $method = $this->getMethod();
     $body = $this->parseBodyInput();
 
-    $drugInfo = new DrugInformation();
+    $drugType = new DrugType();
 
     $jwt = new JWT();
     $authorization = new Authorization();
@@ -62,33 +62,20 @@ class DrugInformationService extends Requests
 
         if ($user) {
 
-          if (!empty($body['name']) && !empty($body['size']) && !empty($body['properties']) && !empty($body['quantity']) && !empty($body['price'])) {
+          if (!empty($body['name'])) {
 
-            $create_book = $drugInfo->create([$body['name'],
-             $body['size'],
-             $body['useMedicine'],
-             $body['contraindications'],
-             $body['properties'],
-             $body['drugTypeId'],
-             $body['categoryId'],
-             $body['packageId'],
-             $body['quantity'],
-             $body['productionDate'],
-             $body['expirationDate'],
-             $body['price'],
-             $body['keyword'],
-             $body['linkImages']]);
+            $create_book = $drugType->create([$body['name']]);
 
             if ($create_book) {
               http_response_code(200);
-              $result['message'] = "DrugInfo created";
+              $result['message'] = "DrugType created";
             } else {
               http_response_code(406);
               $result['error'] = "Sorry, something went wrog, verify the fields";
             }
           } else {
             http_response_code(406);
-            $result['error'] = "id or name field is empty";
+            $result['error'] = "name field is empty";
           }
         } else {
           http_response_code(401);
@@ -110,7 +97,7 @@ class DrugInformationService extends Requests
   {
     $method = $this->getMethod();
 
-    $drugInfo = new DrugInformation();
+    $drugType = new DrugType();
 
     $jwt = new JWT();
     $authorization = new Authorization();
@@ -125,14 +112,14 @@ class DrugInformationService extends Requests
 
         if ($user) {
 
-          $drugInfo_id = $id[0];
-          $book_exists = $drugInfo->listById([$drugInfo_id]);
+          $drugType_id = $id[0];
+          $book_exists = $drugType->listById([$drugType_id]);
 
           if ($book_exists) {
             $result['drugInfo'] = $book_exists;
           } else {
             http_response_code(404);
-            $result['error'] = "DrugInfo not found";
+            $result['error'] = "DrugType not found";
           }
         } else {
           http_response_code(401);
@@ -155,7 +142,7 @@ class DrugInformationService extends Requests
     $method = $this->getMethod();
     $body = $this->parseBodyInput();
 
-    $drugInfo = new DrugInformation();
+    $drugType = new DrugType();
 
     $jwt = new JWT();
     $authorization = new Authorization();
@@ -172,21 +159,21 @@ class DrugInformationService extends Requests
 
           if (!empty($body['id']) && !empty($body['name'])) {
 
-            $updated = $drugInfo->update([$body['id'], $body['name'], $body['size'], $body['price']]);
+            $updated = $drugType->update([$body['id'], $body['name']]);
 
             if ($updated) {
-              $result['message'] = "DrugInfo updated";
+              $result['message'] = "DrugType updated";
             } else {
               http_response_code(406);
               $result = [
-                'error_01' => "Verify title or year, try different values",
+                'error_01' => "Verify name, try different values",
                 'error_02' => "Sorry, something went wrog, verify the ID"
               ];
             }
 
           } else {
             http_response_code(406);
-            $result['error'] = "Id or Name field is empty";
+            $result['error'] = "Title or Year field is empty";
           }
         } else {
           http_response_code(401);
@@ -208,7 +195,7 @@ class DrugInformationService extends Requests
   {
     $method = $this->getMethod();
 
-    $drugInfo = new DrugInformation();
+    $drugType = new DrugType();
 
     $jwt = new JWT();
     $authorization = new Authorization();
@@ -223,12 +210,12 @@ class DrugInformationService extends Requests
 
         if ($user) {
 
-          $drug_info_id = $id[0];
+          $drug_type_id = $id[0];
 
-          $delete_book = $drugInfo->remove([$drug_info_id]);
+          $delete_book = $drugType->remove([$drug_type_id,]);
 
           if ($delete_book) {
-            $result['message'] = "DrugInfo deleted";
+            $result['message'] = "DrugType deleted";
           } else {
             http_response_code(406);
             $result['error'] = "Sorry, something went wrog, drugInfo not exists";
