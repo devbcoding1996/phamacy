@@ -24,7 +24,7 @@ $routes = [
   '/drugType'             => 'DrugTypeService@index',
   '/drugType/create'      => 'DrugTypeService@create',
   '/drugType/list/{id}'   => 'DrugTypeService@listById',
-  '/drugType/update/{id}' => 'DrugTypeService@update',
+  '/drugType/update' => 'DrugTypeService@update',
   '/drugType/remove/{id}' => 'DrugTypeService@remove',
 
   '/package'             => 'PackageService@index',
@@ -50,4 +50,16 @@ $routes = [
   '/userCustomer/list/{id}'   => 'UserCustomerService@listById',
   '/userCustomer/update/{id}' => 'UserCustomerService@update',
   '/userCustomer/remove/{id}' => 'UserCustomerService@remove',
+
+  '/orderDrug'             => 'OrderDrugService@index',
+  '/orderDrug/create'      => 'OrderDrugService@create',
+  '/orderDrug/list/{id}'   => 'OrderDrugService@listById',
+  '/orderDrug/update' => 'OrderDrugService@update',
+  '/orderDrug/remove/{id}' => 'OrderDrugService@remove',
+
+  '/orderDrugDetail'             => 'OrderDrugDetailService@index',
+  '/orderDrugDetail/create'      => 'OrderDrugDetailService@create',
+  '/orderDrugDetail/list/{id}'   => 'OrderDrugDetailService@listById',
+  '/orderDrugDetail/update' => 'OrderDrugDetailService@update',
+  '/orderDrugDetail/remove/{id}' => 'OrderDrugDetailService@remove',
 ];

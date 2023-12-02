@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 25, 2023 at 04:52 PM
+-- Generation Time: Dec 02, 2023 at 07:21 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -276,7 +276,8 @@ INSERT INTO `drug_type` (`id`, `name`) VALUES
 (20, 'เครื่องปั๊มนม'),
 (21, 'ยาสำหรับฉีดพ่นช่องปากและลำคอ'),
 (22, 'ยาสำหรับฉีดพ่นช่องปาก'),
-(23, 'THC');
+(23, 'THC'),
+(24, 'xxx');
 
 -- --------------------------------------------------------
 
@@ -285,13 +286,44 @@ INSERT INTO `drug_type` (`id`, `name`) VALUES
 --
 
 CREATE TABLE `order_drug` (
-  `order_id` int(11) NOT NULL,
+  `id` char(10) NOT NULL DEFAULT uuid(),
   `customer_id` int(11) NOT NULL,
-  `drug_id` int(11) NOT NULL,
+  `total` decimal(10,2) NOT NULL,
+  `status` enum('S','OD','C','WP') NOT NULL,
+  `order_date` date NOT NULL,
+  `order_update` datetime NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `order_drug`
+--
+
+INSERT INTO `order_drug` (`id`, `customer_id`, `total`, `status`, `order_date`, `order_update`) VALUES
+('b807eb20-8', 1, 9999.00, 'S', '2023-12-03', '2023-12-03 01:06:29');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `order_drug_detail`
+--
+
+CREATE TABLE `order_drug_detail` (
+  `id` int(11) NOT NULL,
+  `order_id` varchar(15) NOT NULL,
+  `drug_info_id` int(11) NOT NULL,
   `quantity` int(11) NOT NULL,
   `value` decimal(10,2) NOT NULL,
-  `status` varchar(255) NOT NULL
+  `total` decimal(10,2) NOT NULL,
+  `order_date` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `order_drug_detail`
+--
+
+INSERT INTO `order_drug_detail` (`id`, `order_id`, `drug_info_id`, `quantity`, `value`, `total`, `order_date`) VALUES
+(1, 'b807eb20-8b5c-1', 133, 2, 500.00, 9000.00, '2023-12-03'),
+(3, 'b807eb20-8b5c-1', 55, 1, 50.00, 100.00, '2023-12-03');
 
 -- --------------------------------------------------------
 
@@ -336,6 +368,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `mobileNumber`, `email`, `passwd`, `isAdmin`) VALUES
+('a09cb3ee-913d-11ee-88e4-38f3ab9049a5', 'sfdsfsdf', 'sdfsdfdsfd', 'sdfsdfdsfsdfsdf', 'sdfdsfsdfdsf', 0),
 ('b807eb20-8b5c-11ee-843a-38f3ab9049a5', 'admin naja', '0978887799', 'Admin@gamil.com', '$2y$10$UOcZOErcWCsTnTfT2QnRo.PVZv7ErMHhypt5H0htFE3CA8xk0Jrxe', 1),
 ('bba2121d-83de-11ee-823b-38f3ab9049a5', 'John', '0978885566', 'Pokz@gamil.com', '$2y$10$5ES.3KNSInIBex7Sdv4pRu1wHCRbhmfukl8lCmz/6fX9pcr5bTBNW', 0);
 
@@ -390,9 +423,14 @@ ALTER TABLE `drug_type`
 -- Indexes for table `order_drug`
 --
 ALTER TABLE `order_drug`
-  ADD PRIMARY KEY (`order_id`),
-  ADD KEY `customer_id` (`customer_id`),
-  ADD KEY `drug_id` (`drug_id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `customer_id` (`customer_id`);
+
+--
+-- Indexes for table `order_drug_detail`
+--
+ALTER TABLE `order_drug_detail`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `package`
@@ -405,6 +443,12 @@ ALTER TABLE `package`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `user_customer`
+--
+ALTER TABLE `user_customer`
+  ADD KEY `user_id` (`user_id`,`customer_id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -426,19 +470,19 @@ ALTER TABLE `customer`
 -- AUTO_INCREMENT for table `drug_information`
 --
 ALTER TABLE `drug_information`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=135;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=137;
 
 --
 -- AUTO_INCREMENT for table `drug_type`
 --
 ALTER TABLE `drug_type`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
--- AUTO_INCREMENT for table `order_drug`
+-- AUTO_INCREMENT for table `order_drug_detail`
 --
-ALTER TABLE `order_drug`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `order_drug_detail`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `package`
@@ -456,13 +500,6 @@ ALTER TABLE `package`
 ALTER TABLE `drug_information`
   ADD CONSTRAINT `drug_information_ibfk_1` FOREIGN KEY (`drug_type_id`) REFERENCES `drug_type` (`id`),
   ADD CONSTRAINT `drug_information_ibfk_2` FOREIGN KEY (`category_id`) REFERENCES `category` (`id`);
-
---
--- Constraints for table `order_drug`
---
-ALTER TABLE `order_drug`
-  ADD CONSTRAINT `order_drug_ibfk_1` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`customer_id`),
-  ADD CONSTRAINT `order_drug_ibfk_2` FOREIGN KEY (`drug_id`) REFERENCES `drug_information` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

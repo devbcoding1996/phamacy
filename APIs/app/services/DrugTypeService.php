@@ -212,7 +212,7 @@ class DrugTypeService extends Requests
 
           $drug_type_id = $id[0];
 
-          $delete_drugType = $drugType->remove([$drug_type_id,]);
+          $delete_drugType = $drugType->remove([$drug_type_id]);
 
           if ($delete_drugType) {
             $result['message'] = "DrugType deleted";

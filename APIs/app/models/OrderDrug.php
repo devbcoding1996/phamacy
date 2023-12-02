@@ -1,6 +1,6 @@
 <?php
 
-class Customer extends Database
+class OrderDrug extends Database
 {
 
   private $pdo;
@@ -21,7 +21,7 @@ class Customer extends Database
       if(!$is_admin){
         return ["Has rights only for Admin!"];
       }
-      $stm = $this->pdo->prepare("SELECT * FROM customer ORDER BY customer_id DESC");
+      $stm = $this->pdo->prepare("SELECT * FROM order_drug ORDER BY id DESC");
       $stm->execute();
       if($stm->rowCount() > 0) {
         $customer = $stm->fetchAll(PDO::FETCH_ASSOC);
@@ -29,14 +29,12 @@ class Customer extends Database
         // Check if the size column is equal to an empty string
         foreach ($customer as $info) {
             $checkArray = [
-              "id" => $info['customer_id'],
-              "fName" => $this->checkNull($info['f_name']),
-              "lName" => $this->checkNull($info['l_name']),
-              "address" => $this->checkNull($info['address']),
-              "phoneNumber" => $this->checkNull($info['phone_number']),
-              "email" => $this->checkNull($info['email']),
-              "discount" => $this->checkNull($info['discount']),
-              "status" => $this->checkNull($info['status'])
+              "id" => $info['id'],
+              "customerId" => $this->checkNull($info['customer_id']),
+              "total" => $this->checkNull($info['total']),
+              "status" => $this->checkNull($info['status']),
+              "orderDate" => $this->checkNull($info['order_date']),
+              "orderUpdate" => $this->checkNull($info['order_update'])
             ];
             array_push($res,$checkArray);
         }
@@ -52,7 +50,7 @@ class Customer extends Database
   public function create($data)
   {
     try {
-      $sql = "INSERT INTO customer (`f_name`,`l_name`,`address`,`phone_number`,`email`,`discount`,`status`) VALUES (:f_name,:l_name,:address,:phone_number,:email,:discount,:status)";
+      $sql = "INSERT INTO order_drug (`f_name`,`l_name`,`address`,`phone_number`,`email`,`discount`,`status`) VALUES (:f_name,:l_name,:address,:phone_number,:email,:discount,:status)";
       $stmt = $this->pdo->prepare($sql);
 
       // Bind the parameters
@@ -80,49 +78,9 @@ class Customer extends Database
   public function listById($data)
   {
     try {
-      $stmt = $this->pdo->prepare("SELECT * FROM customer WHERE id = :id");
+      $stmt = $this->pdo->prepare("SELECT * FROM order_drug WHERE id = :id");
       // Bind the parameters
       $stmt->bindParam(':id', $data[0]);
-
-      // Execute the SELECT statement
-      $stmt->execute();
-      
-      if($stmt->rowCount() > 0){
-        return $stmt->fetch(PDO::FETCH_ASSOC);
-      } else {
-        return false;
-      }
-    } catch (PDOException $err) {
-      return false;
-    }
-  }
-
-  public function listByName($data)
-  {
-    try {
-      $stmt = $this->pdo->prepare("SELECT * FROM customer WHERE `name` = LIKE '%:name%'");
-      // Bind the parameters
-      $stmt->bindParam(':name', $data[0]);
-
-      // Execute the SELECT statement
-      $stmt->execute();
-      
-      if($stmt->rowCount() > 0){
-        return $stmt->fetch(PDO::FETCH_ASSOC);
-      } else {
-        return false;
-      }
-    } catch (PDOException $err) {
-      return false;
-    }
-  }
-
-  public function listByKeyword($data)
-  {
-    try {
-      $stmt = $this->pdo->prepare("SELECT * FROM customer WHERE keyword = LIKE '%:keyword%'");
-      // Bind the parameters
-      $stmt->bindParam(':keyword', $data[0]);
 
       // Execute the SELECT statement
       $stmt->execute();
@@ -141,7 +99,7 @@ class Customer extends Database
   {
     try {
       // Prepare the UPDATE statement
-      $sql = "UPDATE customer SET `name` = :name WHERE id = :id";
+      $sql = "UPDATE order_drug SET `name` = :name WHERE id = :id";
       $stmt = $this->pdo->prepare($sql);
 
       // Bind the parameters
@@ -164,7 +122,7 @@ class Customer extends Database
   public function remove($data) 
   {
     try {
-      $stmt = $this->pdo->prepare("DELETE FROM customer WHERE id = :id");
+      $stmt = $this->pdo->prepare("DELETE FROM order_drug WHERE id = :id");
       // Bind the parameters
       $stmt->bindParam(':id', $data[0]);
 
@@ -195,12 +153,12 @@ class Customer extends Database
         if ($user) {
           $user_id = $user->id;
 
-          $sql = "INSERT INTO user_customer (`user_id`,`customer_id`) VALUES (:user_id,:customer_id);";
+          $sql = "INSERT INTO user_customer (`user_id`,`id`) VALUES (:user_id,:id);";
           $stmt = $this->pdo->prepare($sql);
 
           // Bind the parameters
           $stmt->bindParam(':user_id', $user_id);
-          $stmt->bindParam(':customer_id', $id);
+          $stmt->bindParam(':id', $id);
 
           // Execute the INSERT statement
           $stmt->execute();
