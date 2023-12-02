@@ -26,6 +26,19 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
         rel="stylesheet">
+
+    <!-- <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/select/1.3.1/css/select.bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/select/1.3.1/css/select.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.5/css/responsive.dataTables.min.css">
+    <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
+    <script src="https://cdn.datatables.net/select/1.3.1/js/dataTables.select.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.2.5/js/dataTables.responsive.min.js"></script> -->
+    <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css">
+
     <style>
         * {
             font-family: 'Kanit', sans-serif;
@@ -107,12 +120,6 @@
             aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <!-- <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search"> -->
-        <div class="navbar-nav">
-            <div class="nav-item text-nowrap">
-                <a class="nav-link px-3" onclick="logout()">Sign out</a>
-            </div>
-        </div>
     </header>
 
     <div class="container-fluid">
@@ -144,6 +151,12 @@
                                 แก้ไขสินค้า
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" onclick="logout()">
+                                <i class="fa-solid fa-right-from-bracket"></i>
+                                ออกจากระบบ
+                            </a>
+                        </li>
                     </ul>
                 </div>
             </nav>
@@ -159,25 +172,49 @@
                 </div>
                 <div
                     class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                    <h1 class="h2">Edit</h1>
+                    <h1 class="h2">แก้ไขสินค้า</h1>
                     <div class="btn-toolbar mb-2 mb-md-0">
                         <div class="btn-group me-2">
-                            <button type="button" class="btn btn-sm btn-outline-secondary">Share</button>
-                            <button type="button" class="btn btn-sm btn-outline-secondary">Export</button>
+                            <button type="button" class="btn btn-sm btn-outline-warning"
+                                id="button">แก้ไขสินค้าที่เลือก</button>
                         </div>
-                        <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round" class="feather feather-calendar" aria-hidden="true">
-                                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-                                <line x1="16" y1="2" x2="16" y2="6"></line>
-                                <line x1="8" y1="2" x2="8" y2="6"></line>
-                                <line x1="3" y1="10" x2="21" y2="10"></line>
-                            </svg>
-                            This week
-                        </button>
                     </div>
                 </div>
+
+
+                <table id="showData" class="table table-striped table-bordered" style="width:100%">
+                    <thead>
+                        <tr>
+                            <!-- <th>ชื่อยา</th>
+                            <th>ขนาด</th>
+                            <th>วิธีใช้</th>
+                            <th>ข้อควรระวัง</th>
+                            <th>สรรพคุณ</th>
+                            <th>ประเภทยา</th>
+                            <th>บรรจุภัณฑ์</th>
+                            <th>จำนวน/เม็ด</th>
+                            <th>หมวดหมู่</th>
+                            <th>ราคา</th>
+                            <th>รูปภาพ</th> -->
+                            <th>Name</th>
+                            <th>Position</th>
+                            <th>Office</th>
+                            <th>Extn.</th>
+                            <th>Start date</th>
+                            <th>Salary</th>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr>
+                            <th>Name</th>
+                            <th>Position</th>
+                            <th>Office</th>
+                            <th>Extn.</th>
+                            <th>Start date</th>
+                            <th>Salary</th>
+                        </tr>
+                    </tfoot>
+                </table>
             </main>
         </div>
     </div>
@@ -222,6 +259,41 @@
                 })
                 .catch(error => console.error('Error:', error));
         }
+
+        let _datas = null;
+        async function callData() {
+            let table = new DataTable('#showData', {
+                ajax: './data.json',
+                search: {
+                    return: true
+                }
+            });
+
+            table.on('click', 'tbody tr', (e) => {
+                let classList = e.currentTarget.classList;
+
+                if (classList.contains('selected')) {
+                    classList.remove('selected');
+                }
+                else {
+                    table.rows('.selected').nodes().each((row) => row.classList.remove('selected'));
+                    classList.add('selected');
+                }
+            });
+
+
+
+            $('#showData tbody').on('click', 'tr', function () {
+                let datas = table.row(this).data();
+                _datas = datas
+            });
+
+            document.querySelector('#button').addEventListener('click', function () {
+                alert(_datas)
+                console.log('Selected Row Data:', _datas);
+            });
+        }
+        callData();
     </script>
 </body>
 
