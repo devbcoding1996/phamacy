@@ -20,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_SESSION['user'])) {
+if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_SESSION['username'])) {
     echo json_encode(['loggedIn' => true, 'username' => $_SESSION['username'], 'password' => $_SESSION['password']]);
     exit;
 }
