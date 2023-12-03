@@ -490,18 +490,6 @@ ALTER TABLE `order_drug_detail`
 ALTER TABLE `package`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
---
--- Constraints for dumped tables
---
-
---
--- Constraints for table `drug_information`
---
-ALTER TABLE `drug_information`
-  ADD CONSTRAINT `drug_information_ibfk_1` FOREIGN KEY (`drug_type_id`) REFERENCES `drug_type` (`id`),
-  ADD CONSTRAINT `drug_information_ibfk_2` FOREIGN KEY (`category_id`) REFERENCES `category` (`id`);
-COMMIT;
-
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
