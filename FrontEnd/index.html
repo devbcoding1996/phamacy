@@ -38,6 +38,7 @@
 	<link rel="stylesheet" href="css/custom.css">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 	<!-- Document Title
 	============================================= -->
 	<title>Narumon | Pharmacy</title>
@@ -57,27 +58,23 @@
 					<h3 class="mb-0 fw-normal">สวัสดี, ยินดีต้อนรับกลับ</h3>
 				</div>
 				<div class="card-body mx-auto py-5" style="max-width: 70%;">
-					<form id="login-form" name="login-form" class="mb-0 row" action="#" method="post">
+					<div class="mb-0 row">
 
 						<div class="col-12">
-							<input type="text" id="login-form-username" name="login-form-username" value=""
-								class="form-control not-dark" placeholder="บัญชีผู้ใช้">
+							<input type="text" id="login-form-username" name="login-form-username"
+								value="Admin@gamil.com" class="form-control not-dark" placeholder="บัญชีผู้ใช้">
 						</div>
 
 						<div class="col-12 mt-4">
-							<input type="password" id="login-form-password" name="login-form-password" value=""
+							<input type="password" id="login-form-password" name="login-form-password" value="admin123"
 								class="form-control not-dark" placeholder="รหัสผ่าน">
 						</div>
-
-						<div class="col-12 text-end">
-							<a href="#" class="text-dark fw-light mt-2">ลืมรหัสผ่าน?</a>
-						</div>
-
 						<div class="col-12 mt-4">
 							<button class="button w-100 m-0" id="login-form-submit" name="login-form-submit"
-								value="login">เข้าสู่ระบบ</button>
+								onclick="handleLogin()">เข้าสู่ระบบ
+							</button>
 						</div>
-					</form>
+					</div>
 				</div>
 				<div class="card-footer py-4 text-center">
 					<p class="mb-0">ท่านมีบัญชีแล้วหรือยัง? <a href="#"><u>สมัครสมาชิก</u></a></p>
@@ -108,7 +105,7 @@
 							<!-- Top Search
 							============================================= -->
 							<div id="top-account">
-								<a href="./admin/login.html" target="_blank">
+								<a href="#modal-register" data-lightbox="inline">
 									<i class="bi-person me-1 position-relative" style="top: 1px;"></i>
 									<span class="d-none d-sm-inline-block font-primary fw-medium">เข้าสู่ระบบ</span>
 								</a>
@@ -186,7 +183,7 @@
 									</a>
 								</li>
 								<li class="menu-item mega-menu">
-									<a class="menu-link" href="all-produch.html">
+									<a class="menu-link" href="all-product.html">
 										<div>สินค้าทั้งหมด</div>
 									</a>
 								</li>
@@ -638,7 +635,7 @@
 	============================================= -->
 	<script src="js/plugins.min.js"></script>
 	<script src="js/functions.bundle.js"></script>
-
+	<script src="js/login.js"></script>
 </body>
 
 </html>

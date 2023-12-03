@@ -42,6 +42,13 @@
 	============================================= -->
     <title>Narumon | Pharmacy</title>
 
+    <style>
+        .fit-image {
+            width: 15%;
+            aspect-ratio: 3/2;
+            object-fit: contain;
+        }
+    </style>
 </head>
 
 <body class="stretched">
@@ -49,42 +56,6 @@
     <!-- Document Wrapper
 	============================================= -->
     <div id="wrapper">
-
-        <!-- Login Modal -->
-        <div class="modal1 mfp-hide" id="modal-register">
-            <div class="card mx-auto" style="max-width: 540px;">
-                <div class="card-header py-3 bg-transparent text-center">
-                    <h3 class="mb-0 fw-normal">สวัสดี, ยินดีต้อนรับกลับ</h3>
-                </div>
-                <div class="card-body mx-auto py-5" style="max-width: 70%;">
-                    <form id="login-form" name="login-form" class="mb-0 row" action="#" method="post">
-
-                        <div class="col-12">
-                            <input type="text" id="login-form-username" name="login-form-username" value=""
-                                class="form-control not-dark" placeholder="บัญชีผู้ใช้">
-                        </div>
-
-                        <div class="col-12 mt-4">
-                            <input type="password" id="login-form-password" name="login-form-password" value=""
-                                class="form-control not-dark" placeholder="รหัสผ่าน">
-                        </div>
-
-                        <div class="col-12 text-end">
-                            <a href="#" class="text-dark fw-light mt-2">ลืมรหัสผ่าน?</a>
-                        </div>
-
-                        <div class="col-12 mt-4">
-                            <button class="button w-100 m-0" id="login-form-submit" name="login-form-submit"
-                                value="login">เข้าสู่ระบบ</button>
-                        </div>
-                    </form>
-                </div>
-                <div class="card-footer py-4 text-center">
-                    <p class="mb-0">ท่านมีบัญชีแล้วหรือยัง? <a href="#"><u>สมัครสมาชิก</u></a></p>
-                </div>
-            </div>
-        </div>
-
         <!-- Header
 		============================================= -->
         <header id="header" class="full-header header-size-md">
@@ -141,8 +112,8 @@
                                         </div>
                                         <div class="top-cart-item">
                                             <div class="top-cart-item-image">
-                                                <a href="#"><img src="images/shop/small/6.jpg"
-                                                        alt="Light Blue Denim Dress"></a>
+                                                <a href="#">
+                                                    <img src="images/shop/small/6.jpg" alt="Light Blue Denim Dress"></a>
                                             </div>
                                             <div class="top-cart-item-desc">
                                                 <div class="top-cart-item-desc-title">
@@ -220,87 +191,17 @@
 				============================================= -->
                 <div class="container">
                     <div class="fancy-title title-border mt-4 title-center">
-                        <h4>วิธีการสั่งซื้อ และ ชำระเงิน</h4>
+                        <h4>รายการสินค้า</h4>
                     </div>
 
-                    <div class="row col-mb-30">
-                        <div class="col-lg-3 col-md-4 col-6 px-2">
-                            <div class="product">
-                                <div class="product-image" style="border-radius: 0;">
-                                    <a href="#"><img style="border: 2px solid #000;"
-                                            src="./images/shopping-guild/choose.png" alt="Image 1"></a>
-                                </div>
-                                <div class="product-desc">
-                                    <h4 class="mb-0">1. เลือกสินค้าที่ต้องการ</h4>
-                                    <h5 class="fw-light">
-                                        กดเลือกสินค้าที่ต้องการได้จากรูปหรือช่องค้นหา และเลือกสินค้าที่ต้องการ
-                                    </h5>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-3 col-md-4 col-6 px-2">
-                            <div class="product">
-                                <div class="product-image" style="border-radius: 0;">
-                                    <a href="#">
-                                        <img style="border: 2px solid #000;" src="./images/shopping-guild/cart.png"
-                                            alt="Image 2">
-                                    </a>
-                                </div>
-                                <div class="product-desc">
-                                    <h4 class="mb-0">2. กดที่ตระกร้าสินค้าเพื่อตรวจสอบ</h4>
-                                    <h5 class="fw-light">ตรวจสอบควมคบถ้วนของสินค้า และกดถัดไป
-                                    </h5>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-3 col-md-4 col-6 px-2">
-                            <div class="product">
-                                <div class="product-image" style="border-radius: 0;">
-                                    <a href="#"><img style="border: 2px solid #000;"
-                                            src="./images/shopping-guild/address.png" alt="Image 3"></a>
-                                </div>
-                                <div class="product-desc">
-                                    <h4 class="mb-0">3. กรอกข้อมูลจัดส่ง</h4>
-                                    <h5 class="fw-light">กรอกข้อมูลผู้ซื้อ ให้ครบถ้วนตามช่องที่มีเครื่องหมายดอกจันทร์
-                                        แล้วกดปุ่ม ”ชำระเงิน” ได้เลย</h5>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-3 col-md-4 col-6 px-2">
-                            <div class="product">
-                                <div class="product-image" style="border-radius: 0;">
-                                    <a href="#"><img style="border: 2px solid #000;"
-                                            src="./images/shopping-guild/payment.png" alt="Image 4"></a>
-                                </div>
-                                <div class="product-desc">
-                                    <h4 class="mb-0">4. ชำระเงิน</h4>
-                                    <h5 class="fw-light">ตรวจสอบสินค้า ราคาสินค้าให้ถูกต้องแล้วแสกน QRCode
-                                        หรือโอนผ่านช่องทางธนาคาร</h5>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-3 col-md-4 col-6 px-2">
-                            <div class="product">
-                                <div class="product-image" style="border-radius: 0;">
-                                    <a href="#"><img style="border: 2px solid #000;"
-                                            src="./images/shopping-guild/send-slip.png" alt="Image 5"></a>
-                                </div>
-                                <div class="product-desc">
-                                    <h4 class="mb-0">5. ยืนยันการชำระเงิน</h4>
-                                    <h5 class="fw-light">
-                                        หลังจากลูกค้าได้ทำการชำระเงินเรีบยร้อยแล้ว ให้แจ้งสลิปการโอนเงินมาที่ LINE
-                                        @NarumonPharmacyShop
-                                    </h5>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="row col-mb-30" id="show-all-product">
                     </div>
+
                 </div>
 
                 <div class="clear"></div>
             </div>
         </section><!-- #content end -->
-
 
         <!-- Footer
 		============================================= -->
@@ -343,7 +244,86 @@
 	============================================= -->
     <script src="js/plugins.min.js"></script>
     <script src="js/functions.bundle.js"></script>
+    <script src="js/tooltips.js"></script>
+    <script>
+        getProduct = async () => {
+            var myHeaders = new Headers();
+            myHeaders.append("Content-Type", "application/json");
+            myHeaders.append("Authorization", "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6ImI4MDdlYjIwLThiNWMtMTFlZS04NDNhLTM4ZjNhYjkwNDlhNSJ9.FmqfsoNTzR9yPraGKiv62TbD9CIGeP5N51Nk3UHv0Yo");
+            myHeaders.append("Cookie", "isAdmin=true");
 
+            var requestOptions = {
+                method: 'GET',
+                headers: myHeaders,
+                redirect: 'follow'
+            };
+
+            let response = await fetch("http://localhost:90/phamacy/APIs/drugInformation", requestOptions)
+                .then((result) => {
+                    return result.json()
+                })
+                .catch((error) => { console.log('error', error) });
+            document.getElementById('show-all-product').innerHTML = '';
+            if (response) {
+                let img;
+                response.drugInformation.forEach(element => {
+                    if (element.price) {
+                        if (element.linkImages) {
+                            img = element.linkImages
+                        } else {
+                            img = './images/default-image.jpg'
+                        }
+                        document.getElementById('show-all-product').innerHTML += `
+                            <div class="col-lg-2 col-md-3 col-6 px-2">
+                                <div class="product">
+                                    <div class="product-image">
+                                        <a href="#"><img src="${img}" class="fit-image" alt="Image 1"></a>
+                                    </div>
+                                    <div class="product-desc">
+                                        <div class="product-title mb-1">
+                                            <h3><a href="#">ชื่อยา ${element.name}</a></h3>
+                                        </div>
+                                        <div class="product-price font-primary">
+                                            <ins>ขนาด ${element.size}</ins>
+                                        </div>
+                                        <div class="product-price font-primary">
+                                            <ins>สรรพคุณ <a href="#" class="text-primary" data-bs-toggle="modal" data-bs-target="#exampleModal${element.categoryId}">ดูเพิ่มเติม...</a></ins>
+                                        </div>
+                                        <div class="product-price font-primary">
+                                            <ins>ราคา ${element.price}฿</ins>
+                                        </div>
+                                        <a href="#" class="btn btn-dark w-100" title="Add to Cart">
+                                            <i class="bi-bag-plus"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Modal -->
+                            <div class="modal fade" id="exampleModal${element.categoryId}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">ชื่อยา ${element.name}</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <h4 class="m-0">สรรพคุณ</h4>
+                                        <h5 class="fw-light">${element.properties}</h5>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    </div>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    }
+                });
+            }
+        }
+        getProduct();
+    </script>
 </body>
 
 </html>

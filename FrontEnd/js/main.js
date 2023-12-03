@@ -21,7 +21,7 @@ checkLoginStatus = async () => {
           title: "เกิดข้อผิดพลาด",
           text: response.error,
         }).then((result) => {
-          window.location.href = "./login.html";
+          window.location.href = "../index.html";
         });
       } else {
         document.getElementById("admin").innerHTML = `สวัสดีแอดมิน ${response.data.name}`;
@@ -55,7 +55,7 @@ logout = async () => {
         title: "กำลังออกจากระบบ",
         text: response.message,
       }).then((result) => {
-        window.location.href = "./login.html";
+        window.location.href = "../index.html";
       });
     })
     .catch((error) => {
