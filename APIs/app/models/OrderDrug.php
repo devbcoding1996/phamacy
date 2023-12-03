@@ -21,7 +21,7 @@ class OrderDrug extends Database
       if(!$is_admin){
         return ["Has rights only for Admin!"];
       }
-      $stm = $this->pdo->prepare("SELECT * FROM order_drug ORDER BY id DESC");
+      $stm = $this->pdo->prepare("SELECT * FROM order_drug ORDER BY order_update DESC");
       $stm->execute();
       if($stm->rowCount() > 0) {
         $customer = $stm->fetchAll(PDO::FETCH_ASSOC);
@@ -54,7 +54,7 @@ class OrderDrug extends Database
       VALUES (:customer_id,:total,:status,:order_date,:order_update)";
      
       $stmt = $this->pdo->prepare($sql);
-      $Now = new DateTime('now', new DateTimeZone('Asia/Bangkok'));
+      $Now = new DateTime('now');
       $currentDate = $Now->format('Y-m-d');
       $currentDateTime = $Now->format('Y-m-d H:i:s');
       $checkStatus= empty($data[2])? 'OD':$data[2] ;
