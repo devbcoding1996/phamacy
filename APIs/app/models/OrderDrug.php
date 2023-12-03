@@ -50,26 +50,27 @@ class OrderDrug extends Database
   public function create($data)
   {
     try {
-      $sql = "INSERT INTO order_drug (`f_name`,`l_name`,`address`,`phone_number`,`email`,`discount`,`status`) VALUES (:f_name,:l_name,:address,:phone_number,:email,:discount,:status)";
+      $sql = "INSERT INTO order_drug (`customer_id`,`total`,`status`,`order_date`,`order_update`) 
+      VALUES (:customer_id,:total,:status,:order_date,:order_update)";
+     
       $stmt = $this->pdo->prepare($sql);
-
+      $Now = new DateTime('now', new DateTimeZone('Asia/Bangkok'));
+      $currentDate = $Now->format('Y-m-d');
+      $currentDateTime = $Now->format('Y-m-d H:i:s');
+      $checkStatus= empty($data[2])? 'OD':$data[2] ;
+      $total = floatval($data[1]);
       // Bind the parameters
-      $stmt->bindParam(':f_name', $data[0]);
-      $stmt->bindParam(':l_name', $data[1]);
-      $stmt->bindParam(':address', $data[2]);
-      $stmt->bindParam(':phone_number', $data[3]);
-      $stmt->bindParam(':email', $data[4]);
-      $stmt->bindParam(':discount', $data[5]);
-      $stmt->bindParam(':status', $data[6]);
-
+      $stmt->bindParam(':customer_id', $data[0]);
+      $stmt->bindParam(':total',$total);
+      $stmt->bindParam(':status', $checkStatus);
+      $stmt->bindParam(':order_date', $currentDate);
+      $stmt->bindParam(':order_update',  $currentDateTime);
       // Execute the INSERT statement
       $stmt->execute();
-
-      $last_index = $this->pdo->lastInsertId();
-
-      $this->createUserCustomer($last_index);
-
-      return true;
+      $stmt2 = $this->pdo->prepare("SELECT id FROM `order_drug` ORDER BY order_update DESC LIMIT 1;");
+      $stmt2->execute();
+      $last_index = $stmt2->fetch(PDO::FETCH_COLUMN);
+      return ['status'=>true,'orderId'=>$last_index];
     } catch (PDOException $err) {
       return false;
     }
@@ -139,7 +140,7 @@ class OrderDrug extends Database
     }
   }
 
-  public function createUserCustomer($id) 
+  public function createOrderDrugDetail($id) 
   {
     try {
 

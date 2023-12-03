@@ -62,13 +62,14 @@ class OrderDrugService extends Requests
 
         if ($user) {
 
-          if (!empty($body['fName']) && !empty($body['lName']) && !empty($body['address'])) {
+          if (!empty($body['customerId']) && !empty($body['total'])) {
 
-            $create_customer = $orderDrug->create([$body['fName'],$body['lName'],$body['address'],$body['phoneNumber'],$body['email'],$body['discount'],"Active"]);
+            $createOrderDrug = $orderDrug->create([$body['customerId'],$body['total'], $body['status']]);
 
-            if ($create_customer) {
+            if ($createOrderDrug['status']) {
               http_response_code(200);
               $result['message'] = "Category created";
+              $result['orderId'] = $createOrderDrug['orderId'];
             } else {
               http_response_code(406);
               $result['error'] = "Sorry, something went wrog, verify the fields";
