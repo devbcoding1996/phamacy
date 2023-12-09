@@ -180,26 +180,26 @@
                 </div>
                 <form class="row g-3 needs-validation" novalidate>
                     <div class="col-md-4">
-                        <label for="drugName" class="form-label">ชื่อยา</label>
-                        <input type="text" class="form-control" id="drugName" value="" required>
+                        <label for="name" class="form-label">ชื่อยา</label>
+                        <input type="text" class="form-control" id="name" value="" required>
                     </div>
                     <div class="col-md-4">
-                        <label for="drugSize" class="form-label">ขนาด</label>
-                        <input type="text" class="form-control" id="drugSize" value="" required>
+                        <label for="size" class="form-label">ขนาด</label>
+                        <input type="text" class="form-control" id="size" value="" required>
                     </div>
                     <div class="clearfix"></div>
                     <div class="col-md-4">
-                        <label for="howtouse" class="form-label">วิธีใช้</label>
+                        <label for="useMedicine" class="form-label">วิธีใช้</label>
                         <div class="form-floating">
-                            <textarea class="form-control" placeholder="รายละเอียดวิธีใช้" id="howtouse"
+                            <textarea class="form-control" placeholder="รายละเอียดวิธีใช้" id="useMedicine"
                                 style="height: 100px" required></textarea>
                         </div>
                     </div>
                     <div class="col-md-4">
-                        <label for="warning" class="form-label">ข้อห้าม/ข้อควรระวังในการใช้ยา</label>
+                        <label for="contraindications" class="form-label">ข้อห้าม/ข้อควรระวังในการใช้ยา</label>
                         <div class="form-floating">
-                            <textarea class="form-control" placeholder="รายละเอียดข้อควรระวังในการใช้ยา" id="warning"
-                                style="height: 100px" required></textarea>
+                            <textarea class="form-control" placeholder="รายละเอียดข้อควรระวังในการใช้ยา"
+                                id="contraindications" style="height: 100px" required></textarea>
                         </div>
                     </div>
                     <div class="col-md-4">
@@ -210,24 +210,13 @@
                         </div>
                     </div>
                     <div class="col-md-3">
-                        <label for="drugType" class="form-label">ประเภทยา</label>
-                        <select class="form-select" id="drugType" required>
-                            <option selected disabled value="">เลือก...</option>
-                            <option>ยารับประทาน</option>
-                            <option>ครีมทาผิวหนัง</option>
-                            <option>วัสดุอุปกรณ์ทำแผล</option>
-                            <option>ยาสูดพ่นเข้าทางปาก</option>
-                            <option>ใช้ทำความสะอาดเชื้อโรคภายนอก</option>
+                        <label for="drugTypeId" class="form-label">ประเภทยา</label>
+                        <select class="form-select" id="drugTypeId" required>
                         </select>
                     </div>
                     <div class="col-md-3">
-                        <label for="packaging" class="form-label">บรรจุภัณฑ์</label>
-                        <select class="form-select" id="packaging" required>
-                            <option selected disabled value="">เลือก...</option>
-                            <option>กระปุก</option>
-                            <option>แผง</option>
-                            <option>กล่อง</option>
-                            <option>ขวด</option>
+                        <label for="packageId" class="form-label">บรรจุภัณฑ์</label>
+                        <select class="form-select" id="packageId" required>
                         </select>
                     </div>
                     <div class="col-md-3">
@@ -235,32 +224,32 @@
                         <input type="text" class="form-control" id="quantity" required>
                     </div>
                     <div class="col-md-3">
-                        <label for="category" class="form-label">หมวดหมู่</label>
-                        <select class="form-select" id="category" required>
+                        <label for="categoryId" class="form-label">หมวดหมู่</label>
+                        <select class="form-select" id="categoryId" required>
                             <option selected disabled value="">เลือก...</option>
-                            <option>ชนิดเม็ด</option>
-                            <option>แคปซูล</option>
-                            <option>หลอด</option>
-                            <option>ชิ้น</option>
-                            <option>ขวด</option>
+                            <option value="2">เม็ด</option>
+                            <option value="3">แคปซูล</option>
+                            <option value="4">หลอด</option>
+                            <option value="5">ชิ้น</option>
+                            <option value="6">ขวด</option>
+                            <option value="7">ซอง</option>
+                            <option value="8">ก้อน</option>
+                            <option value="10">แผง</option>
+                            <option value="14">กรัม</option>
                         </select>
-                    </div>
-                    <div class="col-md-3">
-                        <label for="productionDate" class="form-label">วันที่ผลิด</label>
-                        <input type="text" class="form-control" id="productionDate" value="0000-00-00" readonly>
-                    </div>
-                    <div class="col-md-3">
-                        <label for="expireDate" class="form-label">วันหมดอายุ</label>
-                        <input type="text" class="form-control" id="expireDate" value="0000-00-00" readonly>
                     </div>
                     <div class="col-md-3">
                         <label for="price" class="form-label">ราคา</label>
                         <input type="text" class="form-control" id="price" required>
                     </div>
-                    <div class="col-md-12">
-                        <label for="imageFile" class="form-label">แนบรูปภาพ</label>
+                    <div class="col-md-3">
+                        <label for="keyword" class="form-label">คำค้นหา</label>
+                        <input type="text" class="form-control" id="keyword" required>
+                    </div>
+                    <div class="col-md-3">
+                        <label for="imageFile" class="form-label">ลิงค์รูปภาพ</label>
                         <div class="mb-3">
-                            <input class="form-control" type="file" id="imageFile" accept="image/*">
+                            <input class="form-control" type="text" id="imageFile" required>
                         </div>
                     </div>
                     <div class="col-12">
@@ -271,6 +260,7 @@
         </div>
     </div>
     <script src="../js/main.js"></script>
+    <script src="../js/select-info.js"></script>
     <script>
         (function () {
             'use strict'
@@ -283,12 +273,63 @@
                         if (!form.checkValidity()) {
                             event.preventDefault()
                             event.stopPropagation()
+                        } else {
+                            handleAddItem();
+                            event.preventDefault()
                         }
 
                         form.classList.add('was-validated')
                     }, false)
                 })
         })()
+
+        let token = localStorage.getItem("token");
+        handleAddItem = async () => {
+            var myHeaders = new Headers();
+            myHeaders.append("Content-Type", "application/json");
+            myHeaders.append("Authorization", `Bearer ${token}`);
+
+            var raw = JSON.stringify({
+                "name": $('#name').val(),
+                "size": `${$('#size').val()} มก.`,
+                "useMedicine": $('#useMedicine').val(),
+                "properties": $('#properties').val(),
+                "drugTypeIdId": $('#drugTypeIdId').val(),
+                "packageId": $('#packageId').val(),
+                "quantity": $('#quantity').val(),
+                "categoryId": $('#categoryId').val(),
+                "price": $('#price').val(),
+                "keyword": $('#keyword').val(),
+                "linkImages": $('#linkImages').val()
+            });
+            console.log('raw', raw)
+
+            var requestOptions = {
+                method: 'POST',
+                headers: myHeaders,
+                body: raw,
+                redirect: 'follow'
+            };
+
+            await fetch("http://localhost:90/phamacy/APIs/drugInformation/create", requestOptions)
+                .then(async (result) => {
+                    let response = await result.json();
+                    Swal.fire({
+                        icon: "success",
+                        title: "สำเร็จ",
+                        text: response.message,
+                    }).then((result) => {
+                        window.location.reload();
+                    });
+                })
+                .catch((error) => {
+                    Swal.fire({
+                        icon: "error",
+                        title: "ผิดพลาด",
+                        text: response.error,
+                    })
+                });
+        }
     </script>
 </body>
 

@@ -56,6 +56,37 @@
     <!-- Document Wrapper
 	============================================= -->
     <div id="wrapper">
+		<!-- Login Modal -->
+		<div class="modal1 mfp-hide" id="modal-register">
+			<div class="card mx-auto" style="max-width: 540px;">
+				<div class="card-header py-3 bg-transparent text-center">
+					<h3 class="mb-0 fw-normal">สวัสดี, ยินดีต้อนรับกลับ</h3>
+				</div>
+				<div class="card-body mx-auto py-5" style="max-width: 70%;">
+					<div class="mb-0 row">
+
+						<div class="col-12">
+							<input type="text" id="login-form-username" name="login-form-username"
+								value="Admin@gamil.com" class="form-control not-dark" placeholder="บัญชีผู้ใช้">
+						</div>
+
+						<div class="col-12 mt-4">
+							<input type="password" id="login-form-password" name="login-form-password" value="admin123"
+								class="form-control not-dark" placeholder="รหัสผ่าน">
+						</div>
+						<div class="col-12 mt-4">
+							<button class="button w-100 m-0" id="login-form-submit" name="login-form-submit"
+								onclick="handleLogin()">เข้าสู่ระบบ
+							</button>
+						</div>
+					</div>
+				</div>
+				<div class="card-footer py-4 text-center">
+					<p class="mb-0">ท่านมีบัญชีแล้วหรือยัง? <a href="#"><u>สมัครสมาชิก</u></a></p>
+				</div>
+			</div>
+		</div>
+
         <!-- Header
 		============================================= -->
         <header id="header" class="full-header header-size-md">
@@ -79,10 +110,10 @@
                             <!-- Top Search
 							============================================= -->
                             <div id="top-account">
-                                <a href="./admin/login.html" target="_blank">
-                                    <i class="bi-person me-1 position-relative" style="top: 1px;"></i>
-                                    <span class="d-none d-sm-inline-block font-primary fw-medium">เข้าสู่ระบบ</span>
-                                </a>
+								<a href="#modal-register" data-lightbox="inline">
+									<i class="bi-person me-1 position-relative" style="top: 1px;"></i>
+									<span class="d-none d-sm-inline-block font-primary fw-medium">เข้าสู่ระบบ</span>
+								</a>
                             </div><!-- #top-search end -->
 
                             <!-- Top Cart
@@ -245,6 +276,7 @@
     <script src="js/plugins.min.js"></script>
     <script src="js/functions.bundle.js"></script>
     <script src="js/tooltips.js"></script>
+	<script src="js/login.js"></script>
     <script>
         getProduct = async () => {
             var myHeaders = new Headers();
@@ -308,8 +340,13 @@
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
+                                        <img src="${img}" alt="Image 1">
                                         <h4 class="m-0">สรรพคุณ</h4>
                                         <h5 class="fw-light">${element.properties}</h5>
+                                        <h4 class="m-0">วิธีใช้</h4>
+                                        <h5 class="fw-light">${element.useMedicine}</h5>
+                                        <h4 class="m-0">ข้อควรระวัง</h4>
+                                        <h5 class="fw-light">${element.contraindications}</h5>
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
