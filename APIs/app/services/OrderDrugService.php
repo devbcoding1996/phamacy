@@ -42,6 +42,46 @@ class OrderDrugService extends Requests
     echo json_encode($result);
   }
 
+  public function listByUserId()
+  {
+    $method = $this->getMethod();
+
+    $orderDrug = new OrderDrug();
+
+    $jwt = new JWT();
+    $authorization = new Authorization();
+
+    $result = [];
+
+    if ($method == 'GET') {
+      $token = $authorization->getAuthorization();
+
+      if ($token) {
+        $user = $jwt->validateJWT($token);
+
+        if ($user) {
+
+          $result = [
+            'quantity' => count($orderDrug->list()),
+            'orderDrug' => $orderDrug->listByUserId()
+          ];
+
+        } else {
+          http_response_code(401);
+          $result['error'] = "Unauthorized, please, verify your token";
+        }
+      } else {
+        http_response_code(401);
+        $result['error'] = "Unauthorized, please, verify your token";
+      }
+    } else {
+      http_response_code(405);
+      $result['error'] = "HTTP Method not allowed";
+    }
+
+    echo json_encode($result);
+  }
+
   public function create()
   {
     $method = $this->getMethod();
@@ -158,17 +198,17 @@ class OrderDrugService extends Requests
 
         if ($user) {
 
-          if (!empty($body['id']) && !empty($body['name'])) {
+          if (!empty($body['id']) && !empty($body['customerId']) && !empty($body['total']) && !empty($body['status'])) {
 
-            $updated = $orderDrug->update([$body['id'], $body['name']]);
+            $updated = $orderDrug->update([$body['id'], $body['customerId'], $body['total'], $body['status']]);
 
             if ($updated) {
               $result['message'] = "Category updated";
             } else {
               http_response_code(406);
               $result = [
-                'error_01' => "Verify name, try different values",
-                'error_02' => "Sorry, something went wrog, verify the ID"
+                'error_01' => "Verify total, try different values",
+                'error_02' => "Sorry, something went wrong, verify the ID"
               ];
             }
 

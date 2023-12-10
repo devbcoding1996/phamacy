@@ -20,10 +20,10 @@ class CustomerService extends Requests
         $user = $jwt->validateJWT($token);
 
         if ($user) {
-
+          $resList = $customer->list($user->id);
           $result = [
-            'quantity' => count($customer->list()),
-            'customer' => $customer->list()
+            'quantity' => count($resList),
+            'customer' => $resList
           ];
 
         } else {
@@ -64,7 +64,7 @@ class CustomerService extends Requests
 
           if (!empty($body['fName']) && !empty($body['lName']) && !empty($body['address'])) {
 
-            $create_customer = $customer->create([$body['fName'],$body['lName'],$body['address'],$body['phoneNumber'],$body['email'],$body['discount'],"Active"]);
+            $create_customer = $customer->create([$body['fName'],$body['lName'],$body['address'],$body['phoneNumber'],$body['email'],$body['discount'],"Active",$user->id]);
 
             if ($create_customer) {
               http_response_code(200);

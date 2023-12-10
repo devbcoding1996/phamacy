@@ -47,6 +47,47 @@ class OrderDrug extends Database
     }
   }
 
+  public function listByUserId()
+  {
+    try {
+      $jwt = new JWT();
+      $authorization = new Authorization();
+      $token = $authorization->getAuthorization();
+
+      if ($token) {
+        $user = $jwt->validateJWT($token);
+
+        if ($user) {
+          $user_id = $user->id;
+          $stm = $this->pdo->prepare("SELECT * FROM order_drug ORDER BY order_update DESC");
+          $stm->execute();
+          if($stm->rowCount() > 0) {
+            $customer = $stm->fetchAll(PDO::FETCH_ASSOC);
+            $res = [];
+            // Check if the size column is equal to an empty string
+            foreach ($customer as $info) {
+                $checkArray = [
+                  "id" => $info['id'],
+                  "customerId" => $this->checkNull($info['customer_id']),
+                  "total" => $this->checkNull($info['total']),
+                  "status" => $this->checkNull($info['status']),
+                  "orderDate" => $this->checkNull($info['order_date']),
+                  "orderUpdate" => $this->checkNull($info['order_update'])
+                ];
+                array_push($res,$checkArray);
+            }
+            return $res;
+          } else {
+            return [];
+          }
+        }
+      }
+      
+    } catch (PDOException $err) {
+      return false;
+    }
+  }
+
   public function create($data)
   {
     try {
@@ -100,11 +141,17 @@ class OrderDrug extends Database
   {
     try {
       // Prepare the UPDATE statement
-      $sql = "UPDATE order_drug SET `name` = :name WHERE id = :id";
+      $sql = "UPDATE order_drug SET `customer_id` = :customer_id,`total` = :total,`status` = :status,`order_update` = :order_update WHERE id = :id";
       $stmt = $this->pdo->prepare($sql);
 
+      $Now = new DateTime('now');
+      $currentDateTime = $Now->format('Y-m-d H:i:s');
+      $total = floatval($data[2]);
       // Bind the parameters
-      $stmt->bindParam(':name', $data[1]);
+      $stmt->bindParam(':order_update', $currentDateTime);
+      $stmt->bindParam(':status', $data[3]);
+      $stmt->bindParam(':total', $total);
+      $stmt->bindParam(':customer_id', $data[1]);
       $stmt->bindParam(':id', $data[0]);
 
       // Execute the UPDATE statement

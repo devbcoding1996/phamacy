@@ -47,14 +47,17 @@ $routes = [
 
   '/userCustomer'             => 'UserCustomerService@index',
   '/userCustomer/create'      => 'UserCustomerService@create',
+  '/userCustomer/listCustomerId/{id}'   => 'UserCustomerService@listByCustomerId',
   '/userCustomer/list/{id}'   => 'UserCustomerService@listById',
   '/userCustomer/update/{id}' => 'UserCustomerService@update',
+  '/userCustomer/updateStatus' => 'UserCustomerService@updateStatus',
   '/userCustomer/remove/{id}' => 'UserCustomerService@remove',
 
   '/orderDrug'             => 'OrderDrugService@index',
   '/orderDrug/create'      => 'OrderDrugService@create',
+  '/orderDrug/listUserId'  => 'OrderDrugService@listByUserId',
   '/orderDrug/list/{id}'   => 'OrderDrugService@listById',
-  '/orderDrug/update' => 'OrderDrugService@update',
+  '/orderDrug/update'      => 'OrderDrugService@update',
   '/orderDrug/remove/{id}' => 'OrderDrugService@remove',
 
   '/orderDrugDetail'             => 'OrderDrugDetailService@index',
