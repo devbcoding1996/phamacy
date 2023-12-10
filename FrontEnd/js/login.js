@@ -60,7 +60,7 @@ checkLoginStatus = async () => {
       if (response.data) {
         if (response.data.isAdmin === 1) {
           setTimeout(() => {
-            window.location.href = "admin/admin.html";
+            window.location.href = "admin/add.html";
           }, 1000);
         } else {
           window.location.reload();
