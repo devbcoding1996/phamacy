@@ -13,15 +13,37 @@ class OrderDrugDetail extends Database
   {
     return empty($val)? "" : $val;
   }
-  public function list()
+  public function list($userId)
   {
     try {
       $authorization = new Authorization();
       $is_admin = $authorization->isAdmin();
-      if(!$is_admin){
-        return ["Has rights only for Admin!"];
+      if($is_admin){
+        $stm = $this->pdo->prepare("SELECT * FROM order_drug_detail ORDER BY id DESC");
+        $stm->execute();
+        if($stm->rowCount() > 0) {
+          $customer = $stm->fetchAll(PDO::FETCH_ASSOC);
+          $res = [];
+          // Check if the size column is equal to an empty string
+          foreach ($customer as $info) {
+              $checkArray = [
+                "id" => $info['id'],
+                "orderId" => $this->checkNull($info['order_id']),
+                "drugInfoId" => $this->checkNull($info['drug_info_id']),
+                "quantity" => intval($info['quantity']),
+                "value" => floatval($info['value']),
+                "total" => floatval($info['total']),
+                "orderDate" => $this->checkNull($info['order_date']),
+                "orderUpdate" => $this->checkNull($info['order_update'])
+              ];
+              array_push($res,$checkArray);
+          }
+          return $res;
+        } else {
+          return [];
+        }
       }
-      $stm = $this->pdo->prepare("SELECT * FROM order_drug_detail ORDER BY id DESC");
+      $stm = $this->pdo->prepare("SELECT * FROM order_drug_detail  ORDER BY id DESC");
       $stm->execute();
       if($stm->rowCount() > 0) {
         $customer = $stm->fetchAll(PDO::FETCH_ASSOC);
@@ -32,10 +54,11 @@ class OrderDrugDetail extends Database
               "id" => $info['id'],
               "orderId" => $this->checkNull($info['order_id']),
               "drugInfoId" => $this->checkNull($info['drug_info_id']),
-              "quantity" => $this->checkNull($info['quantity']),
-              "value" => $this->checkNull($info['value']),
-              "total" => $this->checkNull($info['total']),
-              "order_date" => $this->checkNull($info['order_date'])
+              "quantity" => intval($info['quantity']),
+              "value" => floatval($info['value']),
+              "total" => floatval($info['total']),
+              "orderDate" => $this->checkNull($info['order_date']),
+              "orderUpdate" => $this->checkNull($info['order_update'])
             ];
             array_push($res,$checkArray);
         }
@@ -51,37 +74,39 @@ class OrderDrugDetail extends Database
   public function create($data)
   {
     try {
-      $sql = "INSERT INTO order_drug_detail (`f_name`,`l_name`,`address`,`phone_number`,`email`,`discount`,`status`) VALUES (:f_name,:l_name,:address,:phone_number,:email,:discount,:status)";
+      $sql = "INSERT INTO order_drug_detail (`drug_info_id`,`order_id`,`quantity`,`value`,`total`,`order_date`,`order_update`) VALUES (:drug_info_id,:order_id,:quantity,:value,:total,:order_date,:order_update)";
       $stmt = $this->pdo->prepare($sql);
 
+      $Now = new DateTime('now');
+      $currentDate = $Now->format('Y-m-d');
+      $currentDateTime = $Now->format('Y-m-d H:i:s');
       // Bind the parameters
-      $stmt->bindParam(':f_name', $data[0]);
-      $stmt->bindParam(':l_name', $data[1]);
-      $stmt->bindParam(':address', $data[2]);
-      $stmt->bindParam(':phone_number', $data[3]);
-      $stmt->bindParam(':email', $data[4]);
-      $stmt->bindParam(':discount', $data[5]);
-      $stmt->bindParam(':status', $data[6]);
+      $stmt->bindParam(':drug_info_id', $data[0]);
+      $stmt->bindParam(':order_id', $data[1]);
+      $stmt->bindParam(':quantity', $data[2]);
+      $stmt->bindParam(':value', $data[3]);
+      $stmt->bindParam(':total', $data[4]);
+      $stmt->bindParam(':order_date', $currentDate);
+      $stmt->bindParam(':order_update', $currentDateTime);
 
       // Execute the INSERT statement
       $stmt->execute();
-
-      $last_index = $this->pdo->lastInsertId();
-
-      $this->createUserCustomer($last_index);
-
-      return true;
+      if($stmt->rowCount() > 0){
+        return true;
+      } else {
+        return false;
+      }
     } catch (PDOException $err) {
       return false;
     }
   }
 
-  public function listById($data)
+  public function listById($id)
   {
     try {
-      $stmt = $this->pdo->prepare("SELECT * FROM order_drug_detail WHERE id = :id");
+      $stmt = $this->pdo->prepare("SELECT * FROM order_drug_detail WHERE order_id = :order_id");
       // Bind the parameters
-      $stmt->bindParam(':id', $data[0]);
+      $stmt->bindParam(':order_id', $id);
 
       // Execute the SELECT statement
       $stmt->execute();
@@ -135,45 +160,6 @@ class OrderDrugDetail extends Database
       } else {
         return false;
       }
-    } catch (PDOException $err) {
-      return false;
-    }
-  }
-
-  public function createUserCustomer($id) 
-  {
-    try {
-
-      $jwt = new JWT();
-      $authorization = new Authorization();
-      $token = $authorization->getAuthorization();
-
-      if ($token) {
-        $user = $jwt->validateJWT($token);
-
-        if ($user) {
-          $user_id = $user->id;
-
-          $sql = "INSERT INTO user_customer (`user_id`,`order_id`) VALUES (:user_id,:order_id);";
-          $stmt = $this->pdo->prepare($sql);
-
-          // Bind the parameters
-          $stmt->bindParam(':user_id', $user_id);
-          $stmt->bindParam(':order_id', $id);
-
-          // Execute the INSERT statement
-          $stmt->execute();
-          
-          if ($stmt->rowCount() > 0) {
-            return true;
-          } else {
-            return false;
-          }
-
-        }
-      }
-
-      
     } catch (PDOException $err) {
       return false;
     }

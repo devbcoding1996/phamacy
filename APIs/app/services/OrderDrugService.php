@@ -20,10 +20,50 @@ class OrderDrugService extends Requests
         $user = $jwt->validateJWT($token);
 
         if ($user) {
-
+          $resList = $orderDrug->list($user->id);
           $result = [
-            'quantity' => count($orderDrug->list()),
-            'orderDrug' => $orderDrug->list()
+            'quantity' => count($resList),
+            'orderDrug' => $resList
+          ];
+
+        } else {
+          http_response_code(401);
+          $result['error'] = "Unauthorized, please, verify your token";
+        }
+      } else {
+        http_response_code(401);
+        $result['error'] = "Unauthorized, please, verify your token";
+      }
+    } else {
+      http_response_code(405);
+      $result['error'] = "HTTP Method not allowed";
+    }
+
+    echo json_encode($result);
+  }
+
+  public function listByUserId()
+  {
+    $method = $this->getMethod();
+
+    $orderDrug = new OrderDrug();
+
+    $jwt = new JWT();
+    $authorization = new Authorization();
+
+    $result = [];
+
+    if ($method == 'GET') {
+      $token = $authorization->getAuthorization();
+
+      if ($token) {
+        $user = $jwt->validateJWT($token);
+
+        if ($user) {
+          $resList = $orderDrug->list($user->id);
+          $result = [
+            'quantity' => count($resList),
+            'orderDrug' => $resList
           ];
 
         } else {
@@ -68,7 +108,7 @@ class OrderDrugService extends Requests
 
             if ($createOrderDrug['status']) {
               http_response_code(200);
-              $result['message'] = "Category created";
+              $result['message'] = "OrderDrug created";
               $result['orderId'] = $createOrderDrug['orderId'];
             } else {
               http_response_code(406);
@@ -120,7 +160,7 @@ class OrderDrugService extends Requests
             $result['orderDrug'] = $book_exists;
           } else {
             http_response_code(404);
-            $result['error'] = "Category not found";
+            $result['error'] = "OrderDrug not found";
           }
         } else {
           http_response_code(401);
@@ -158,17 +198,17 @@ class OrderDrugService extends Requests
 
         if ($user) {
 
-          if (!empty($body['id']) && !empty($body['name'])) {
+          if (!empty($body['id']) && !empty($body['customerId']) && !empty($body['total']) && !empty($body['status'])) {
 
-            $updated = $orderDrug->update([$body['id'], $body['name']]);
+            $updated = $orderDrug->update([$body['id'], $body['customerId'], $body['total'], $body['status']]);
 
             if ($updated) {
-              $result['message'] = "Category updated";
+              $result['message'] = "OrderDrug updated";
             } else {
               http_response_code(406);
               $result = [
-                'error_01' => "Verify name, try different values",
-                'error_02' => "Sorry, something went wrog, verify the ID"
+                'error_01' => "Verify total, try different values",
+                'error_02' => "Sorry, something went wrong, verify the ID"
               ];
             }
 
@@ -216,7 +256,7 @@ class OrderDrugService extends Requests
           $delete_customer = $orderDrug->remove([$drug_type_id,]);
 
           if ($delete_customer) {
-            $result['message'] = "Category deleted";
+            $result['message'] = "OrderDrug deleted";
           } else {
             http_response_code(406);
             $result['error'] = "Sorry, something went wrog, customer not exists";

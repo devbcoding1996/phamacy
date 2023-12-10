@@ -33,10 +33,10 @@ class DrugInformation extends Database
               "drugTypeId" => $this->checkNull($info['drug_type_id']),
               "categoryId" => $this->checkNull($info['category_id']),
               "packageId" => $this->checkNull($info['package_id']),
-              "quantity" => $this->checkNull($info['quantity']),
+              "quantity" => intval($info['quantity']),
               "productionDate" => $this->checkNull($info['production_date']),
               "expirationDate" => $this->checkNull($info['expiration_date']),
-              "price" => $this->checkNull($info['price']),
+              "price" => floatval($info['price']),
               "keyword" => $this->checkNull($info['keyword']),
               "linkImages" => $this->checkNull($info['link_images']),
             ];
@@ -85,10 +85,10 @@ class DrugInformation extends Database
               "drugTypeId" => $this->checkNull($info['drug_type_id']),
               "categoryId" => $this->checkNull($info['category_id']),
               "packageId" => $this->checkNull($info['package_id']),
-              "quantity" => $this->checkNull($info['quantity']),
+              "quantity" => intval($info['quantity']),
               "productionDate" => $this->checkNull($info['production_date']),
               "expirationDate" => $this->checkNull($info['expiration_date']),
-              "price" => $this->checkNull($info['price']),
+              "price" => floatval($info['price']),
               "keyword" => $this->checkNull($info['keyword']),
               "linkImages" => $this->checkNull($info['link_images']),
             ];
@@ -103,11 +103,50 @@ class DrugInformation extends Database
     }
   }
 
-  public function listByName($data)
+  public function listProductAll()
   {
     try {
-      $stm = $this->pdo->prepare("SELECT * FROM drug_information WHERE `name` = LIKE '%?%'");
-      $stm->execute([$data[0]]);
+      $stm = $this->pdo->prepare("SELECT drug_information.*,drug_type.name as dt_name,category.name as c_name,package.name as p_name FROM drug_information INNER JOIN drug_type ON(drug_information.drug_type_id = drug_type.id ) INNER JOIN category ON(drug_information.category_id = category.id ) INNER JOIN package ON(drug_information.package_id = package.id );");
+      $stm->execute();
+      
+      if($stm->rowCount() > 0){
+        $drug_information = $stm->fetchAll(PDO::FETCH_ASSOC);
+        $res = [];
+        // Check if the size column is equal to an empty string
+        foreach ($drug_information as $info) {
+            $checkArray = [
+              "id" => $info['id'],
+              "name" => $this->checkNull($info['name']),
+              "size" => $this->checkNull($info['size']),
+              "useMedicine" => $this->checkNull($info['use_medicine']),
+              "contraindications" => $this->checkNull($info['contraindications']),
+              "properties" => $this->checkNull($info['properties']),
+              "drugTypeName" => $this->checkNull($info['dt_name']),
+              "categoryName" => $this->checkNull($info['c_name']),
+              "packageName" => $this->checkNull($info['p_name']),
+              "quantity" => intval($info['quantity']),
+              "productionDate" => $this->checkNull($info['production_date']),
+              "expirationDate" => $this->checkNull($info['expiration_date']),
+              "price" => floatval($info['price']),
+              "keyword" => $this->checkNull($info['keyword']),
+              "linkImages" => $this->checkNull($info['link_images']),
+            ];
+            array_push($res,$checkArray);
+        }
+        return $res;
+      } else {
+        return false;
+      }
+    } catch (PDOException $err) {
+      return false;
+    }
+  }
+
+  public function listByName($name)
+  {
+    try {
+      $stm = $this->pdo->prepare("SELECT * FROM drug_information WHERE `name` = LIKE '?%'");
+      $stm->execute([$name]);
       
       if($stm->rowCount() > 0){
         return $stm->fetch(PDO::FETCH_ASSOC);
@@ -119,11 +158,11 @@ class DrugInformation extends Database
     }
   }
 
-  public function listByKeyword($data)
+  public function listByKeyword($keyword)
   {
     try {
-      $stm = $this->pdo->prepare("SELECT * FROM drug_information WHERE keyword = LIKE '%?%'");
-      $stm->execute([$data[0]]);
+      $stm = $this->pdo->prepare("SELECT * FROM drug_information WHERE keyword = LIKE '?%'");
+      $stm->execute([$keyword]);
       
       if($stm->rowCount() > 0){
         return $stm->fetch(PDO::FETCH_ASSOC);

@@ -21,9 +21,10 @@ class UserCustomerService extends Requests
 
         if ($user) {
 
+          $resList = $userCustomer->list($user->id);
           $result = [
-            'quantity' => count($userCustomer->list()),
-            'userCustomer' => $userCustomer->list()
+            'quantity' => count($resList),
+            'userCustomer' => $resList
           ];
 
         } else {
@@ -62,9 +63,9 @@ class UserCustomerService extends Requests
 
         if ($user) {
 
-          if (!empty($body['userId']) && !empty($body['customerId'])) {
+          if (!empty($body['customerId'])) {
 
-            $create_userCustomer = $userCustomer->create([$body['userId'],$body['customerId']]);
+            $create_userCustomer = $userCustomer->create([$user->id,$body['customerId']]);
 
             if ($create_userCustomer) {
               http_response_code(200);
@@ -137,6 +138,50 @@ class UserCustomerService extends Requests
     echo json_encode($result);
   }
 
+  public function listByCustomerId($id)
+  {
+    $method = $this->getMethod();
+
+    $userCustomer = new UserCustomer();
+
+    $jwt = new JWT();
+    $authorization = new Authorization();
+
+    $result = [];
+
+    if ($method == 'GET') {
+      $token = $authorization->getAuthorization();
+
+      if ($token) {
+        $user = $jwt->validateJWT($token);
+
+        if ($user) {
+
+          $customerId = $id[0];
+          $userCustomer_exists = $userCustomer->listCustomerId([$customerId]);
+
+          if ($userCustomer_exists) {
+            $result['userCustomer'] = $userCustomer_exists;
+          } else {
+            http_response_code(404);
+            $result['error'] = "UserCustomer not found";
+          }
+        } else {
+          http_response_code(401);
+          $result['error'] = "Unauthorized, please, verify your token";
+        }
+      } else {
+        http_response_code(401);
+        $result['error'] = "Unauthorized, please, verify your token";
+      }
+    } else {
+      http_response_code(405);
+      $result['error'] = "HTTP Method not allowed";
+    }
+
+    echo json_encode($result);
+  }
+
   public function update()
   {
     $method = $this->getMethod();
@@ -157,9 +202,64 @@ class UserCustomerService extends Requests
 
         if ($user) {
 
-          if (!empty($body['ucId']) && !empty($body['userId']) && !empty($body['customerId'])) {
+          if (!empty($body['ucId']) && !empty($body['customerId'])) {
 
-            $updated = $userCustomer->update([$body['ucId'],$body['userId'], $body['customerId']]);
+            $updated = $userCustomer->update([$body['ucId'],$user->id, $body['customerId']]);
+
+            if ($updated) {
+              $result['message'] = "UserCustomer updated";
+            } else {
+              http_response_code(406);
+              $result = [
+                'error_01' => "Verify name, try different values",
+                'error_02' => "Sorry, something went wrog, verify the ID"
+              ];
+            }
+
+          } else {
+            http_response_code(406);
+            $result['error'] = "Title or Year field is empty";
+          }
+        } else {
+          http_response_code(401);
+          $result['error'] = "Unauthorized, please, verify your token";
+        }
+      } else {
+        http_response_code(401);
+        $result['error'] = "Unauthorized, please, verify your token";
+      }
+    } else {
+      http_response_code(405);
+      $result['error'] = "HTTP Method not allowed";
+    }
+
+    echo json_encode($result);
+  }
+
+  public function updateStatus()
+  {
+    $method = $this->getMethod();
+    $body = $this->parseBodyInput();
+
+    $userCustomer = new UserCustomer();
+
+    $jwt = new JWT();
+    $authorization = new Authorization();
+
+    $result = [];
+
+    if ($method == 'PUT') {
+      $token = $authorization->getAuthorization();
+
+      if ($token) {
+        $user = $jwt->validateJWT($token);
+
+        if ($user) {
+
+          if (!empty($body['id']) && !empty($body['status'])) {
+
+            $updated = $userCustomer->updateStatus([$body['id'], $body['status']]);
+            $userCustomer->updateStatusN($user->id,$body['id']);
 
             if ($updated) {
               $result['message'] = "UserCustomer updated";

@@ -13,15 +13,37 @@ class Customer extends Database
   {
     return empty($val)? "" : $val;
   }
-  public function list()
+  public function list($userId)
   {
     try {
       $authorization = new Authorization();
       $is_admin = $authorization->isAdmin();
-      if(!$is_admin){
-        return ["Has rights only for Admin!"];
+      if($is_admin){
+        $stm = $this->pdo->prepare("SELECT * FROM customer ORDER BY customer_id DESC");
+        $stm->execute();
+        if($stm->rowCount() > 0) {
+          $customer = $stm->fetchAll(PDO::FETCH_ASSOC);
+          $res = [];
+          // Check if the size column is equal to an empty string
+          foreach ($customer as $info) {
+              $checkArray = [
+                "id" => $info['customer_id'],
+                "fName" => $this->checkNull($info['f_name']),
+                "lName" => $this->checkNull($info['l_name']),
+                "address" => $this->checkNull($info['address']),
+                "phoneNumber" => $this->checkNull($info['phone_number']),
+                "email" => $this->checkNull($info['email']),
+                "discount" => $this->checkNull($info['discount']),
+                "status" => $this->checkNull($info['status'])
+              ];
+              array_push($res,$checkArray);
+          }
+          return $res;
+        } else {
+          return [];
+        }
       }
-      $stm = $this->pdo->prepare("SELECT * FROM customer ORDER BY customer_id DESC");
+      $stm = $this->pdo->prepare("SELECT customer.* FROM user_customer INNER JOIN customer ON(user_customer.customer_id = customer.customer_id) WHERE user_customer.user_id ='$userId' ORDER BY customer_id DESC");
       $stm->execute();
       if($stm->rowCount() > 0) {
         $customer = $stm->fetchAll(PDO::FETCH_ASSOC);
@@ -67,9 +89,11 @@ class Customer extends Database
       // Execute the INSERT statement
       $stmt->execute();
 
-      $last_index = $this->pdo->lastInsertId();
-
-      $this->createUserCustomer($last_index);
+      $stmt2 = $this->pdo->prepare("SELECT customer_id FROM `customer` ORDER BY customer_id DESC LIMIT 1;");
+      $stmt2->execute();
+      $last_index = $stmt2->fetch(PDO::FETCH_COLUMN);
+      $userCustomer = new UserCustomer();
+      $create_userCustomer = $userCustomer->create([$data[7],$last_index]);
 
       return true;
     } catch (PDOException $err) {
@@ -135,7 +159,7 @@ class Customer extends Database
     } catch (PDOException $err) {
       return false;
     }
-  }
+  }  
 
   public function update($data) 
   {
@@ -176,45 +200,6 @@ class Customer extends Database
       } else {
         return false;
       }
-    } catch (PDOException $err) {
-      return false;
-    }
-  }
-
-  public function createUserCustomer($id) 
-  {
-    try {
-
-      $jwt = new JWT();
-      $authorization = new Authorization();
-      $token = $authorization->getAuthorization();
-
-      if ($token) {
-        $user = $jwt->validateJWT($token);
-
-        if ($user) {
-          $user_id = $user->id;
-
-          $sql = "INSERT INTO user_customer (`user_id`,`customer_id`) VALUES (:user_id,:customer_id);";
-          $stmt = $this->pdo->prepare($sql);
-
-          // Bind the parameters
-          $stmt->bindParam(':user_id', $user_id);
-          $stmt->bindParam(':customer_id', $id);
-
-          // Execute the INSERT statement
-          $stmt->execute();
-          
-          if ($stmt->rowCount() > 0) {
-            return true;
-          } else {
-            return false;
-          }
-
-        }
-      }
-
-      
     } catch (PDOException $err) {
       return false;
     }

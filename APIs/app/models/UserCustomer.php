@@ -10,15 +10,21 @@ class UserCustomer extends Database
     $this->pdo = $this->getConnection();
   }
 
-  public function list()
+  public function list($userId)
   {
     try {
       $authorization = new Authorization();
       $is_admin = $authorization->isAdmin();
-      if(!$is_admin){
-        return ["Has rights only for Admin!"];
+      if($is_admin){
+        $stm = $this->pdo->prepare("SELECT * FROM user_customer ORDER BY uc_id DESC");
+        $stm->execute();
+        if($stm->rowCount() > 0) {
+          return $stm->fetchAll(PDO::FETCH_ASSOC);
+        } else {
+          return [];
+        }
       }
-      $stm = $this->pdo->prepare("SELECT * FROM user_customer ORDER BY uc_id DESC");
+      $stm = $this->pdo->prepare("SELECT * FROM user_customer WHERE user_id='$userId' ORDER BY uc_id DESC");
       $stm->execute();
       if($stm->rowCount() > 0) {
         return $stm->fetchAll(PDO::FETCH_ASSOC);
@@ -69,6 +75,25 @@ class UserCustomer extends Database
     }
   }
 
+  public function listCustomerId($data)
+  {
+    try {
+      $stmt = $this->pdo->prepare("SELECT * FROM user_customer WHERE customer_id = :id and `status` = 'Y';");
+      // Bind the parameters
+      $stmt->bindParam(':id', $data[0]);
+
+      // Execute the SELECT statement
+      $stmt->execute();
+      
+      if($stmt->rowCount() > 0){
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+      } else {
+        return false;
+      }
+    } catch (PDOException $err) {
+      return false;
+    }
+  }
   public function listByName($data)
   {
     try {
@@ -129,6 +154,48 @@ class UserCustomer extends Database
       } else {
         return false;
       }
+    } catch (PDOException $err) {
+      return false;
+    }
+  }
+
+  public function updateStatus($data) 
+  {
+    try {
+      // Prepare the UPDATE statement
+      $sql = "UPDATE user_customer SET `status` = :status WHERE customer_id = :customer_id";
+      $stmt = $this->pdo->prepare($sql);
+
+      // Bind the parameters
+      $stmt->bindParam(':status', $data[1]);
+      $stmt->bindParam(':customer_id', $data[0]);
+
+      // Execute the UPDATE statement
+      $stmt->execute();
+      
+      if ($stmt->rowCount() > 0) {
+        return true;
+      } else {
+        return false;
+      }
+    } catch (PDOException $err) {
+      return false;
+    }
+  }
+  public function updateStatusN($userId,$customerId) 
+  {
+    try {
+      // Prepare the UPDATE statement
+      $sql = "UPDATE user_customer SET `status` = 'N' WHERE user_id = :user_id AND customer_id != :customer_id";
+      $stmt = $this->pdo->prepare($sql);
+
+      // Bind the parameters
+      $stmt->bindParam(':customer_id', $customerId);
+      $stmt->bindParam(':user_id', $userId);
+
+      // Execute the UPDATE statement
+      $stmt->execute();
+      
     } catch (PDOException $err) {
       return false;
     }

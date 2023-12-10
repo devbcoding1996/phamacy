@@ -17,7 +17,7 @@ class Core
 
     ($url != '/') ? $url = rtrim($url, '/') : $url;
 
-    $routerFound = false;
+    $routerFound = false;    
 
     foreach ($this->getRoutes() as $path => $serviceAndAction) {
       $pattern = '#^' . preg_replace('/{id}/', '([\w-]+)', $path) . '$#';
@@ -29,9 +29,7 @@ class Core
         $routerFound = true;
         
         [$currentService, $action] = explode('@', $serviceAndAction);
-
         require_once __DIR__ . "/../services/$currentService.php";
-
         $service = new $currentService();
         $service->$action($matches);
       }
