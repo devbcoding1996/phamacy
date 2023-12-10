@@ -68,7 +68,7 @@ class CustomerService extends Requests
 
             if ($create_customer) {
               http_response_code(200);
-              $result['message'] = "Category created";
+              $result['message'] = "Customer created";
             } else {
               http_response_code(406);
               $result['error'] = "Sorry, something went wrog, verify the fields";
@@ -119,7 +119,7 @@ class CustomerService extends Requests
             $result['customer'] = $book_exists;
           } else {
             http_response_code(404);
-            $result['error'] = "Category not found";
+            $result['error'] = "Customer not found";
           }
         } else {
           http_response_code(401);
@@ -162,7 +162,7 @@ class CustomerService extends Requests
             $updated = $customer->update([$body['id'], $body['name']]);
 
             if ($updated) {
-              $result['message'] = "Category updated";
+              $result['message'] = "Customer updated";
             } else {
               http_response_code(406);
               $result = [
@@ -215,7 +215,7 @@ class CustomerService extends Requests
           $delete_customer = $customer->remove([$drug_type_id,]);
 
           if ($delete_customer) {
-            $result['message'] = "Category deleted";
+            $result['message'] = "Customer deleted";
           } else {
             http_response_code(406);
             $result['error'] = "Sorry, something went wrog, customer not exists";

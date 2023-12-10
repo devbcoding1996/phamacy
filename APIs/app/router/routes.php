@@ -17,6 +17,7 @@ $routes = [
 
   '/drugInformation'             => 'DrugInformationService@index',
   '/drugInformation/create'      => 'DrugInformationService@create',
+  '/drugInformation/listProductAll'   => 'DrugInformationService@listProductAll',
   '/drugInformation/list/{id}'   => 'DrugInformationService@listById',
   '/drugInformation/update/{id}' => 'DrugInformationService@update',
   '/drugInformation/remove/{id}' => 'DrugInformationService@remove',
@@ -62,6 +63,7 @@ $routes = [
 
   '/orderDrugDetail'             => 'OrderDrugDetailService@index',
   '/orderDrugDetail/create'      => 'OrderDrugDetailService@create',
+  '/orderDrugDetail/add'      => 'OrderDrugDetailService@add',
   '/orderDrugDetail/list/{id}'   => 'OrderDrugDetailService@listById',
   '/orderDrugDetail/update' => 'OrderDrugDetailService@update',
   '/orderDrugDetail/remove/{id}' => 'OrderDrugDetailService@remove',

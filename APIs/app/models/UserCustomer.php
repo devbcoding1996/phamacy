@@ -182,6 +182,24 @@ class UserCustomer extends Database
       return false;
     }
   }
+  public function updateStatusN($userId,$customerId) 
+  {
+    try {
+      // Prepare the UPDATE statement
+      $sql = "UPDATE user_customer SET `status` = 'N' WHERE user_id = :user_id AND customer_id != :customer_id";
+      $stmt = $this->pdo->prepare($sql);
+
+      // Bind the parameters
+      $stmt->bindParam(':customer_id', $customerId);
+      $stmt->bindParam(':user_id', $userId);
+
+      // Execute the UPDATE statement
+      $stmt->execute();
+      
+    } catch (PDOException $err) {
+      return false;
+    }
+  }
 
   public function remove($data) 
   {

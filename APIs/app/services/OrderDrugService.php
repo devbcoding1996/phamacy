@@ -20,10 +20,10 @@ class OrderDrugService extends Requests
         $user = $jwt->validateJWT($token);
 
         if ($user) {
-
+          $resList = $orderDrug->list($user->id);
           $result = [
-            'quantity' => count($orderDrug->list()),
-            'orderDrug' => $orderDrug->list()
+            'quantity' => count($resList),
+            'orderDrug' => $resList
           ];
 
         } else {
@@ -60,10 +60,10 @@ class OrderDrugService extends Requests
         $user = $jwt->validateJWT($token);
 
         if ($user) {
-
+          $resList = $orderDrug->list($user->id);
           $result = [
-            'quantity' => count($orderDrug->list()),
-            'orderDrug' => $orderDrug->listByUserId()
+            'quantity' => count($resList),
+            'orderDrug' => $resList
           ];
 
         } else {
@@ -108,7 +108,7 @@ class OrderDrugService extends Requests
 
             if ($createOrderDrug['status']) {
               http_response_code(200);
-              $result['message'] = "Category created";
+              $result['message'] = "OrderDrug created";
               $result['orderId'] = $createOrderDrug['orderId'];
             } else {
               http_response_code(406);
@@ -160,7 +160,7 @@ class OrderDrugService extends Requests
             $result['orderDrug'] = $book_exists;
           } else {
             http_response_code(404);
-            $result['error'] = "Category not found";
+            $result['error'] = "OrderDrug not found";
           }
         } else {
           http_response_code(401);
@@ -203,7 +203,7 @@ class OrderDrugService extends Requests
             $updated = $orderDrug->update([$body['id'], $body['customerId'], $body['total'], $body['status']]);
 
             if ($updated) {
-              $result['message'] = "Category updated";
+              $result['message'] = "OrderDrug updated";
             } else {
               http_response_code(406);
               $result = [
@@ -256,7 +256,7 @@ class OrderDrugService extends Requests
           $delete_customer = $orderDrug->remove([$drug_type_id,]);
 
           if ($delete_customer) {
-            $result['message'] = "Category deleted";
+            $result['message'] = "OrderDrug deleted";
           } else {
             http_response_code(406);
             $result['error'] = "Sorry, something went wrog, customer not exists";

@@ -259,6 +259,7 @@ class UserCustomerService extends Requests
           if (!empty($body['id']) && !empty($body['status'])) {
 
             $updated = $userCustomer->updateStatus([$body['id'], $body['status']]);
+            $userCustomer->updateStatusN($user->id,$body['id']);
 
             if ($updated) {
               $result['message'] = "UserCustomer updated";

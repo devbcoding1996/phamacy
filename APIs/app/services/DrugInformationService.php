@@ -126,10 +126,148 @@ class DrugInformationService extends Requests
         if ($user) {
 
           $drugInfo_id = $id[0];
-          $book_exists = $drugInfo->listById([$drugInfo_id]);
+          $drugInfo_exists = $drugInfo->listById([$drugInfo_id]);
 
-          if ($book_exists) {
-            $result['drugInfo'] = $book_exists;
+          if ($drugInfo_exists) {
+            $result['drugInfo'] = $drugInfo_exists;
+          } else {
+            http_response_code(404);
+            $result['error'] = "DrugInfo not found";
+          }
+        } else {
+          http_response_code(401);
+          $result['error'] = "Unauthorized, please, verify your token";
+        }
+      } else {
+        http_response_code(401);
+        $result['error'] = "Unauthorized, please, verify your token";
+      }
+    } else {
+      http_response_code(405);
+      $result['error'] = "HTTP Method not allowed";
+    }
+
+    echo json_encode($result);
+  }
+
+  public function listByName()
+  {
+    $method = $this->getMethod();
+    $body = $this->parseBodyInput();
+
+    $drugInfo = new DrugInformation();
+
+    $jwt = new JWT();
+    $authorization = new Authorization();
+
+    $result = [];
+
+    if ($method == 'POST') {
+      $token = $authorization->getAuthorization();
+
+      if ($token) {
+        $user = $jwt->validateJWT($token);
+
+        if ($user) {
+
+          if (empty($body['name'])) {
+            http_response_code(406);
+            $result['error'] = "name field is empty";
+          }
+          $drugInfo_exists = $drugInfo->listByName($body['name']);
+
+          if ($drugInfo_exists) {
+            $result['drugInfo'] = $drugInfo_exists;
+          } else {
+            http_response_code(404);
+            $result['error'] = "DrugInfo not found";
+          }
+        } else {
+          http_response_code(401);
+          $result['error'] = "Unauthorized, please, verify your token";
+        }
+      } else {
+        http_response_code(401);
+        $result['error'] = "Unauthorized, please, verify your token";
+      }
+    } else {
+      http_response_code(405);
+      $result['error'] = "HTTP Method not allowed";
+    }
+
+    echo json_encode($result);
+  }
+
+  public function listByKeyword()
+  {
+    $method = $this->getMethod();
+    $body = $this->parseBodyInput();
+
+    $drugInfo = new DrugInformation();
+
+    $jwt = new JWT();
+    $authorization = new Authorization();
+
+    $result = [];
+
+    if ($method == 'POST') {
+      $token = $authorization->getAuthorization();
+
+      if ($token) {
+        $user = $jwt->validateJWT($token);
+
+        if ($user) {
+          if (empty($body['keyWord'])) {
+            http_response_code(406);
+            $result['error'] = "keyWord field is empty";
+          }
+          $drugInfo_exists = $drugInfo->listByKeyword($body['keyWord']);
+
+          if ($drugInfo_exists) {
+            $result['drugInfo'] = $drugInfo_exists;
+          } else {
+            http_response_code(404);
+            $result['error'] = "DrugInfo not found";
+          }
+        } else {
+          http_response_code(401);
+          $result['error'] = "Unauthorized, please, verify your token";
+        }
+      } else {
+        http_response_code(401);
+        $result['error'] = "Unauthorized, please, verify your token";
+      }
+    } else {
+      http_response_code(405);
+      $result['error'] = "HTTP Method not allowed";
+    }
+
+    echo json_encode($result);
+  }
+
+  public function listProductAll()
+  {
+    $method = $this->getMethod();
+
+    $drugInfo = new DrugInformation();
+
+    $jwt = new JWT();
+    $authorization = new Authorization();
+
+    $result = [];
+
+    if ($method == 'GET') {
+      $token = $authorization->getAuthorization();
+
+      if ($token) {
+        $user = $jwt->validateJWT($token);
+
+        if ($user) {
+
+          $drugInfo_exists = $drugInfo->listProductAll();
+
+          if ($drugInfo_exists) {
+            $result['drugInfo'] = $drugInfo_exists;
           } else {
             http_response_code(404);
             $result['error'] = "DrugInfo not found";
@@ -169,7 +307,7 @@ class DrugInformationService extends Requests
         $user = $jwt->validateJWT($token);
 
         if ($user) {
-
+          
           if (!empty($body['id'])) {
             $updated = $drugInfo->update([$body['id'],
             $body['name'],

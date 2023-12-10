@@ -1,6 +1,6 @@
 <?php
 
-class OrderDrugService extends Requests
+class OrderDrugDetailService extends Requests
 {
   public function index()
   {
@@ -20,10 +20,10 @@ class OrderDrugService extends Requests
         $user = $jwt->validateJWT($token);
 
         if ($user) {
-
+          $resList = $orderDrugDetail->list($user->id);
           $result = [
-            'quantity' => count($orderDrugDetail->list()),
-            'orderDrugDetail' => $orderDrugDetail->list()
+            'quantity' => count($resList),
+            'orderDrugDetail' => $resList
           ];
 
         } else {
@@ -61,14 +61,38 @@ class OrderDrugService extends Requests
         $user = $jwt->validateJWT($token);
 
         if ($user) {
+          $chk = false;
+          foreach($body as $row){
+            if (!empty($row['drugInfoId']) && !empty($row['orderId']) && !empty($row['quantity']) && !empty($row['value']) && !empty($row['total'])) {
 
-          if (!empty($body['fName']) && !empty($body['lName']) && !empty($body['address'])) {
+              $create_customer = $orderDrugDetail->create([$row['drugInfoId'],$row['orderId'],$row['quantity'],$row['value'],$row['total']]);
 
-            $create_customer = $orderDrugDetail->create([$body['fName'],$body['lName'],$body['address'],$body['phoneNumber'],$body['email'],$body['discount'],"Active"]);
+              if ($create_customer) {
+                http_response_code(200);
+                $result['message'] = "OrderDrugDetail created";
+              } else {
+                http_response_code(406);
+                $result['error'] = "Sorry, something went wrog, verify the fields";
+              }
+            } else {
+              http_response_code(406);
+              $result['error'] = "name field is empty";
+            }
+            $chk = true;
+          }
+
+          if($chk){
+            echo json_encode($result);
+            exit();
+          }
+
+          if (!empty($body['drugInfoId']) && !empty($body['orderId']) && !empty($body['quantity']) && !empty($body['value']) && !empty($body['total'])) {
+
+            $create_customer = $orderDrugDetail->create([$body['drugInfoId'],$body['orderId'],$body['quantity'],$body['value'],$body['total']]);
 
             if ($create_customer) {
               http_response_code(200);
-              $result['message'] = "Category created";
+              $result['message'] = "OrderDrugDetail created";
             } else {
               http_response_code(406);
               $result['error'] = "Sorry, something went wrog, verify the fields";
@@ -112,14 +136,14 @@ class OrderDrugService extends Requests
 
         if ($user) {
 
-          $drugType_id = $id[0];
-          $book_exists = $orderDrugDetail->listById([$drugType_id]);
+          $orderDrugDetail_id = $id[0];
+          $orderDrugDetail_exists = $orderDrugDetail->listById($orderDrugDetail_id);
 
-          if ($book_exists) {
-            $result['orderDrugDetail'] = $book_exists;
+          if ($orderDrugDetail_exists) {
+            $result['orderDrugDetail'] = $orderDrugDetail_exists;
           } else {
             http_response_code(404);
-            $result['error'] = "Category not found";
+            $result['error'] = "OrderDrugDetail not found";
           }
         } else {
           http_response_code(401);
@@ -162,7 +186,7 @@ class OrderDrugService extends Requests
             $updated = $orderDrugDetail->update([$body['id'], $body['name']]);
 
             if ($updated) {
-              $result['message'] = "Category updated";
+              $result['message'] = "OrderDrugDetail updated";
             } else {
               http_response_code(406);
               $result = [
@@ -215,7 +239,7 @@ class OrderDrugService extends Requests
           $delete_customer = $orderDrugDetail->remove([$drug_type_id,]);
 
           if ($delete_customer) {
-            $result['message'] = "Category deleted";
+            $result['message'] = "OrderDrugDetail deleted";
           } else {
             http_response_code(406);
             $result['error'] = "Sorry, something went wrog, customer not exists";
