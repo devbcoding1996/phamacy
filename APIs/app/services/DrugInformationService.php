@@ -267,7 +267,10 @@ class DrugInformationService extends Requests
           $drugInfo_exists = $drugInfo->listProductAll();
 
           if ($drugInfo_exists) {
-            $result['drugInfo'] = $drugInfo_exists;
+            $result = [
+              'quantity' => count($drugInfo_exists),
+              'drugInformation' => $drugInfo_exists
+            ];
           } else {
             http_response_code(404);
             $result['error'] = "DrugInfo not found";
@@ -288,7 +291,7 @@ class DrugInformationService extends Requests
     echo json_encode($result);
   }
 
-  public function update()
+  public function update($id)
   {
     $method = $this->getMethod();
     $body = $this->parseBodyInput();
@@ -307,9 +310,9 @@ class DrugInformationService extends Requests
         $user = $jwt->validateJWT($token);
 
         if ($user) {
-          
-          if (!empty($body['id'])) {
-            $updated = $drugInfo->update([$body['id'],
+          $id = $id[0];
+          if (!empty($id)) {
+            $updated = $drugInfo->update([$id,
             $body['name'],
             $body['size'],
             $body['useMedicine'],
