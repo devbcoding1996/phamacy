@@ -56,36 +56,36 @@
     <!-- Document Wrapper
 	============================================= -->
     <div id="wrapper">
-		<!-- Login Modal -->
-		<div class="modal1 mfp-hide" id="modal-register">
-			<div class="card mx-auto" style="max-width: 540px;">
-				<div class="card-header py-3 bg-transparent text-center">
-					<h3 class="mb-0 fw-normal">สวัสดี, ยินดีต้อนรับกลับ</h3>
-				</div>
-				<div class="card-body mx-auto py-5" style="max-width: 70%;">
-					<div class="mb-0 row">
+        <!-- Login Modal -->
+        <div class="modal1 mfp-hide" id="modal-register">
+            <div class="card mx-auto" style="max-width: 540px;">
+                <div class="card-header py-3 bg-transparent text-center">
+                    <h3 class="mb-0 fw-normal">สวัสดี, ยินดีต้อนรับกลับ</h3>
+                </div>
+                <div class="card-body mx-auto py-5" style="max-width: 70%;">
+                    <div class="mb-0 row">
 
-						<div class="col-12">
-							<input type="text" id="login-form-username" name="login-form-username"
-								value="Admin@gamil.com" class="form-control not-dark" placeholder="บัญชีผู้ใช้">
-						</div>
+                        <div class="col-12">
+                            <input type="text" id="login-form-username" name="login-form-username"
+                                value="Admin@gamil.com" class="form-control not-dark" placeholder="บัญชีผู้ใช้">
+                        </div>
 
-						<div class="col-12 mt-4">
-							<input type="password" id="login-form-password" name="login-form-password" value="admin123"
-								class="form-control not-dark" placeholder="รหัสผ่าน">
-						</div>
-						<div class="col-12 mt-4">
-							<button class="button w-100 m-0" id="login-form-submit" name="login-form-submit"
-								onclick="handleLogin()">เข้าสู่ระบบ
-							</button>
-						</div>
-					</div>
-				</div>
-				<div class="card-footer py-4 text-center">
-					<p class="mb-0">ท่านมีบัญชีแล้วหรือยัง? <a href="#"><u>สมัครสมาชิก</u></a></p>
-				</div>
-			</div>
-		</div>
+                        <div class="col-12 mt-4">
+                            <input type="password" id="login-form-password" name="login-form-password" value="admin123"
+                                class="form-control not-dark" placeholder="รหัสผ่าน">
+                        </div>
+                        <div class="col-12 mt-4">
+                            <button class="button w-100 m-0" id="login-form-submit" name="login-form-submit"
+                                onclick="handleLogin()">เข้าสู่ระบบ
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer py-4 text-center">
+                    <p class="mb-0">ท่านมีบัญชีแล้วหรือยัง? <a href="#"><u>สมัครสมาชิก</u></a></p>
+                </div>
+            </div>
+        </div>
 
         <!-- Header
 		============================================= -->
@@ -110,10 +110,10 @@
                             <!-- Top Search
 							============================================= -->
                             <div id="top-account">
-								<a href="#modal-register" data-lightbox="inline">
-									<i class="bi-person me-1 position-relative" style="top: 1px;"></i>
-									<span class="d-none d-sm-inline-block font-primary fw-medium">เข้าสู่ระบบ</span>
-								</a>
+                                <a href="#modal-register" data-lightbox="inline">
+                                    <i class="bi-person me-1 position-relative" style="top: 1px;"></i>
+                                    <span class="d-none d-sm-inline-block font-primary fw-medium">เข้าสู่ระบบ</span>
+                                </a>
                             </div><!-- #top-search end -->
 
                             <!-- Top Cart
@@ -205,8 +205,8 @@
                             </ul>
                         </nav><!-- #primary-menu end -->
 
-                        <form class="top-search-form" action="search.html" method="get">
-                            <input type="text" name="q" class="form-control" value=""
+                        <form class="top-search-form">
+                            <input type="text" id="search" class="form-control" value="" onkeyup="handleSearch()"
                                 placeholder="Type &amp; Hit Enter.." autocomplete="off">
                         </form>
 
@@ -234,37 +234,6 @@
             </div>
         </section><!-- #content end -->
 
-        <!-- Footer
-		============================================= -->
-        <footer id="footer" class="bg-gray border-0">
-
-            <!-- Copyrights
-			============================================= -->
-            <div id="copyrights" class="bg-gray">
-
-                <div class="container">
-
-                    <div class="row justify-content-between align-items-center">
-                        <div class="col-md-6">
-                            Copyrights &copy; 2023 All Rights Reserved by Canvas Inc.<br>
-                            <div class="copyright-links"><a href="#">Terms of Use</a> / <a href="#">Privacy Policy</a>
-                            </div>
-                        </div>
-
-                        <div class="col-md-6 d-md-flex flex-md-column align-items-md-end mt-4 mt-md-0">
-                            <div class="copyrights-menu copyright-links">
-                                <a href="#">About</a>/<a href="#">Features</a>/<a href="#">FAQs</a>/<a
-                                    href="#">Contact</a>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-
-            </div><!-- #copyrights end -->
-
-        </footer><!-- #footer end -->
-
     </div><!-- #wrapper end -->
 
     <!-- Go To Top
@@ -276,8 +245,22 @@
     <script src="js/plugins.min.js"></script>
     <script src="js/functions.bundle.js"></script>
     <script src="js/tooltips.js"></script>
-	<script src="js/login.js"></script>
+    <script src="js/login.js"></script>
     <script>
+        handleSearch = () => {
+            var input = document.getElementById("search");
+            var filter = input.value.toLowerCase();
+            var nodes = document.getElementsByClassName('target');
+
+            for (i = 0; i < nodes.length; i++) {
+                if (nodes[i].innerText.toLowerCase().includes(filter)) {
+                    nodes[i].style.display = "block";
+                } else {
+                    nodes[i].style.display = "none";
+                }
+            }
+        }
+
         getProduct = async () => {
             var myHeaders = new Headers();
             myHeaders.append("Content-Type", "application/json");
@@ -306,7 +289,7 @@
                             img = './images/default-image.jpg'
                         }
                         document.getElementById('show-all-product').innerHTML += `
-                            <div class="col-lg-2 col-md-3 col-6 px-2">
+                            <div class="col-lg-2 col-md-3 col-6 px-2 target">
                                 <div class="product">
                                     <div class="product-image">
                                         <a href="#"><img src="${img}" class="fit-image" alt="Image 1"></a>
@@ -317,6 +300,9 @@
                                         </div>
                                         <div class="product-price font-primary">
                                             <ins>ขนาด ${element.size}</ins>
+                                        </div>
+                                        <div class="product-price font-primary">
+                                            <ins>${element.keyword}</ins>
                                         </div>
                                         <div class="product-price font-primary">
                                             <ins>สรรพคุณ <a href="#" class="text-primary" data-bs-toggle="modal" data-bs-target="#exampleModal${element.categoryId}">ดูเพิ่มเติม...</a></ins>
