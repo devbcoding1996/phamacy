@@ -28,7 +28,7 @@ class OrderDrug extends Database
           foreach ($customer as $info) {
               $checkArray = [
                 "id" => $info['id'],
-                "customerId" => $this->checkNull($info['customer_id']),
+                "customerId" => intval($info['customer_id']),
                 "total" => floatval($info['total']),
                 "status" => $this->checkNull($info['status']),
                 "orderDate" => $this->checkNull($info['order_date']),
@@ -50,7 +50,7 @@ class OrderDrug extends Database
         foreach ($customer as $info) {
             $checkArray = [
               "id" => $info['id'],
-              "customerId" => $this->checkNull($info['customer_id']),
+              "customerId" => intval($info['customer_id']),
               "total" => floatval($info['total']),
               "status" => $this->checkNull($info['status']),
               "orderDate" => $this->checkNull($info['order_date']),
@@ -88,7 +88,7 @@ class OrderDrug extends Database
             foreach ($customer as $info) {
                 $checkArray = [
                   "id" => $info['id'],
-                  "customerId" => $this->checkNull($info['customer_id']),
+                  "customerId" => intval($info['customer_id']),
                   "total" => floatval($info['total']),
                   "status" => $this->checkNull($info['status']),
                   "orderDate" => $this->checkNull($info['order_date']),
