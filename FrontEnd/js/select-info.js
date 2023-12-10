@@ -26,7 +26,7 @@ getDrugType = async () => {
 };
 getDrugType();
 
-getPackage = () => {
+getPackage = async () => {
   var myHeaders = new Headers();
   let token = localStorage.getItem("token");
   myHeaders.append("Content-Type", "application/json");
@@ -38,7 +38,7 @@ getPackage = () => {
     redirect: "follow",
   };
 
-  fetch("http://localhost:90/phamacy/APIs/package", requestOptions)
+  await fetch("http://localhost:90/phamacy/APIs/package", requestOptions)
     .then(async (result) => {
       let response = await result.json();
       console.log("response", response.package);
@@ -53,3 +53,31 @@ getPackage = () => {
     });
 };
 getPackage();
+
+getCategory = async () => {
+  var myHeaders = new Headers();
+  let token = localStorage.getItem("token");
+  myHeaders.append("Content-Type", "application/json");
+  myHeaders.append("Authorization", `Bearer ${token}`);
+
+  var requestOptions = {
+    method: "GET",
+    headers: myHeaders,
+    redirect: "follow",
+  };
+
+  await fetch("http://localhost:90/phamacy/APIs/category", requestOptions)
+    .then(async (result) => {
+      let response = await result.json();
+      console.log("response", response.category);
+      $("#categoryId").empty();
+      $("#categoryId").append(`<option selected disabled value="">เลือก...</option>`);
+      response.category.forEach((element) => {
+        $("#categoryId").append(`<option value="${element.id}">${element.name}</option>`);
+      });
+    })
+    .catch((error) => {
+      console.log("error", error);
+    });
+};
+getCategory();
