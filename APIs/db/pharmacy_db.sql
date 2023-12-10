@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 02, 2023 at 07:21 PM
+-- Generation Time: Dec 10, 2023 at 08:53 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -49,7 +49,8 @@ INSERT INTO `category` (`id`, `name`) VALUES
 (11, '10 เม็ด/แผง'),
 (12, '4 เม็ด/แผง'),
 (13, 'มล.'),
-(14, 'กรัม');
+(14, 'กรัม'),
+(16, 'มิลลิกรัม');
 
 -- --------------------------------------------------------
 
@@ -77,7 +78,11 @@ INSERT INTO `customer` (`customer_id`, `f_name`, `l_name`, `address`, `phone_num
 (2, 'ทดสอบ', 'ลูกค้า2', '8 อาคาร ทรู ทาวเวอร์ ถนนรัชดาภิเษก แขวงห้วยขวาง เขตห้วยขวาง กรุงเทพฯ 10310', '0989997788', 'test@gmail.com', 0.99, 'Active'),
 (3, 'ทดสอบ', 'ลูกค้า3', '899 ห้อง E101 ชั้น 1 เดอะซีซันส์มอลล์ ถนนพหลโยธิน สามเสนใน พญาไท กรุงเทพมหานคร 10400', '0989995589', 'test3@gmail.com', 0.99, 'Active'),
 (4, 'ทดสอบ', 'ลูกค้า4', '552 ห้อง S10 ชั้น 9 เดอะซีซันส์มอลล์ ถนนพหลโยธิน สามเสนใน พญาไท กรุงเทพมหานคร 10400', '0989995522', 'test4@gmail.com', 0.99, 'Active'),
-(5, 'ทดสอบ', 'ลูกค้า5', '784 ห้อง S10 ชั้น 9 เดอะซีซันส์มอลล์ ถนนพหลโยธิน สามเสนใน พญาไท กรุงเทพมหานคร 10400', '0989995522', 'test5@gmail.com', 0.89, 'Active');
+(5, 'ทดสอบ', 'ลูกค้า5', '784 ห้อง S10 ชั้น 9 เดอะซีซันส์มอลล์ ถนนพหลโยธิน สามเสนใน พญาไท กรุงเทพมหานคร 10400', '0989995522', 'test5@gmail.com', 0.89, 'Active'),
+(6, 'ทดสอบ66', 'ลูกค้า56', '879 ห้อง S10 ชั้น 9 เดอะซีซันส์มอลล์ ถนนพหลโยธิน สามเสนใน พญาไท กรุงเทพมหานคร 10400', '0988895522', 'test6@gmail.com', 0.99, 'Active'),
+(7, 'ทดสอบ77', 'ลูกค้า57', '889 ห้อง S10 ชั้น 9 เดอะซีซันส์มอลล์ ถนนพหลโยธิน สามเสนใน พญาไท กรุงเทพมหานคร 10400', '0988895522', 'test7@gmail.com', 0.99, 'Active'),
+(8, 'ยูเซอร์01', 'ลูกค้า01', '001 ห้อง S10 ชั้น 1 เดอะซีซันส์มอลล์ ถนนพหลโยธิน สามเสนใน พญาไท กรุงเทพมหานคร 10400', '0911111111', 'user01@gmail.com', 0.00, 'Active'),
+(9, 'ยูเซอร์02', 'ลูกค้า02', '002 ห้อง S12 ชั้น 1 เดอะซีซันส์มอลล์ ถนนพหลโยธิน สามเสนใน พญาไท กรุงเทพมหานคร 10400', '0922222222', 'user02@gmail.com', 0.00, 'Active');
 
 -- --------------------------------------------------------
 
@@ -299,7 +304,7 @@ CREATE TABLE `order_drug` (
 --
 
 INSERT INTO `order_drug` (`id`, `customer_id`, `total`, `status`, `order_date`, `order_update`) VALUES
-('b807eb20-8', 1, 9999.00, 'S', '2023-12-03', '2023-12-03 01:06:29');
+('b807eb20-8', 1, 9999.00, 'C', '2023-12-03', '2023-12-03 01:06:29');
 
 -- --------------------------------------------------------
 
@@ -368,6 +373,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `mobileNumber`, `email`, `passwd`, `isAdmin`) VALUES
+('12600044-972e-11ee-a5c0-38f3ab9049a5', 'user naja', '0978887798', 'user@gamil.com', '$2y$10$u2uW7tYLEvHr7ToitUtV0.wZMlAgNQzUiUFUK3gH9.ymRRNQpYxHW', 0),
 ('a09cb3ee-913d-11ee-88e4-38f3ab9049a5', 'sfdsfsdf', 'sdfsdfdsfd', 'sdfsdfdsfsdfsdf', 'sdfdsfsdfdsf', 0),
 ('b807eb20-8b5c-11ee-843a-38f3ab9049a5', 'admin naja', '0978887799', 'Admin@gamil.com', '$2y$10$UOcZOErcWCsTnTfT2QnRo.PVZv7ErMHhypt5H0htFE3CA8xk0Jrxe', 1),
 ('bba2121d-83de-11ee-823b-38f3ab9049a5', 'John', '0978885566', 'Pokz@gamil.com', '$2y$10$5ES.3KNSInIBex7Sdv4pRu1wHCRbhmfukl8lCmz/6fX9pcr5bTBNW', 0);
@@ -381,15 +387,20 @@ INSERT INTO `users` (`id`, `name`, `mobileNumber`, `email`, `passwd`, `isAdmin`)
 CREATE TABLE `user_customer` (
   `uc_id` char(36) NOT NULL DEFAULT uuid(),
   `user_id` char(36) NOT NULL,
-  `customer_id` char(36) NOT NULL
+  `customer_id` int(11) NOT NULL,
+  `status` enum('N','Y') NOT NULL DEFAULT 'N'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `user_customer`
 --
 
-INSERT INTO `user_customer` (`uc_id`, `user_id`, `customer_id`) VALUES
-('8d7a7110-8baa-11ee-b489-38f3ab9049a5', 'b807eb20-8b5c-11ee-843a-38f3ab9049a5', '5');
+INSERT INTO `user_customer` (`uc_id`, `user_id`, `customer_id`, `status`) VALUES
+('8d7a7110-8baa-11ee-b489-38f3ab9049a5', 'b807eb20-8b5c-11ee-843a-38f3ab9049a5', 5, 'N'),
+('5fe99718-9726-11ee-a5c0-38f3ab9049a5', 'b807eb20-8b5c-11ee-843a-38f3ab9049a5', 6, 'N'),
+('6e3400cb-9727-11ee-a5c0-38f3ab9049a5', 'b807eb20-8b5c-11ee-843a-38f3ab9049a5', 7, 'N'),
+('6c78ef26-972e-11ee-a5c0-38f3ab9049a5', '12600044-972e-11ee-a5c0-38f3ab9049a5', 8, 'N'),
+('82505ad8-972e-11ee-a5c0-38f3ab9049a5', '12600044-972e-11ee-a5c0-38f3ab9049a5', 9, 'Y');
 
 --
 -- Indexes for dumped tables
@@ -458,13 +469,13 @@ ALTER TABLE `user_customer`
 -- AUTO_INCREMENT for table `category`
 --
 ALTER TABLE `category`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `customer`
 --
 ALTER TABLE `customer`
-  MODIFY `customer_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `customer_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `drug_information`
@@ -489,6 +500,7 @@ ALTER TABLE `order_drug_detail`
 --
 ALTER TABLE `package`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
