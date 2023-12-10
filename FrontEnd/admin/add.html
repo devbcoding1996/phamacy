@@ -114,12 +114,12 @@
             <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
                 <div class="position-sticky pt-3">
                     <ul class="nav flex-column">
-                        <li class="nav-item">
+                        <!-- <li class="nav-item">
                             <a class="nav-link active" aria-current="page" href="./admin.html">
                                 <i class="fa-solid fa-chart-line"></i>
                                 Dashboard
                             </a>
-                        </li>
+                        </li> -->
                         <li class="nav-item">
                             <a class="nav-link" href="./add.html">
                                 <i class="fa-solid fa-plus"></i>
@@ -139,7 +139,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" onclick="logout()">
+                            <a class="nav-link" href="#" onclick="logout()">
                                 <i class="fa-solid fa-right-from-bracket"></i>
                                 ออกจากระบบ
                             </a>
@@ -233,9 +233,9 @@
                         <input type="text" class="form-control" id="keyword" required>
                     </div>
                     <div class="col-md-3">
-                        <label for="imageFile" class="form-label">ลิงค์รูปภาพ</label>
+                        <label for="linkImages" class="form-label">ลิงค์รูปภาพ</label>
                         <div class="mb-3">
-                            <input class="form-control" type="text" id="imageFile" required>
+                            <input class="form-control" type="text" id="linkImages" required>
                         </div>
                     </div>
                     <div class="col-12">
@@ -277,7 +277,7 @@
 
             var raw = JSON.stringify({
                 "name": $('#name').val(),
-                "size": `${$('#size').val()} มก.`,
+                "size": $('#size').val(),
                 "useMedicine": $('#useMedicine').val(),
                 "properties": $('#properties').val(),
                 "drugTypeIdId": $('#drugTypeIdId').val(),

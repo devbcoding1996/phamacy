@@ -56,12 +56,7 @@
                 font-size: 3.5rem;
             }
         }
-    </style>
 
-
-    <!-- Custom styles for this template -->
-    <link href="../css/dashboard.css" rel="stylesheet">
-    <style type="text/css">
         /* Chart.js */
         @keyframes chartjs-render-animation {
             from {
@@ -115,6 +110,11 @@
             text-overflow: ellipsis;
         }
     </style>
+
+
+    <!-- Custom styles for this template -->
+    <link href="../css/dashboard.css" rel="stylesheet">
+    <link href="../css/table-responsive.css" rel="stylesheet">
 </head>
 
 <body cz-shortcut-listen="true">
@@ -133,12 +133,12 @@
             <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
                 <div class="position-sticky pt-3">
                     <ul class="nav flex-column">
-                        <li class="nav-item">
+                        <!-- <li class="nav-item">
                             <a class="nav-link active" aria-current="page" href="./admin.html">
                                 <i class="fa-solid fa-chart-line"></i>
                                 Dashboard
                             </a>
-                        </li>
+                        </li> -->
                         <li class="nav-item">
                             <a class="nav-link" href="./add.html">
                                 <i class="fa-solid fa-plus"></i>
@@ -158,7 +158,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" onclick="logout()">
+                            <a class="nav-link" href="#" onclick="logout()">
                                 <i class="fa-solid fa-right-from-bracket"></i>
                                 ออกจากระบบ
                             </a>
@@ -184,44 +184,163 @@
                     </div>
                 </div>
 
-                <table id="showData" class="table table-striped table-bordered" style="width:100%">
+                <table id="showData" class="table table-striped table-bordered table-responsive"
+                    style="width:100%; overflow-y: hidden;">
                     <thead>
                         <tr>
-                            <!-- <th>ชื่อยา</th>
+                            <th>รหัสยา</th>
+                            <th>ชื่อยา</th>
                             <th>ขนาด</th>
+                            <!-- <th>ประเภทยา</th>
+                            <th>หมวดหมู่</th>
+                            <th>บรรจุภัณฑ์</th> -->
+                            <th>สรรพคุณ</th>
                             <th>วิธีใช้</th>
                             <th>ข้อควรระวัง</th>
-                            <th>สรรพคุณ</th>
-                            <th>ประเภทยา</th>
-                            <th>บรรจุภัณฑ์</th>
-                            <th>จำนวน/เม็ด</th>
-                            <th>หมวดหมู่</th>
                             <th>ราคา</th>
-                            <th>รูปภาพ</th> -->
-                            <th>id</th>
-                            <th>name</th>
-                            <th>size</th>
-                            <th>drugTypeId</th>
-                            <th>categoryId</th>
-                            <th>packageId</th>
-                            <th>properties</th>
-                            <th>useMedicine</th>
-                            <th>contraindications</th>
-                            <th>price</th>
                             <th></th>
                         </tr>
                     </thead>
                     <tfoot>
                         <tr>
+                            <th>รหัสยา</th>
+                            <th>ชื่อยา</th>
+                            <th>ขนาด</th>
+                            <!-- <th>ประเภทยา</th>
+                            <th>หมวดหมู่</th>
+                            <th>บรรจุภัณฑ์</th> -->
+                            <th>สรรพคุณ</th>
+                            <th>วิธีใช้</th>
+                            <th>ข้อควรระวัง</th>
+                            <th>ราคา</th>
+                            <th></th>
                         </tr>
                     </tfoot>
                 </table>
             </main>
+
+            <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-xl">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="editModalLabel">แก้ไขข้อมูลยา</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body" id="contentModal">
+                            <form id="formEdit" class="row g-3 needs-validation" novalidate>
+                                <div class="col-md-4">
+                                    <label for="name" class="form-label">ชื่อยา</label>
+                                    <input type="text" class="form-control" id="name" value="" required>
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="size" class="form-label">ขนาด</label>
+                                    <input type="text" class="form-control" id="size" value="" required>
+                                </div>
+                                <div class="clearfix"></div>
+                                <div class="col-md-4">
+                                    <label for="useMedicine" class="form-label">วิธีใช้</label>
+                                    <div class="form-floating">
+                                        <textarea class="form-control" placeholder="รายละเอียดวิธีใช้" id="useMedicine"
+                                            style="height: 100px" required></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="contraindications"
+                                        class="form-label">ข้อห้าม/ข้อควรระวังในการใช้ยา</label>
+                                    <div class="form-floating">
+                                        <textarea class="form-control" placeholder="รายละเอียดข้อควรระวังในการใช้ยา"
+                                            id="contraindications" style="height: 100px" required></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="properties" class="form-label">สรรพคุณ</label>
+                                    <div class="form-floating">
+                                        <textarea class="form-control" placeholder="Leave a comment here"
+                                            id="properties" style="height: 100px" required></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <label for="drugTypeId" class="form-label">ประเภทยา</label>
+                                    <select class="form-select" id="drugTypeId" required>
+                                    </select>
+                                </div>
+                                <div class="col-md-3">
+                                    <label for="packageId" class="form-label">บรรจุภัณฑ์</label>
+                                    <select class="form-select" id="packageId" required>
+                                    </select>
+                                </div>
+                                <div class="col-md-3">
+                                    <label for="quantity" class="form-label">จำนวน</label>
+                                    <input type="text" class="form-control" id="quantity" required>
+                                </div>
+                                <div class="col-md-3">
+                                    <label for="categoryId" class="form-label">หมวดหมู่</label>
+                                    <select class="form-select" id="categoryId" required>
+                                        <option selected disabled value="">เลือก...</option>
+                                        <option value="2">เม็ด</option>
+                                        <option value="3">แคปซูล</option>
+                                        <option value="4">หลอด</option>
+                                        <option value="5">ชิ้น</option>
+                                        <option value="6">ขวด</option>
+                                        <option value="7">ซอง</option>
+                                        <option value="8">ก้อน</option>
+                                        <option value="10">แผง</option>
+                                        <option value="14">กรัม</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-3">
+                                    <label for="price" class="form-label">ราคา</label>
+                                    <input type="text" class="form-control" id="price" required>
+                                </div>
+                                <div class="col-md-3">
+                                    <label for="keyword" class="form-label">คำค้นหา</label>
+                                    <input type="text" class="form-control" id="keyword" required>
+                                </div>
+                                <div class="col-md-3">
+                                    <label for="linkImages" class="form-label">ลิงค์รูปภาพ</label>
+                                    <div class="mb-3">
+                                        <input class="form-control" type="text" id="linkImages" required>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <button class="btn btn-primary" type="submit">แก้ไขข้อมูล</button>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-warning" data-bs-dismiss="modal"
+                                id="close">ปิด</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <script src="../js/main.js"></script>
+    <script src="../js/select-info.js"></script>
 
     <script>
+        (function () {
+            'use strict'
+
+            var forms = document.querySelectorAll('.needs-validation')
+
+            Array.prototype.slice.call(forms)
+                .forEach(function (form) {
+                    form.addEventListener('submit', function (event) {
+                        if (!form.checkValidity()) {
+                            event.preventDefault()
+                            event.stopPropagation()
+                        } else {
+                            handleEditItem();
+                            event.preventDefault()
+                        }
+
+                        form.classList.add('was-validated')
+                    }, false)
+                })
+        })()
+
         async function getProduct() {
             var settings = {
                 "url": "http://localhost:90/phamacy/APIs/drugInformation",
@@ -257,15 +376,15 @@
                     {
                         data: 'size',
                     },
-                    {
-                        data: 'drugTypeId',
-                    },
-                    {
-                        data: 'categoryId'
-                    },
-                    {
-                        data: 'packageId',
-                    },
+                    // {
+                    //     data: 'drugTypeId',
+                    // },
+                    // {
+                    //     data: 'categoryId'
+                    // },
+                    // {
+                    //     data: 'packageId',
+                    // },
                     {
                         data: 'properties',
                         render: function (data) {
@@ -291,7 +410,7 @@
                         data: null,
                         render: function (data) {
                             return data =
-                                `<button type="button" class="btn btn-sm btn-outline-warning" id="edit">แก้ไข</button>`
+                                `<button type="button" class="btn btn-sm btn-outline-warning" data-bs-toggle="modal" data-bs-target="#editModal" id="edit">แก้ไข</button>`
                         },
                     }
                 ],
@@ -299,10 +418,79 @@
 
             $('#showData tbody').on('click', '#edit', function () {
                 var data = table.row($(this).parents('tr')).data();
-                console.log('data', data)
+                manageDrugDetail(data)
             });
         }
         getProduct();
+
+        let id;
+        manageDrugDetail = (data) => {
+            console.log('data', data)
+            id = data.id;
+            $('#name').val(`${data.name}`);
+            $('#size').val(`${data.size}`);
+            $('#useMedicine').val(`${data.useMedicine}`);
+            $('#contraindications').val(`${data.contraindications}`);
+            $('#properties').val(`${data.properties}`);
+            $('#drugTypeId').val(`${data.drugTypeId}`);
+            $('#packageId').val(`${data.packageId}`);
+            $('#quantity').val(`${data.quantity}`);
+            $('#categoryId').val(`${data.categoryId}`);
+            $('#price').val(`${data.price}`);
+            $('#keyword').val(`${data.keyword}`);
+            $('#linkImages').val(`${data.linkImages}`);
+        }
+
+        let token = localStorage.getItem("token");
+        handleEditItem = async () => {
+            var myHeaders = new Headers();
+            myHeaders.append("Content-Type", "application/json");
+            myHeaders.append("Authorization", `Bearer ${token}`);
+
+            var raw = JSON.stringify({
+                "id": id,
+                "name": $('#name').val(),
+                "size": `${$('#size').val()} มก.`,
+                "useMedicine": $('#useMedicine').val(),
+                "contraindications": $('#contraindications').val(),
+                "properties": $('#properties').val(),
+                "drugTypeId": $('#drugTypeId').val(),
+                "packageId": $('#packageId').val(),
+                "quantity": $('#quantity').val(),
+                "productionDate": "0000-00-00",
+                "expirationDate": "0000-00-00",
+                "categoryId": $('#categoryId').val(),
+                "price": $('#price').val(),
+                "keyword": $('#keyword').val(),
+                "linkImages": $('#linkImages').val()
+            });
+
+            var requestOptions = {
+                method: 'PUT',
+                headers: myHeaders,
+                body: raw,
+                redirect: 'follow'
+            };
+
+            await fetch(`http://localhost:90/phamacy/APIs/drugInformation/update/${id}`, requestOptions)
+                .then(async (result) => {
+                    let response = await result.json();
+                    Swal.fire({
+                        icon: "success",
+                        title: "สำเร็จ",
+                        text: response.message,
+                    }).then((result) => {
+                        window.location.reload();
+                    });
+                })
+                .catch((error) => {
+                    Swal.fire({
+                        icon: "error",
+                        title: "ผิดพลาด",
+                        text: response.error,
+                    })
+                });
+        }
     </script>
 </body>
 
