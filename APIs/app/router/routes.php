@@ -36,7 +36,7 @@ $routes = [
   '/category'             => 'CategoryService@index',
   '/category/create'      => 'CategoryService@create',
   '/category/list/{id}'   => 'CategoryService@listById',
-  '/category/update/{id}' => 'CategoryService@update',
+  '/category/update'      => 'CategoryService@update',
   '/category/remove/{id}' => 'CategoryService@remove',
 
   '/customer'             => 'CustomerService@index',

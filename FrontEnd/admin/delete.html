@@ -230,18 +230,18 @@
                             <form id="formEdit" class="row g-3 needs-validation" novalidate>
                                 <div class="col-md-4">
                                     <label for="name" class="form-label">ชื่อยา</label>
-                                    <input type="text" class="form-control" id="name" value="" readonly>
+                                    <input type="text" class="form-control" id="name" value="" readonly disabled>
                                 </div>
                                 <div class="col-md-4">
                                     <label for="size" class="form-label">ขนาด</label>
-                                    <input type="text" class="form-control" id="size" value="" readonly>
+                                    <input type="text" class="form-control" id="size" value="" readonly disabled>
                                 </div>
                                 <div class="clearfix"></div>
                                 <div class="col-md-4">
                                     <label for="useMedicine" class="form-label">วิธีใช้</label>
                                     <div class="form-floating">
                                         <textarea class="form-control" placeholder="รายละเอียดวิธีใช้" id="useMedicine"
-                                            style="height: 100px" readonly></textarea>
+                                            style="height: 100px" readonly disabled></textarea>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
@@ -249,14 +249,14 @@
                                         class="form-label">ข้อห้าม/ข้อควรระวังในการใช้ยา</label>
                                     <div class="form-floating">
                                         <textarea class="form-control" placeholder="รายละเอียดข้อควรระวังในการใช้ยา"
-                                            id="contraindications" style="height: 100px" readonly></textarea>
+                                            id="contraindications" style="height: 100px" readonly disabled></textarea>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <label for="properties" class="form-label">สรรพคุณ</label>
                                     <div class="form-floating">
                                         <textarea class="form-control" placeholder="Leave a comment here"
-                                            id="properties" style="height: 100px" readonly></textarea>
+                                            id="properties" style="height: 100px" readonly disabled></textarea>
                                     </div>
                                 </div>
                                 <div class="col-md-3">
@@ -271,35 +271,25 @@
                                 </div>
                                 <div class="col-md-3">
                                     <label for="quantity" class="form-label">จำนวน</label>
-                                    <input type="text" class="form-control" id="quantity" readonly>
+                                    <input type="text" class="form-control" id="quantity" readonly disabled>
                                 </div>
                                 <div class="col-md-3">
                                     <label for="categoryId" class="form-label">หมวดหมู่</label>
                                     <select class="form-select" id="categoryId" disabled>
-                                        <option selected disabled value="">เลือก...</option>
-                                        <option value="2">เม็ด</option>
-                                        <option value="3">แคปซูล</option>
-                                        <option value="4">หลอด</option>
-                                        <option value="5">ชิ้น</option>
-                                        <option value="6">ขวด</option>
-                                        <option value="7">ซอง</option>
-                                        <option value="8">ก้อน</option>
-                                        <option value="10">แผง</option>
-                                        <option value="14">กรัม</option>
                                     </select>
                                 </div>
                                 <div class="col-md-3">
                                     <label for="price" class="form-label">ราคา</label>
-                                    <input type="text" class="form-control" id="price" readonly>
+                                    <input type="text" class="form-control" id="price" readonly disabled>
                                 </div>
                                 <div class="col-md-3">
                                     <label for="keyword" class="form-label">คำค้นหา</label>
-                                    <input type="text" class="form-control" id="keyword" readonly>
+                                    <input type="text" class="form-control" id="keyword" readonly disabled>
                                 </div>
                                 <div class="col-md-3">
                                     <label for="linkImages" class="form-label">ลิงค์รูปภาพ</label>
                                     <div class="mb-3">
-                                        <input class="form-control" type="text" id="linkImages" readonly>
+                                        <input class="form-control" type="text" id="linkImages" readonly disabled>
                                     </div>
                                 </div>
                                 <div class="col-12">
