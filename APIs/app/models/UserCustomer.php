@@ -75,12 +75,12 @@ class UserCustomer extends Database
     }
   }
 
-  public function listCustomerId($data)
+  public function listCustomerId($userId)
   {
     try {
-      $stmt = $this->pdo->prepare("SELECT * FROM user_customer WHERE customer_id = :id and `status` = 'Y';");
+      $stmt = $this->pdo->prepare("SELECT * FROM user_customer WHERE user_id = :id and `status` = 'Y' LIMIT 1;");
       // Bind the parameters
-      $stmt->bindParam(':id', $data[0]);
+      $stmt->bindParam(':id', $userId);
 
       // Execute the SELECT statement
       $stmt->execute();

@@ -157,8 +157,7 @@ class UserCustomerService extends Requests
 
         if ($user) {
 
-          $customerId = $id[0];
-          $userCustomer_exists = $userCustomer->listCustomerId([$customerId]);
+          $userCustomer_exists = $userCustomer->listCustomerId($user->id);
 
           if ($userCustomer_exists) {
             $result['userCustomer'] = $userCustomer_exists;
