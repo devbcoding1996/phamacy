@@ -18986,7 +18986,7 @@ body:not(.top-search-open) .top-search-parent .header-misc > *:not(#top-search) 
   .top-cart-content {
     opacity: 0;
     position: absolute;
-    width: 280px;
+    width: 320px;
     border: 1px solid var(--cnvs-header-border-color);
     border-top: 2px solid var(--cnvs-themecolor);
     top: calc((var(--cnvs-header-height) + 20px) * 0.5);
@@ -19097,6 +19097,15 @@ body:not(.top-search-open) .top-search-parent .header-misc > *:not(#top-search) 
     z-index: 399;
     margin-top: 0;
   }
+}
+.delete-item {
+  height: 35px;
+  padding: 2px 5px !important;
+  width: 35px;
+}
+
+.item-count {
+  width: 65px !important;
 }
 
 /* ----------------------------------------------------------------

@@ -10,7 +10,7 @@ getDrugType = async () => {
     redirect: "follow",
   };
 
-  await fetch("http://localhost:90/phamacy/APIs/drugType", requestOptions)
+  await fetch("https://api.wakeupcoding.com/pharmacy-api/drugType", requestOptions)
     .then(async (result) => {
       let response = await result.json();
       console.log("response", response.drugType);
@@ -38,7 +38,7 @@ getPackage = async () => {
     redirect: "follow",
   };
 
-  await fetch("http://localhost:90/phamacy/APIs/package", requestOptions)
+  await fetch("https://api.wakeupcoding.com/pharmacy-api/package", requestOptions)
     .then(async (result) => {
       let response = await result.json();
       console.log("response", response.package);
@@ -66,7 +66,7 @@ getCategory = async () => {
     redirect: "follow",
   };
 
-  await fetch("http://localhost:90/phamacy/APIs/category", requestOptions)
+  await fetch("https://api.wakeupcoding.com/pharmacy-api/category", requestOptions)
     .then(async (result) => {
       let response = await result.json();
       console.log("response", response.category);

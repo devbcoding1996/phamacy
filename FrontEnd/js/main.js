@@ -11,7 +11,7 @@ checkLoginStatus = async () => {
     redirect: "follow",
   };
 
-  await fetch("http://localhost:90/phamacy/APIs/users", requestOptions)
+  await fetch("https://api.wakeupcoding.com/pharmacy-api/users", requestOptions)
     .then(async (result) => {
       // return result.json()
       let response = await result.json();
@@ -46,7 +46,7 @@ logout = async () => {
     redirect: "follow",
   };
 
-  await fetch("http://localhost:90/phamacy/APIs/users/logout", requestOptions)
+  await fetch("https://api.wakeupcoding.com/pharmacy-api/users/logout", requestOptions)
     .then(async (result) => {
       let response = await result.json();
       localStorage.clear();

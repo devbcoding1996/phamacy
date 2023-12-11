@@ -16,4 +16,4 @@ define('SECRET_KEY', 'pharmacystore');
 /**
  * Base URL
 */
-define('BASE_URL', 'http://localhost:90/phamacy/APIs/');
+define('BASE_URL', 'https://api.wakeupcoding.com/pharmacy-api/');
