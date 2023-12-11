@@ -68,12 +68,12 @@
 					<div class="mb-0 row">
 
 						<div class="col-12">
-							<input type="text" id="login-form-username" name="login-form-username"
-								value="Admin@gamil.com" class="form-control not-dark" placeholder="บัญชีผู้ใช้">
+							<input type="text" id="login-form-username" name="login-form-username" value=""
+								class="form-control not-dark" placeholder="บัญชีผู้ใช้">
 						</div>
 
 						<div class="col-12 mt-4">
-							<input type="password" id="login-form-password" name="login-form-password" value="admin123"
+							<input type="password" id="login-form-password" name="login-form-password" value=""
 								class="form-control not-dark" placeholder="รหัสผ่าน">
 						</div>
 						<div class="col-12 mt-4">
@@ -112,11 +112,17 @@
 							<!-- Top Search
 							============================================= -->
 							<div id="top-account">
-								<a href="#modal-register" data-lightbox="inline">
+								<a href="#modal-register" id="noLogin" data-lightbox="inline">
 									<i class="bi-person me-1 position-relative" style="top: 1px;"></i>
 									<span class="d-none d-sm-inline-block font-primary fw-medium">เข้าสู่ระบบ</span>
 								</a>
-							</div><!-- #top-search end -->
+
+								<a href="#" id="hasLogin" data-lightbox="inline">
+									<i class="bi-person me-1 position-relative" style="top: 1px;"></i>
+									<span class="d-none d-sm-inline-block font-primary fw-medium">คุณ เอ บี</span>
+								</a>
+							</div>
+							<!-- #top-search end -->
 
 							<!-- Top Cart
 							============================================= -->
@@ -486,6 +492,7 @@
 	<script src="js/plugins.min.js"></script>
 	<script src="js/functions.bundle.js"></script>
 	<script src="js/login.js"></script>
+	<script src="js/customer.js"></script>
 </body>
 
 </html>
