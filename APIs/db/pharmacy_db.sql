@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 10, 2023 at 08:53 AM
+-- Generation Time: Dec 11, 2023 at 01:51 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -82,7 +82,8 @@ INSERT INTO `customer` (`customer_id`, `f_name`, `l_name`, `address`, `phone_num
 (6, 'ทดสอบ66', 'ลูกค้า56', '879 ห้อง S10 ชั้น 9 เดอะซีซันส์มอลล์ ถนนพหลโยธิน สามเสนใน พญาไท กรุงเทพมหานคร 10400', '0988895522', 'test6@gmail.com', 0.99, 'Active'),
 (7, 'ทดสอบ77', 'ลูกค้า57', '889 ห้อง S10 ชั้น 9 เดอะซีซันส์มอลล์ ถนนพหลโยธิน สามเสนใน พญาไท กรุงเทพมหานคร 10400', '0988895522', 'test7@gmail.com', 0.99, 'Active'),
 (8, 'ยูเซอร์01', 'ลูกค้า01', '001 ห้อง S10 ชั้น 1 เดอะซีซันส์มอลล์ ถนนพหลโยธิน สามเสนใน พญาไท กรุงเทพมหานคร 10400', '0911111111', 'user01@gmail.com', 0.00, 'Active'),
-(9, 'ยูเซอร์02', 'ลูกค้า02', '002 ห้อง S12 ชั้น 1 เดอะซีซันส์มอลล์ ถนนพหลโยธิน สามเสนใน พญาไท กรุงเทพมหานคร 10400', '0922222222', 'user02@gmail.com', 0.00, 'Active');
+(9, 'ยูเซอร์02', 'ลูกค้า02', '002 ห้อง S12 ชั้น 1 เดอะซีซันส์มอลล์ ถนนพหลโยธิน สามเสนใน พญาไท กรุงเทพมหานคร 10400', '0922222222', 'user02@gmail.com', 0.00, 'Active'),
+(10, 'ยูเซอร์03', 'ลูกค้า03', '003 ห้อง S10 ชั้น 3 เดอะซีซันส์มอลล์ ถนนพหลโยธิน สามเสนใน พญาไท กรุงเทพมหานคร 10400', '093333333', 'user01@gmail.com', 0.99, 'Active');
 
 -- --------------------------------------------------------
 
@@ -247,7 +248,7 @@ INSERT INTO `drug_information` (`id`, `name`, `size`, `use_medicine`, `contraind
 (131, 'Bromso Elixir', '8 มก.', 'รับประทาน 1 ช้อนชา 3 เวลา', '-ควรหลีกเลี่ยงการใช้ยานี้ในสตรีมีครรภ์ และกำลังให้นมบุตร-ควรระมัดระวังใช้ยานี้ในผู้ป่วยที่มีแผลในกระเพาะอาหารโดยเฉพาะชนิดเม็ด-การรับประทานยานี้ร่วมกับยาปฏิชีวนะ เช่น amoxicillin, cefuroxime, erythromycin, doxycycline จะทำให้ระดับยาปฏิชีวนะในเนื้อเยื่อปอดเพิ่มขึ้นได้-ระวังการใช้ยาในผู้ที่มีประวัติเป็นโรคกระเพาะอาหาร - ลำไส้ ด้วยยามีฤทธิ์ระคายเคืองกระเพาะอาหาร - ลำไส้-ระวังการใช้ยาในผู้ที่มีประวัติเป็นโรคหืด ด้วยยาอาจก่อให้เกิดภาวะหลอดลมตีบ-ระวังการใช้ยากับผู้ที่มีภาวะตับ - ไตผิดปกติ', 'บรรเทาอาการไอ หวัด ฆ่าเชื้อแบคทีเรียนในลำคอ', 7, 6, 3, 1, '0000-00-00', '0000-00-00', 50.00, 'แก้ไข้หวัด', 'https://www.petz.world/wp-content/uploads/2023/07/414679.jpeg.webp'),
 (132, 'Bronal Syrup', '60 มล.', '-ผู้ใหญ่และเด็กอายุมากกว่า 12 ปี : รับประทานครั้งละ 10 มล. วันละ 3 ครั้ง-เด็กอายุมากกว่า 2 ปี : ขนาดยาทานครั้งละ 0.16 มก./น้ำหนักตัว 1 กก. วันละ 3 ครั้งขนาดยาทานที่ใช้ทั้งหมดเท่ากับ 3 มก./น้ำหนักตัว 1 กก./วัน', '-เด็กอายุน้อยกว่าหรือเท่ากับ 2 ปี: ไม่มีการศึกษาการใช้ยาในผู้ป่วยกลุ่มนี้ จึงไม่ควรใช้ยาในผู้ป่วยกลุ่มนี้-สตรีมีครรภ์: ไม่ควรใช้ยาในผู้ป่วยกลุ่มนี้-สตรีให้นมบุตร: ไม่ควรใช้ยาในผู้ป่วยกลุ่มนี้-ผู้ป่วยที่มีภาวะการทำงานของตับบกพร่อง: ห้ามใช้ยานี้-ผู้ป่วยที่มีภาวะการทำงานของไตบกพร่อง: ควรระมัดระวังการใช้ยาในผู้ป่วยกลุ่มนี้', 'บรรเทาอาการไอ', 7, 6, 3, 1, '0000-00-00', '0000-00-00', 99.99, 'แก้ไอ', 'https://i.ytimg.com/vi/zdP3j-5Fbxc/sddefault.jpg'),
 (133, 'Bronpect-D', NULL, 'ครั้งละ 1 เม็ด วันละ 3 ครั้ง', NULL, 'บรรเทาอาการไอ เนื่องจากการระคายคอ บรรเทาอาการไอ และขับเสมหะที่เกิดร่วมกับหวัด และหลอดลมอักเสบ', NULL, NULL, NULL, NULL, '0000-00-00', '0000-00-00', NULL, NULL, NULL),
-(134, 'spider man', '10,000 กรัม', NULL, NULL, 'บรรเทาอาการท้องผูก ขับลม', 0, 0, 0, 9910, NULL, NULL, 99.99, 'แก้ท้องผูก', NULL);
+(134, 'HEHEHE', '10,000 กรัม', '', '', 'บรรเทาอาการท้องผูก ขับลม', 0, 0, 0, 9910, '0000-00-00', '0000-00-00', 99.99, 'แก้ท้องผูก', '');
 
 -- --------------------------------------------------------
 
@@ -304,7 +305,8 @@ CREATE TABLE `order_drug` (
 --
 
 INSERT INTO `order_drug` (`id`, `customer_id`, `total`, `status`, `order_date`, `order_update`) VALUES
-('b807eb20-8', 1, 9999.00, 'C', '2023-12-03', '2023-12-03 01:06:29');
+('b807eb20-8', 1, 9999.00, 'C', '2023-12-03', '2023-12-03 01:06:29'),
+('d25bf165-9', 9, 8855.00, 'WP', '2023-12-11', '2023-12-11 19:35:52');
 
 -- --------------------------------------------------------
 
@@ -314,21 +316,24 @@ INSERT INTO `order_drug` (`id`, `customer_id`, `total`, `status`, `order_date`, 
 
 CREATE TABLE `order_drug_detail` (
   `id` int(11) NOT NULL,
-  `order_id` varchar(15) NOT NULL,
+  `order_id` char(10) NOT NULL,
   `drug_info_id` int(11) NOT NULL,
   `quantity` int(11) NOT NULL,
   `value` decimal(10,2) NOT NULL,
   `total` decimal(10,2) NOT NULL,
-  `order_date` date DEFAULT NULL
+  `order_date` date DEFAULT NULL,
+  `order_update` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `order_drug_detail`
 --
 
-INSERT INTO `order_drug_detail` (`id`, `order_id`, `drug_info_id`, `quantity`, `value`, `total`, `order_date`) VALUES
-(1, 'b807eb20-8b5c-1', 133, 2, 500.00, 9000.00, '2023-12-03'),
-(3, 'b807eb20-8b5c-1', 55, 1, 50.00, 100.00, '2023-12-03');
+INSERT INTO `order_drug_detail` (`id`, `order_id`, `drug_info_id`, `quantity`, `value`, `total`, `order_date`, `order_update`) VALUES
+(1, 'b807eb20-8', 133, 2, 500.00, 9000.00, '2023-12-03', '2023-12-10 18:35:16'),
+(3, 'b807eb20-8', 55, 1, 50.00, 100.00, '2023-12-03', '2023-12-10 18:35:16'),
+(4, 'b807eb20-8', 2, 2, 99.99, 199.98, '2023-12-10', '2023-12-10 19:07:11'),
+(5, 'b807eb20-8', 3, 2, 50.99, 101.01, '2023-12-10', '2023-12-10 19:07:11');
 
 -- --------------------------------------------------------
 
@@ -373,7 +378,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `mobileNumber`, `email`, `passwd`, `isAdmin`) VALUES
-('12600044-972e-11ee-a5c0-38f3ab9049a5', 'user naja', '0978887798', 'user@gamil.com', '$2y$10$u2uW7tYLEvHr7ToitUtV0.wZMlAgNQzUiUFUK3gH9.ymRRNQpYxHW', 0),
+('12600044-972e-11ee-a5c0-38f3ab9049a5', 'user naja', '0978887798', 'user@gmail.com', '$2y$10$u2uW7tYLEvHr7ToitUtV0.wZMlAgNQzUiUFUK3gH9.ymRRNQpYxHW', 0),
 ('a09cb3ee-913d-11ee-88e4-38f3ab9049a5', 'sfdsfsdf', 'sdfsdfdsfd', 'sdfsdfdsfsdfsdf', 'sdfdsfsdfdsf', 0),
 ('b807eb20-8b5c-11ee-843a-38f3ab9049a5', 'admin naja', '0978887799', 'Admin@gamil.com', '$2y$10$UOcZOErcWCsTnTfT2QnRo.PVZv7ErMHhypt5H0htFE3CA8xk0Jrxe', 1),
 ('bba2121d-83de-11ee-823b-38f3ab9049a5', 'John', '0978885566', 'Pokz@gamil.com', '$2y$10$5ES.3KNSInIBex7Sdv4pRu1wHCRbhmfukl8lCmz/6fX9pcr5bTBNW', 0);
@@ -398,9 +403,10 @@ CREATE TABLE `user_customer` (
 INSERT INTO `user_customer` (`uc_id`, `user_id`, `customer_id`, `status`) VALUES
 ('8d7a7110-8baa-11ee-b489-38f3ab9049a5', 'b807eb20-8b5c-11ee-843a-38f3ab9049a5', 5, 'N'),
 ('5fe99718-9726-11ee-a5c0-38f3ab9049a5', 'b807eb20-8b5c-11ee-843a-38f3ab9049a5', 6, 'N'),
-('6e3400cb-9727-11ee-a5c0-38f3ab9049a5', 'b807eb20-8b5c-11ee-843a-38f3ab9049a5', 7, 'N'),
-('6c78ef26-972e-11ee-a5c0-38f3ab9049a5', '12600044-972e-11ee-a5c0-38f3ab9049a5', 8, 'N'),
-('82505ad8-972e-11ee-a5c0-38f3ab9049a5', '12600044-972e-11ee-a5c0-38f3ab9049a5', 9, 'Y');
+('6e3400cb-9727-11ee-a5c0-38f3ab9049a5', 'b807eb20-8b5c-11ee-843a-38f3ab9049a5', 7, 'Y'),
+('6c78ef26-972e-11ee-a5c0-38f3ab9049a5', '12600044-972e-11ee-a5c0-38f3ab9049a5', 8, 'Y'),
+('82505ad8-972e-11ee-a5c0-38f3ab9049a5', '12600044-972e-11ee-a5c0-38f3ab9049a5', 9, 'N'),
+('cb806c44-9749-11ee-a5c0-38f3ab9049a5', '12600044-972e-11ee-a5c0-38f3ab9049a5', 10, 'N');
 
 --
 -- Indexes for dumped tables
@@ -475,7 +481,7 @@ ALTER TABLE `category`
 -- AUTO_INCREMENT for table `customer`
 --
 ALTER TABLE `customer`
-  MODIFY `customer_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `customer_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `drug_information`
@@ -493,7 +499,7 @@ ALTER TABLE `drug_type`
 -- AUTO_INCREMENT for table `order_drug_detail`
 --
 ALTER TABLE `order_drug_detail`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `package`
