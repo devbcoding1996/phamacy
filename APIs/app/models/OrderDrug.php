@@ -138,7 +138,7 @@ class OrderDrug extends Database
       $last_index = $stmt2->fetch(PDO::FETCH_COLUMN);
       return ['status'=>true,'orderId'=>$last_index];
     } catch (PDOException $err) {
-      return false;
+      return ['status'=>false,'orderId'=>""];;
     }
   }
 
