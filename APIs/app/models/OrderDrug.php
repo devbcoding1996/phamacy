@@ -111,6 +111,11 @@ class OrderDrug extends Database
   public function create($data)
   {
     try {
+      $resChk = $this->checkOrderByCustomerId($data[0]);
+      if($resChk){
+        return ['status'=>true,'orderId'=>$resChk];
+      }
+
       $sql = "INSERT INTO order_drug (`customer_id`,`total`,`status`,`order_date`,`order_update`) 
       VALUES (:customer_id,:total,:status,:order_date,:order_update)";
      
@@ -137,20 +142,34 @@ class OrderDrug extends Database
     }
   }
 
+  public function checkOrderByCustomerId($customerId)
+  {
+    try {
+      $stmt = $this->pdo->prepare("SELECT id FROM `order_drug` WHERE customer_id = :id AND `status` IN ('OD','WP') ORDER BY order_update DESC LIMIT 1;");
+      // Bind the parameters
+      $stmt->bindParam(':id', $customerId);
+      $stmt->execute();
+      if($stmt->rowCount() > 0){
+        return $stmt->fetch(PDO::FETCH_COLUMN);
+      } else {
+        return false;
+      }
+    } catch (PDOException $err) {
+      return false;
+    }
+  }
+
   public function listById($data)
   {
     try {
-      $stmt = $this->pdo->prepare("SELECT * FROM order_drug WHERE id = :id");
+      $stmt = $this->pdo->prepare("SELECT * FROM order_drug WHERE id = :id;");
       // Bind the parameters
-      $stmt->bindParam(':id', $data[0]);
-
+      $stmt->bindParam(':id', $data);
       // Execute the SELECT statement
       $stmt->execute();
       
       if($stmt->rowCount() > 0){
-        return $stmt->fetch(PDO::FETCH_ASSOC);
-      } else {
-        return false;
+       return $stmt->fetch(PDO::FETCH_ASSOC);
       }
     } catch (PDOException $err) {
       return false;
@@ -161,7 +180,7 @@ class OrderDrug extends Database
   {
     try {
       // Prepare the UPDATE statement
-      $sql = "UPDATE order_drug SET `customer_id` = :customer_id,`total` = :total,`status` = :status,`order_update` = :order_update WHERE id = :id";
+      $sql = "UPDATE order_drug SET `customer_id` = :customer_id,`total` = :total,`status` = :status,`order_update` = :order_update WHERE id = :id;";
       $stmt = $this->pdo->prepare($sql);
 
       $Now = new DateTime('now');
@@ -190,7 +209,7 @@ class OrderDrug extends Database
   public function remove($data) 
   {
     try {
-      $stmt = $this->pdo->prepare("DELETE FROM order_drug WHERE id = :id");
+      $stmt = $this->pdo->prepare("DELETE FROM order_drug WHERE id = :id;");
       // Bind the parameters
       $stmt->bindParam(':id', $data[0]);
 

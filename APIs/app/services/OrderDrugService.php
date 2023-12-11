@@ -153,8 +153,8 @@ class OrderDrugService extends Requests
 
         if ($user) {
 
-          $drugType_id = $id[0];
-          $book_exists = $orderDrug->listById([$drugType_id]);
+          $orderDrug_id = $id[0];          
+          $book_exists = $orderDrug->listById($orderDrug_id);
 
           if ($book_exists) {
             $result['orderDrug'] = $book_exists;
