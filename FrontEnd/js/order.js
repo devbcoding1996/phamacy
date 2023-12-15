@@ -60,6 +60,7 @@ var shoppingCart = (function () {
 
   // Remove all items from cart
   obj.removeItemFromCartAll = function (name) {
+    console.log("remove", name);
     for (var item in cart) {
       if (cart[item].name === name) {
         cart.splice(item, 1);
@@ -113,13 +114,21 @@ var shoppingCart = (function () {
 function addItem(event) {
   // alert('working');
   event.preventDefault();
-  var name = event.target.attributes['data-name'].value;
-  var price = Number(event.target.attributes['data-price'].value);
-  console.log('name', name)
-  console.log('price', price)
+  var name = event.target.attributes["data-name"].value;
+  var price = Number(event.target.attributes["data-price"].value);
+  console.log("name", name);
+  console.log("price", price);
   shoppingCart.addItemToCart(name, price, 1);
   displayCart();
-};
+}
+
+// Delete item button
+function deleteItem(event) {
+  var name = event.target.attributes["data-name"].value;
+  console.log("name", name);
+  shoppingCart.removeItemFromCartAll(name);
+  displayCart();
+}
 
 // Clear items
 $(".clear-cart").click(function () {
@@ -130,43 +139,27 @@ $(".clear-cart").click(function () {
 function displayCart() {
   var cartArray = shoppingCart.listCart();
   var output = "";
+  console.log("cartArray[i].name", cartArray);
   for (var i in cartArray) {
-    output +=
-      "<tr>" +
-      "<td>" +
-      cartArray[i].name +
-      "</td>" +
-      "<td>(" +
-      cartArray[i].price +
-      ")</td>" +
-      "<td><div class='input-group'>" +
-      "<input type='number' class='item-count form-control' data-name='" +
-      cartArray[i].name +
-      "' value='" +
-      cartArray[i].count +
-      "'>" +
-      "</div></td>" +
-      "<td><button class='delete-item btn btn-danger' data-name=" +
-      cartArray[i].name +
-      ">X</button></td>" +
-      " = " +
-    //   "<td>" +
-    //   cartArray[i].total +
-    //   "</td>" +
-      "</tr>";
+    output += `
+      <tr>
+          <td>${cartArray[i].name}</td>
+          <td>(${cartArray[i].price}฿)</td>
+          <td>
+              <div class='input-group'>
+                  <input type='number' class='item-count form-control' data-name='${cartArray[i].name}'
+                      value='${cartArray[i].count}'>
+              </div>
+          </td>
+          <td><button class='delete-item btn btn-danger' onclick='deleteItem(event)' data-name='${cartArray[i].name}'>X</button>
+          </td>
+      </tr>
+    `;
   }
   $(".show-cart").html(output);
   $(".total-cart").html(shoppingCart.totalCart());
   $(".total-count").html(shoppingCart.totalCount());
 }
-
-// Delete item button
-
-$(".show-cart").on("click", ".delete-item", function (event) {
-  var name = $(this).data("name");
-  shoppingCart.removeItemFromCartAll(name);
-  displayCart();
-});
 
 // Item count input
 $(".show-cart").on("change", ".item-count", function (event) {
