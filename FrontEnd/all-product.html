@@ -223,9 +223,25 @@
     <script src="js/customer.js"></script>
     <script src="js/order.js"></script>
     <script>
-        handleSearch = () => {
-            var input = document.getElementById("search");
-            var filter = input.value.toLowerCase();
+        checkKeyword = () => {
+            // Get the query string from the current URL
+            const queryString = window.location.search;
+            const urlParams = new URLSearchParams(queryString);
+            const param = urlParams.get('keyword');
+            console.log('param:', param);
+
+            if (param) {
+                handleSearch(param)
+            }
+        }
+
+        handleSearch = (key) => {
+            if (!key) {
+                var input = document.getElementById("search");
+                var filter = input.value.toLowerCase();
+            } else {
+                var filter = key.toLowerCase();
+            }
             var nodes = document.getElementsByClassName('target');
 
             for (i = 0; i < nodes.length; i++) {
@@ -320,6 +336,8 @@
                     }
                 });
             }
+
+            checkKeyword();
         }
         getProduct();
     </script>
