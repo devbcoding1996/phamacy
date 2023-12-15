@@ -151,7 +151,7 @@ function displayCart() {
                       value='${cartArray[i].count}'>
               </div>
           </td>
-          <td><button class='delete-item btn btn-danger' onclick='deleteItem(event)' data-name='${cartArray[i].name}'>X</button>
+          <td><a class='delete-item btn btn-danger' onclick='deleteItem(event)' data-name='${cartArray[i].name}'>X</a>
           </td>
       </tr>
     `;
