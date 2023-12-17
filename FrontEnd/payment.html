@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-US">
+
+<head>
+
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta http-equiv="x-ua-compatible" content="IE=edge">
+    <meta name="author" content="SemiColonWeb">
+    <meta name="description"
+        content="Create Shop, Store &amp; eCommerce Websites with Canvas Template. Get Canvas to build powerful websites easily with the Highly Customizable &amp; Best Selling Bootstrap Template, today.">
+
+    <link rel="icon" type="image/x-icon" href="./favicon.png">
+    <!-- Font Imports -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;1,400&family=Montserrat:wght@300;400;500;600;700&family=Merriweather:ital,wght@0,300;0,400;1,300;1,400&display=swap"
+        rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+        integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <!-- Core Style -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Font Icons -->
+    <link rel="stylesheet" href="css/font-icons.css">
+
+    <!-- Plugins/Components CSS -->
+    <link rel="stylesheet" href="css/swiper.css">
+
+    <!-- Niche Demos -->
+    <link rel="stylesheet" href="demos/shop/shop.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/custom.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <!-- Document Title
+	============================================= -->
+    <title>Narumon | Pharmacy</title>
+
+</head>
+
+<body class="stretched">
+
+    <!-- Document Wrapper
+	============================================= -->
+    <div id="wrapper">
+        <div class="loading-container" id="load" style="display: none;">
+            <div class="lds-ripple">
+                <div></div>
+                <div></div>
+            </div>
+        </div>
+        <!-- Login Modal -->
+        <div class="modal1 mfp-hide" id="modal-register">
+            <div class="card mx-auto" style="max-width: 540px;">
+                <div class="card-header py-3 bg-transparent text-center">
+                    <h3 class="mb-0 fw-normal">สวัสดี, ยินดีต้อนรับกลับ</h3>
+                </div>
+                <div class="card-body mx-auto py-5" style="max-width: 70%;">
+                    <div class="mb-0 row">
+
+                        <div class="col-12">
+                            <input type="text" id="login-form-username" name="login-form-username" value=""
+                                class="form-control not-dark" placeholder="บัญชีผู้ใช้">
+                        </div>
+
+                        <div class="col-12 mt-4">
+                            <input type="password" id="login-form-password" name="login-form-password" value=""
+                                class="form-control not-dark" placeholder="รหัสผ่าน">
+                        </div>
+                        <div class="col-12 mt-4">
+                            <button class="button w-100 m-0" id="login-form-submit" name="login-form-submit"
+                                onclick="handleLogin()">เข้าสู่ระบบ
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer py-4 text-center">
+                    <p class="mb-0">ท่านมีบัญชีแล้วหรือยัง? <a href="#"><u>สมัครสมาชิก</u></a></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Header
+		============================================= -->
+        <header id="header" class="full-header header-size-md">
+            <div id="header-wrap">
+                <div class="container">
+                    <div class="header-row justify-content-lg-between">
+
+                        <!-- Logo
+						============================================= -->
+                        <div id="logo" class="me-lg-4">
+                            <a href="index.html">
+                                <!-- <img class="logo-default"
+									srcset="demos/shop/images/logo.png, demos/shop/images/logo@2x.png 2x"
+									src="demos/shop/images/logo@2x.png" alt="Canvas Logo"> -->
+                                <h2 class="logo-default font-bebas m-0">Narumon Pharmacy</h2>
+                            </a>
+                        </div><!-- #logo end -->
+
+                        <div class="header-misc">
+
+                            <!-- Top Search
+							============================================= -->
+                            <div id="top-account">
+                            </div>
+                        </div>
+
+                        <div class="primary-menu-trigger">
+                            <button class="cnvs-hamburger" type="button" title="Open Mobile Menu">
+                                <span class="cnvs-hamburger-box"><span class="cnvs-hamburger-inner"></span></span>
+                            </button>
+                        </div>
+
+                        <!-- Primary Navigation
+						============================================= -->
+                        <nav class="primary-menu with-arrows me-lg-auto">
+
+                            <ul class="menu-container">
+                                <li class="menu-item current">
+                                    <a class="menu-link" href="index.html">
+                                        <div>หน้าหลัก</div>
+                                    </a>
+                                </li>
+                                <li class="menu-item mega-menu">
+                                    <a class="menu-link" href="all-product.html">
+                                        <div>สินค้าทั้งหมด</div>
+                                    </a>
+                                </li>
+                                <li class="menu-item current">
+                                    <a class="menu-link" href="how-to-buy.html">
+                                        <div>วิธีสั่งซื้อและชำระเงิน</div>
+                                    </a>
+                                </li>
+                                <li class="menu-item current">
+                                    <a class="menu-link" href="contact-us.html">
+                                        <div>ติดต่อเรา</div>
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav><!-- #primary-menu end -->
+                    </div>
+                </div>
+            </div>
+            <div class="header-wrap-clone"></div>
+        </header><!-- #header end -->
+
+        <section id="content">
+            <div class="content-wrap" style="padding-top: 0.5rem;">
+                <!-- New Arrivals Men
+				============================================= -->
+                <div class="container">
+                    <div class="fancy-title title-border mt-4 title-center">
+                        <h4>ชำระเงิน</h4>
+                    </div>
+
+                    <div class="row g-5">
+                        <div class="col-md-5 col-lg-4 order-md-last">
+                            <h4 class="d-flex justify-content-between align-items-center mb-3 show-count">
+                                <span class="text-primary">สินค้าของคุณ</span>
+                                <span class="badge bg-primary rounded-pill total-count"></span>
+                            </h4>
+                            <ul class="list-group mb-3">
+                                <li class="list-group-item d-flex justify-content-between">
+                                    <span>รหัสออเดอร์</span>
+                                    <strong class="order-code"></strong>
+                                </li>
+                            </ul>
+                            <ul class="list-group mb-3 show-cart">
+                            </ul>
+                            <ul class="list-group mb-3">
+                                <li class="list-group-item d-flex justify-content-between">
+                                    <span>ราคารวม(บาท)</span>
+                                    <strong class="total-cart"></strong>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-md-7 col-lg-8">
+                            <h4 class="mb-3">ที่อยู่ในการจัดส่ง</h4>
+                            <form class="needs-validation" novalidate="">
+                                <div class="row g-3">
+                                    <div class="col-sm-6">
+                                        <label for="firstName" class="form-label">ชื่อ</label>
+                                        <input type="text" class="form-control" id="firstName" placeholder="" value=""
+                                            required="">
+                                        <div class="invalid-feedback">
+                                            Valid first name is required.
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-6">
+                                        <label for="lastName" class="form-label">นามสกุล</label>
+                                        <input type="text" class="form-control" id="lastName" placeholder="" value=""
+                                            required="">
+                                        <div class="invalid-feedback">
+                                            Valid last name is required.
+                                        </div>
+                                    </div>
+
+                                    <div class="col-6">
+                                        <label for="email" class="form-label">อีเมล์</label>
+                                        <input type="email" class="form-control" id="email"
+                                            placeholder="you@example.com">
+                                        <div class="invalid-feedback">
+                                            Please enter a valid email address for shipping updates.
+                                        </div>
+                                    </div>
+
+                                    <div class="col-6">
+                                        <label for="email" class="form-label">เบอร์โทรศัพท์</label>
+                                        <input type="email" class="form-control" id="phonenumber" maxlength="10"
+                                            placeholder="">
+                                        <div class="invalid-feedback">
+                                            Please enter a valid phonenumber for shipping.
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12">
+                                        <label for="address" class="form-label">ที่อยู่</label>
+                                        <input type="text" class="form-control" id="address" placeholder="" required="">
+                                        <div class="invalid-feedback">
+                                            Please enter your shipping address.
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12">
+                                        <label for="address2" class="form-label">ที่อยู่ 2 <span
+                                                class="text-muted">(Optional)</span></label>
+                                        <input type="text" class="form-control" id="address2" placeholder="">
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <label for="district" class="form-label">ตำบล</label>
+                                        <select class="form-select" id="district" required="">
+                                            <option value="">เลือก...</option>
+                                        </select>
+                                        <div class="invalid-feedback">
+                                            Please select a valid district.
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <label for="subdistrict" class="form-label">อำเภอ</label>
+                                        <select class="form-select" id="subdistrict" required="">
+                                            <option value="">เลือก...</option>
+                                        </select>
+                                        <div class="invalid-feedback">
+                                            Please provide a valid subdistrict.
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <label for="province" class="form-label">จังหวัด</label>
+                                        <select class="form-select" id="province" required="">
+                                            <option value="">เลือก...</option>
+                                        </select>
+                                        <div class="invalid-feedback">
+                                            Please provide a valid province.
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <label for="zip" class="form-label">รหัสไปรษณีย์</label>
+                                        <input type="text" class="form-control" id="zip" placeholder="" required="">
+                                        <div class="invalid-feedback">
+                                            Zip code required.
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <hr class="my-4">
+
+                                <div class="form-check">
+                                    <input type="checkbox" class="form-check-input" id="same-address">
+                                    <label class="form-check-label"
+                                        for="same-address">ที่อยู่สำหรับจัดส่งตรงกับที่อยู่ในการเรียกเก็บเงิน</label>
+                                </div>
+
+                                <div class="form-check">
+                                    <input type="checkbox" class="form-check-input" id="save-info">
+                                    <label class="form-check-label"
+                                        for="save-info">บันทึกข้อมูลนี้ไว้ใช้ครั้งต่อไป</label>
+                                </div>
+
+                                <hr class="my-4">
+
+                                <h4 class="mb-2">ช่องทางการชำระเงิน</h4>
+                                <div class="my-3">
+                                    <span>พร้อมเพย์</span><br>
+                                    <span>ชื่อบัญชี <code>Narumon Pharmacy</code></span><br>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <img src="./images/qrcode.png" width="100%" alt="">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="my-3">
+                                    <span>ธนาคารกรุงไทย</span><br>
+                                    <span>เลขบัญชี <code>1234212235</code></span><br>
+                                    <span>ชื่อบัญชี <code>Narumon Pharmacy</code></span><br>
+                                    <span class="text-danger">*หมายเหตุ
+                                        หากลูกค้าโอนเงินเรียบร้อยแล้วกรุณาส่งสลิปการโอนเงินมาที่ LINE
+                                        @NarumonPharmacyShop</span>
+                                </div>
+
+                                <button class="w-100 btn btn-primary btn-lg" type="submit">ยืนยันการชำระเงิน</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="clear"></div>
+            </div>
+        </section><!-- #content end -->
+    </div><!-- #wrapper end -->
+
+    <!-- Go To Top
+	============================================= -->
+    <div id="gotoTop" class="bi-arrow-up"></div>
+
+    <!-- JavaScripts
+	============================================= -->
+    <script src="js/plugins.min.js"></script>
+    <script src="js/functions.bundle.js"></script>
+    <script src="js/login.js"></script>
+    <script src="js/customer.js"></script>
+    <script src="js/payment.js"></script>
+
+    <script>
+
+        (function () {
+            'use strict'
+
+            var forms = document.querySelectorAll('.needs-validation')
+
+            Array.prototype.slice.call(forms)
+                .forEach(function (form) {
+                    form.addEventListener('submit', function (event) {
+                        if (!form.checkValidity()) {
+                            event.preventDefault()
+                            event.stopPropagation()
+                        } else {
+                            // handleAddItem();
+                            event.preventDefault()
+                        }
+
+                        form.classList.add('was-validated')
+                    }, false)
+                })
+        })()
+    </script>
+</body>
+
+</html>

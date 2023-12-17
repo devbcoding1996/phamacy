@@ -53,6 +53,7 @@ orderDrugDetailCreate = async () => {
   let token = localStorage.getItem("token");
   myHeaders.append("Content-Type", "application/json");
   myHeaders.append("Authorization", `Bearer ${token}`);
+  document.getElementById("load").style.display = "flex";
 
   var cartArray = shoppingCart.listCart();
   let model = cartArray.map(function (item) {
@@ -78,6 +79,9 @@ orderDrugDetailCreate = async () => {
     .then(async (result) => {
       let response = await result.json();
       console.log("response", response);
+      setTimeout(() => {
+        window.location.href = "payment.html";
+      }, 2000);
     })
     .catch((error) => {
       console.log("error", error);
