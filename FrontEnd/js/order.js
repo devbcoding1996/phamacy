@@ -38,13 +38,14 @@ orderDrugCreate = async () => {
       .catch((error) => {
         console.log("error", error);
       });
-  } else {
-    Swal.fire({
-      icon: "warning",
-      title: "คำเตือน",
-      text: "โปรดเพิ่มสินค้นในตะกร้า",
-    });
-  }
+  } 
+  // else {
+  //   Swal.fire({
+  //     icon: "warning",
+  //     title: "คำเตือน",
+  //     text: "โปรดเพิ่มสินค้นในตะกร้า",
+  //   });
+  // }
 };
 document.getElementById("top-cart-trigger").addEventListener("click", orderDrugCreate);
 
