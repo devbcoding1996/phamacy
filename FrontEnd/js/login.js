@@ -2,6 +2,7 @@ let role;
 handleLogin = async () => {
   var _user = document.getElementById("login-form-username").value;
   var _pass = document.getElementById("login-form-password").value;
+  document.getElementById('load').style.display = 'flex';
   try {
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");

@@ -61,7 +61,12 @@
 	<!-- Document Wrapper
 	============================================= -->
 	<div id="wrapper">
-
+		<div class="loading-container" id="load" style="display: none;">
+			<div class="lds-ripple">
+				<div></div>
+				<div></div>
+			</div>
+		</div>
 		<!-- Login Modal -->
 		<div class="modal1 mfp-hide" id="modal-register">
 			<div class="card mx-auto" style="max-width: 540px;">
@@ -121,7 +126,7 @@
 
 							<!-- Top Cart
 							============================================= -->
-							<div id="top-cart" class="header-misc-icon d-none d-sm-block">
+							<div id="top-cart" class="header-misc-icon d-sm-block">
 								<a href="#" id="top-cart-trigger">
 									<i class="uil uil-shopping-bag"></i>
 									<span class="top-cart-number total-count"></span>
@@ -136,7 +141,8 @@
 									</div>
 									<div class="top-cart-action">
 										<span class="top-checkout-price total-cart"></span>
-										<a href="#" class="button button-3d button-small m-0">ชำระเงิน</a>
+										<a href="#" class="button button-3d button-small m-0"
+											onclick="orderDrugDetailCreate()">ชำระเงิน</a>
 									</div>
 								</div>
 							</div>

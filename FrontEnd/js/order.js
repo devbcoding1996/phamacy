@@ -1,10 +1,97 @@
+orderDrugCreate = async () => {
+  console.log("shoppingCart.totalCart()", shoppingCart.totalCart());
+  if (shoppingCart.totalCart() > 0) {
+    var myHeaders = new Headers();
+    let token = localStorage.getItem("token");
+    let customerId = localStorage.getItem("customer_id");
+    if (!customerId) {
+      Swal.fire({
+        icon: "warning",
+        title: "โปรดเข้าสู่ระบบ",
+        text: "Unauthorized, please, verify your token",
+      }).then((result) => {
+        return false;
+      });
+    }
+    myHeaders.append("Content-Type", "application/json");
+    myHeaders.append("Authorization", `Bearer ${token}`);
+
+    var raw = JSON.stringify({
+      customerId: customerId,
+      total: shoppingCart.totalCart(),
+    });
+
+    var requestOptions = {
+      method: "POST",
+      headers: myHeaders,
+      body: raw,
+      redirect: "follow",
+    };
+    await fetch("https://api.wakeupcoding.com/pharmacy-api/orderDrug/create", requestOptions)
+      .then(async (result) => {
+        let response = await result.json();
+        console.log("response", response);
+        if (response.orderId) {
+          localStorage.setItem("orderId", response.orderId);
+        }
+      })
+      .catch((error) => {
+        console.log("error", error);
+      });
+  } else {
+    Swal.fire({
+      icon: "warning",
+      title: "คำเตือน",
+      text: "โปรดเพิ่มสินค้นในตะกร้า",
+    });
+  }
+};
+document.getElementById("top-cart-trigger").addEventListener("click", orderDrugCreate);
+
+orderDrugDetailCreate = async () => {
+  var myHeaders = new Headers();
+  let token = localStorage.getItem("token");
+  myHeaders.append("Content-Type", "application/json");
+  myHeaders.append("Authorization", `Bearer ${token}`);
+
+  var cartArray = shoppingCart.listCart();
+  let model = cartArray.map(function (item) {
+    return {
+      drugInfoId: item.drugInfoId,
+      orderId: item.orderId,
+      quantity: item.count,
+      value: item.price,
+      total: item.total,
+    };
+  });
+
+  var raw = JSON.stringify(model);
+
+  var requestOptions = {
+    method: "POST",
+    headers: myHeaders,
+    body: raw,
+    redirect: "follow",
+  };
+
+  await fetch("https://api.wakeupcoding.com/pharmacy-api/orderDrugDetail/create", requestOptions)
+    .then(async (result) => {
+      let response = await result.json();
+      console.log("response", response);
+    })
+    .catch((error) => {
+      console.log("error", error);
+    });
+};
+
 var shoppingCart = (function () {
   cart = [];
 
-  function Item(name, price, count) {
+  function Item(name, price, count, drugInfoId) {
     this.name = name;
     this.price = price;
     this.count = count;
+    this.drugInfoId = drugInfoId;
   }
 
   // Save cart
@@ -23,7 +110,7 @@ var shoppingCart = (function () {
   var obj = {};
 
   // Add to cart
-  obj.addItemToCart = function (name, price, count) {
+  obj.addItemToCart = function (name, price, count, id) {
     for (var item in cart) {
       if (cart[item].name === name) {
         cart[item].count++;
@@ -31,7 +118,7 @@ var shoppingCart = (function () {
         return;
       }
     }
-    var item = new Item(name, price, count);
+    var item = new Item(name, price, count, id);
     cart.push(item);
     saveCart();
   };
@@ -43,6 +130,14 @@ var shoppingCart = (function () {
         break;
       }
     }
+    saveCart();
+  };
+  // Set orderid from item
+  obj.setOrderIdForItem = function (orderId) {
+    for (var i in cart) {
+      cart[i].orderId = orderId;
+    }
+    saveCart();
   };
   // Remove item from cart
   obj.removeItemFromCart = function (name) {
@@ -114,11 +209,20 @@ var shoppingCart = (function () {
 function addItem(event) {
   // alert('working');
   event.preventDefault();
+  var id = event.target.attributes["data-id"].value;
   var name = event.target.attributes["data-name"].value;
   var price = Number(event.target.attributes["data-price"].value);
   console.log("name", name);
   console.log("price", price);
-  shoppingCart.addItemToCart(name, price, 1);
+  shoppingCart.addItemToCart(name, price, 1, id);
+  displayCart();
+}
+
+function updateItem(name, event) {
+  var name = name;
+  var count = Number(event.value);
+  shoppingCart.setCountForItem(name, count);
+  shoppingCart.setOrderIdForItem(name, localStorage.getItem("orderId"));
   displayCart();
 }
 
@@ -137,6 +241,8 @@ $(".clear-cart").click(function () {
 });
 
 function displayCart() {
+  orderDrugCreate();
+  shoppingCart.setOrderIdForItem(localStorage.getItem("orderId"));
   var cartArray = shoppingCart.listCart();
   var output = "";
   console.log("cartArray[i].name", cartArray);
@@ -147,7 +253,7 @@ function displayCart() {
           <td>(${cartArray[i].price}฿)</td>
           <td>
               <div class='input-group'>
-                  <input type='number' class='item-count form-control' data-name='${cartArray[i].name}'
+                  <input type='number' class='item-count form-control' data-name='${cartArray[i].name}' onchange='updateItem("${cartArray[i].name}", this)'
                       value='${cartArray[i].count}'>
               </div>
           </td>

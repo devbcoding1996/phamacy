@@ -40,6 +40,7 @@
     <!-- Custom CSS -->
     <link rel="stylesheet" href="css/custom.css">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <!-- Document Title
 	============================================= -->
@@ -55,7 +56,12 @@
 </head>
 
 <body class="stretched">
-
+    <div class="loading-container" id="load" style="display: none;">
+        <div class="lds-ripple">
+            <div></div>
+            <div></div>
+        </div>
+    </div>
     <!-- Document Wrapper
 	============================================= -->
     <div id="wrapper">
@@ -69,12 +75,12 @@
                     <div class="mb-0 row">
 
                         <div class="col-12">
-                            <input type="text" id="login-form-username" name="login-form-username"
-                                value="Admin@gamil.com" class="form-control not-dark" placeholder="บัญชีผู้ใช้">
+                            <input type="text" id="login-form-username" name="login-form-username" value=""
+                                class="form-control not-dark" placeholder="บัญชีผู้ใช้">
                         </div>
 
                         <div class="col-12 mt-4">
-                            <input type="password" id="login-form-password" name="login-form-password" value="admin123"
+                            <input type="password" id="login-form-password" name="login-form-password" value=""
                                 class="form-control not-dark" placeholder="รหัสผ่าน">
                         </div>
                         <div class="col-12 mt-4">
@@ -117,7 +123,7 @@
 
                             <!-- Top Cart
 							============================================= -->
-                            <div id="top-cart" class="header-misc-icon d-none d-sm-block">
+                            <div id="top-cart" class="header-misc-icon d-sm-block">
                                 <a href="#" id="top-cart-trigger">
                                     <i class="uil uil-shopping-bag"></i>
                                     <span class="top-cart-number total-count"></span>
@@ -132,7 +138,7 @@
                                     </div>
                                     <div class="top-cart-action">
                                         <span class="top-checkout-price total-cart"></span>
-                                        <a href="#" class="button button-3d button-small m-0">ชำระเงิน</a>
+                                        <a href="#" class="button button-3d button-small m-0" onclick="orderDrugDetailCreate()">ชำระเงิน</a>
                                     </div>
                                 </div>
                             </div>
@@ -294,7 +300,7 @@
                                             <ins>ขนาด ${element.size}</ins>
                                         </div>
                                         <div class="product-price font-primary">
-                                            <ins>${element.keyword}</ins>
+                                            <ins>ประเภท ${element.keyword}</ins>
                                         </div>
                                         <div class="product-price font-primary">
                                             <ins>สรรพคุณ <a href="#" class="text-primary" data-bs-toggle="modal" data-bs-target="#exampleModal${element.categoryId}">ดูเพิ่มเติม...</a></ins>
@@ -303,7 +309,7 @@
                                             <ins>ราคา ${element.price}฿</ins>
                                         </div>
                                         <div class="featured-content-list">
-                                            <button type="button" data-name="${element.name}" data-price="${element.price}" onclick="addItem(event)" class="btn btn-dark w-100">Add to cart</button>
+                                            <button type="button" data-name="${element.name}" data-price="${element.price}" data-id="${element.id}" onclick="addItem(event)" class="btn btn-dark w-100">Add to cart</button>
                                         </div>
                                     </div>
                                 </div>
