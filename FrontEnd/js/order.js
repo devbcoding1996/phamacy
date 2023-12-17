@@ -6,6 +6,7 @@ orderDrugCreate = async () => {
     let customerId = localStorage.getItem("customer_id");
     if (!customerId) {
       localStorage.clear();
+      shoppingCart.clearCart();
       shoppingCart.removeItemFromCartAll();
       return false;
       // Swal.fire({
