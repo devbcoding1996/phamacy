@@ -5,13 +5,16 @@ orderDrugCreate = async () => {
     let token = localStorage.getItem("token");
     let customerId = localStorage.getItem("customer_id");
     if (!customerId) {
-      Swal.fire({
-        icon: "warning",
-        title: "โปรดเข้าสู่ระบบ",
-        text: "Unauthorized, please, verify your token",
-      }).then((result) => {
-        return false;
-      });
+      localStorage.clear();
+      shoppingCart.removeItemFromCartAll();
+      return false;
+      // Swal.fire({
+      //   icon: "warning",
+      //   title: "โปรดเข้าสู่ระบบ",
+      //   text: "Unauthorized, please, verify your token",
+      // }).then((result) => {
+      //   return false;
+      // });
     }
     myHeaders.append("Content-Type", "application/json");
     myHeaders.append("Authorization", `Bearer ${token}`);
@@ -38,7 +41,7 @@ orderDrugCreate = async () => {
       .catch((error) => {
         console.log("error", error);
       });
-  } 
+  }
   // else {
   //   Swal.fire({
   //     icon: "warning",
