@@ -2,7 +2,7 @@ let role;
 handleLogin = async () => {
   var _user = document.getElementById("login-form-username").value;
   var _pass = document.getElementById("login-form-password").value;
-  document.getElementById('load').style.display = 'flex';
+  document.getElementById("load").style.display = "flex";
   try {
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
@@ -31,6 +31,7 @@ handleLogin = async () => {
       localStorage.setItem("token", response.token);
       await checkLoginStatus();
     } else {
+      document.getElementById("load").style.display = "none";
       Swal.fire({
         icon: "error",
         title: "คำเตือน",
