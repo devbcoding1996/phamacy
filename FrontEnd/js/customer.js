@@ -26,6 +26,7 @@ callListCustomer = async () => {
                     </a>
 
                     <ul class="dropdown-menu" aria-labelledby="hasLogin">
+                        <li><a class="dropdown-item" href="history.html">ประวัติคำสั่งซื้อ</a></li>
                         <li><a class="dropdown-item" href="#" onclick="logout()">ออกจากระบบ</a></li>
                     </ul>
                 </div>

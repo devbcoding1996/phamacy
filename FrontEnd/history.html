@@ -25,6 +25,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
         integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
     <!-- Core Style -->
     <link rel="stylesheet" href="style.css">
 
@@ -46,25 +47,19 @@
 	============================================= -->
     <title>Narumon | Pharmacy</title>
 
-    <style>
-        .fit-image {
-            width: 15%;
-            aspect-ratio: 3/2;
-            object-fit: contain;
-        }
-    </style>
 </head>
 
 <body class="stretched">
-    <div class="loading-container" id="load" style="display: none;">
-        <div class="lds-ripple">
-            <div></div>
-            <div></div>
-        </div>
-    </div>
+
     <!-- Document Wrapper
 	============================================= -->
     <div id="wrapper">
+        <div class="loading-container" id="load" style="display: none;">
+            <div class="lds-ripple">
+                <div></div>
+                <div></div>
+            </div>
+        </div>
         <!-- Login Modal -->
         <div class="modal1 mfp-hide" id="modal-register">
             <div class="card mx-auto" style="max-width: 540px;">
@@ -113,6 +108,7 @@
                                 <h2 class="logo-default font-bebas m-0">Narumon Pharmacy</h2>
                             </a>
                         </div><!-- #logo end -->
+
 
                         <div class="header-misc">
 
@@ -191,12 +187,6 @@
                                 </li>
                             </ul>
                         </nav><!-- #primary-menu end -->
-
-                        <form class="top-search-form">
-                            <input type="text" id="search" class="form-control" value="" onkeyup="handleSearch()"
-                                placeholder="Type &amp; Hit Enter.." autocomplete="off">
-                        </form>
-
                     </div>
                 </div>
             </div>
@@ -208,17 +198,15 @@
                 <!-- New Arrivals Men
 				============================================= -->
                 <div class="container">
-                    <div class="fancy-title title-border mt-4 title-center">
-                        <h4>รายการสินค้า</h4>
-                    </div>
-                    <div class="row col-mb-30" id="show-all-product">
+                    <div class="my-3 p-3 bg-body rounded shadow-sm">
+                        <h4 class="border-bottom pb-2 mb-0">รายการคำสั่งซื้อ</h4>
+                        <div class="order-list"></div>
                     </div>
                 </div>
 
                 <div class="clear"></div>
             </div>
         </section><!-- #content end -->
-
     </div><!-- #wrapper end -->
 
     <!-- Go To Top
@@ -229,130 +217,56 @@
 	============================================= -->
     <script src="js/plugins.min.js"></script>
     <script src="js/functions.bundle.js"></script>
-    <script src="js/tooltips.js"></script>
     <script src="js/login.js"></script>
     <script src="js/customer.js"></script>
     <script src="js/order.js"></script>
+
     <script>
-        checkKeyword = () => {
-            // Get the query string from the current URL
-            const queryString = window.location.search;
-            const urlParams = new URLSearchParams(queryString);
-            const param = urlParams.get('keyword');
-            console.log('param:', param);
-
-            if (param) {
-                handleSearch(param)
-            }
-        }
-
-        handleSearch = (key) => {
-            if (!key) {
-                var input = document.getElementById("search");
-                var filter = input.value.toLowerCase();
-            } else {
-                var filter = key.toLowerCase();
-            }
-            var nodes = document.getElementsByClassName('target');
-
-            for (i = 0; i < nodes.length; i++) {
-                if (nodes[i].innerText.toLowerCase().includes(filter)) {
-                    nodes[i].style.display = "block";
-                } else {
-                    nodes[i].style.display = "none";
-                }
-            }
-        }
-
-        getProduct = async () => {
+        var orderId = localStorage.getItem('orderId')
+        orderDrugList = async () => {
             var myHeaders = new Headers();
+            let token = localStorage.getItem("token");
+            let order = "";
             myHeaders.append("Content-Type", "application/json");
-            myHeaders.append("Authorization", "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6ImI4MDdlYjIwLThiNWMtMTFlZS04NDNhLTM4ZjNhYjkwNDlhNSJ9.FmqfsoNTzR9yPraGKiv62TbD9CIGeP5N51Nk3UHv0Yo");
-            myHeaders.append("Cookie", "isAdmin=true");
+            myHeaders.append("Authorization", `Bearer ${token}`);
 
             var requestOptions = {
-                method: 'GET',
+                method: "GET",
                 headers: myHeaders,
-                redirect: 'follow'
+                redirect: "follow",
             };
+            if (!orderId) return false;
+            await fetch(`https://api.wakeupcoding.com/pharmacy-api/orderDrug/list/${orderId}`, requestOptions)
+                .then(async (result) => {
+                    let response = await result.json();
+                    console.log("response", response.orderDrug);
+                    if (!response) return false;
+                    order = `
+                        <div class="d-flex text-muted pt-3">
+                            <svg class="bd-placeholder-img flex-shrink-0 me-2 rounded" width="32" height="32"
+                                xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 32x32"
+                                preserveAspectRatio="xMidYMid slice" focusable="false">
+                                <title>Placeholder</title>
+                                <rect width="100%" height="100%" fill="#007bff"></rect><text x="50%" y="50%"
+                                    fill="#007bff" dy=".3em">32x32</text>
+                            </svg>
 
-            let response = await fetch("https://api.wakeupcoding.com/pharmacy-api/drugInformation", requestOptions)
-                .then((result) => {
-                    return result.json()
+                            <p class="pb-3 mb-0 small lh-sm border-bottom w-100">
+                                <strong class="d-block text-gray-dark">เลขที่คำสั่งซื้อ ${response.orderDrug.id}</strong>
+                                <small>สถานะคำสั่งซื้อ ${response.orderDrug.status}</small><br>
+                                <small>วันที่สั่งซื้อ ${response.orderDrug.orderDate}</small>
+                                <strong class="d-block text-gray-dark">ราคารวม ${response.orderDrug.total}</strong>
+                            </p>
+                        </div>
+                    `;
+                    $('.order-list').html(order)
                 })
-                .catch((error) => { console.log('error', error) });
-            document.getElementById('show-all-product').innerHTML = '';
-            if (response) {
-                let img;
-                response.drugInformation.forEach(element => {
-                    if (element.price) {
-                        if (element.linkImages) {
-                            img = element.linkImages
-                        } else {
-                            img = './images/default-image.jpg'
-                        }
-                        document.getElementById('show-all-product').innerHTML += `
-                            <div class="col-lg-2 col-md-3 col-6 px-2 target">
-                                <div class="product">
-                                    <div class="product-image">
-                                        <a href="#"><img src="${img}" class="fit-image" alt="Image 1"></a>
-                                    </div>
-                                    <div class="product-desc">
-                                        <div class="product-title mb-1">
-                                            <h3><a href="#">ชื่อยา ${element.name}</a></h3>
-                                        </div>
-                                        <div class="product-price font-primary">
-                                            <ins>ขนาด ${element.size}</ins>
-                                        </div>
-                                        <div class="product-price font-primary">
-                                            <ins>ประเภท ${element.keyword}</ins>
-                                        </div>
-                                        <div class="product-price font-primary">
-                                            <ins>สรรพคุณ <a href="#" class="text-primary" data-bs-toggle="modal" data-bs-target="#exampleModal${element.categoryId}">ดูเพิ่มเติม...</a></ins>
-                                        </div>
-                                        <div class="product-price font-primary">
-                                            <ins>ราคา ${element.price}฿</ins>
-                                        </div>
-                                        <div class="featured-content-list">
-                                            <button type="button" data-name="${element.name}" data-price="${element.price}" data-id="${element.id}" onclick="addItem(event)" class="btn btn-dark w-100">Add to cart</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Modal -->
-                            <div class="modal fade" id="exampleModal${element.categoryId}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">ชื่อยา ${element.name}</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <img src="${img}" alt="Image 1">
-                                        <h4 class="m-0">สรรพคุณ</h4>
-                                        <h5 class="fw-light">${element.properties}</h5>
-                                        <h4 class="m-0">วิธีใช้</h4>
-                                        <h5 class="fw-light">${element.useMedicine}</h5>
-                                        <h4 class="m-0">ข้อควรระวัง</h4>
-                                        <h5 class="fw-light">${element.contraindications}</h5>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ปิด</button>
-                                    </div>
-                                    </div>
-                                </div>
-                            </div>
-                        `;
-                    }
+                .catch((error) => {
+                    console.log("error", error);
                 });
-            }
-
-            checkKeyword();
-        }
-        getProduct();
+        };
+        orderDrugList();
     </script>
-
 </body>
 
 </html>
