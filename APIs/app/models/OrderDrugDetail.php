@@ -174,11 +174,74 @@ class OrderDrugDetail extends Database
   public function remove($data) 
   {
     try {
+
+      $resSBI = $this->selectOrderDDById($data[0]);
       $stmt = $this->pdo->prepare("DELETE FROM order_drug_detail WHERE id = :id");
       // Bind the parameters
       $stmt->bindParam(':id', $data[0]);
 
       // Execute the DELETE statement
+      $stmt->execute();
+      
+      if ($stmt->rowCount() > 0) {
+        if($resSBI){
+          $res = $this->selectOrderById($resSBI['order_id']);
+          $total = floatval($res - $resSBI['total']);
+          $this->updateOrderTotal([$resSBI['order_id'],$total]);
+        }
+        return true;
+      } else {
+        return false;
+      }
+    } catch (PDOException $err) {
+      return false;
+    }
+  }
+
+  private function selectOrderById($id)
+  {
+      try {
+        $stmt = $this->pdo->prepare("SELECT total FROM order_drug WHERE id = :id");
+        $stmt->bindParam(':id', $id);
+        $stmt->execute();
+        
+        if($stmt->rowCount() > 0){
+          return $stmt->fetch(PDO::FETCH_COLUMN);
+        }
+        } catch (PDOException $err) {
+        return false;
+      }
+  }
+
+  private function selectOrderDDById($id)
+  {
+      try {
+        $stmt = $this->pdo->prepare("SELECT order_drug_detail.* FROM order_drug_detail WHERE id = :id");
+        $stmt->bindParam(':id', $id);
+        $stmt->execute();
+        
+        if($stmt->rowCount() > 0){
+          return $stmt->fetch(PDO::FETCH_ASSOC);
+        }
+        } catch (PDOException $err) {
+        return false;
+      }
+  }
+
+  private function updateOrderTotal($data)
+  {
+    try {
+      // Prepare the UPDATE statement
+      $sql = "UPDATE order_drug SET `total` = :total, `order_update` = :order_update WHERE id = :id";
+      $stmt = $this->pdo->prepare($sql);
+      $Now = new DateTime('now');
+      $currentDateTime = $Now->format('Y-m-d H:i:s');
+      // Bind the parameters
+      $stmt->bindParam(':order_update', $currentDateTime);
+      $stmt->bindParam(':total', $data[1]);
+      $stmt->bindParam(':id', $data[0]);
+
+      // Execute the UPDATE statement
       $stmt->execute();
       
       if ($stmt->rowCount() > 0) {
