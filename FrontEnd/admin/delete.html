@@ -333,7 +333,7 @@
 
         async function getProduct() {
             var settings = {
-                "url": "http://localhost:90/phamacy/APIs/drugInformation",
+                "url": "https://api.wakeupcoding.com/pharmacy-api/drugInformation",
                 "method": "GET",
                 "timeout": 0,
                 "headers": {
@@ -451,7 +451,7 @@
                 denyButtonText: `ยกเลิก`
             }).then(async (result) => {
                 if (result.isConfirmed) {
-                    await fetch(`http://localhost:90/phamacy/APIs/drugInformation/remove/${id}`, requestOptions)
+                    await fetch(`https://api.wakeupcoding.com/pharmacy-api/drugInformation/remove/${id}`, requestOptions)
                         .then(async (result) => {
                             let response = await result.json();
                             Swal.fire({

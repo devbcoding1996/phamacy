@@ -22,6 +22,10 @@
 		href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
 		rel="stylesheet">
 
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+		integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+		crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
 	<!-- Core Style -->
 	<link rel="stylesheet" href="style.css">
 
@@ -57,7 +61,12 @@
 	<!-- Document Wrapper
 	============================================= -->
 	<div id="wrapper">
-
+		<div class="loading-container" id="load" style="display: none;">
+			<div class="lds-ripple">
+				<div></div>
+				<div></div>
+			</div>
+		</div>
 		<!-- Login Modal -->
 		<div class="modal1 mfp-hide" id="modal-register">
 			<div class="card mx-auto" style="max-width: 540px;">
@@ -112,63 +121,32 @@
 							<!-- Top Search
 							============================================= -->
 							<div id="top-account">
-								<a href="#modal-register" id="noLogin" data-lightbox="inline">
-									<i class="bi-person me-1 position-relative" style="top: 1px;"></i>
-									<span class="d-none d-sm-inline-block font-primary fw-medium">เข้าสู่ระบบ</span>
-								</a>
-
-								<a href="#" id="hasLogin" data-lightbox="inline">
-									<i class="bi-person me-1 position-relative" style="top: 1px;"></i>
-									<span class="d-none d-sm-inline-block font-primary fw-medium">คุณ เอ บี</span>
-								</a>
 							</div>
 							<!-- #top-search end -->
 
 							<!-- Top Cart
 							============================================= -->
-							<div id="top-cart" class="header-misc-icon d-none d-sm-block">
+							<div id="top-cart" class="header-misc-icon d-sm-block">
 								<a href="#" id="top-cart-trigger">
-									<i class="uil uil-shopping-bag"></i><span class="top-cart-number">5</span>
+									<i class="uil uil-shopping-bag"></i>
+									<span class="top-cart-number total-count"></span>
 								</a>
 								<div class="top-cart-content">
 									<div class="top-cart-title">
 										<h4>ตะกร้าสินค้า</h4>
 									</div>
 									<div class="top-cart-items">
-										<div class="top-cart-item">
-											<div class="top-cart-item-image">
-												<a href="#">
-													<img src="images/shop/small/1.jpg" alt="Blue Round-Neck Tshirt">
-												</a>
-											</div>
-											<div class="top-cart-item-desc">
-												<div class="top-cart-item-desc-title">
-													<a href="#">Blue Round-Neck Tshirt with a Button</a>
-													<span class="top-cart-item-price d-block">$19.99</span>
-												</div>
-												<div class="top-cart-item-quantity">x 2</div>
-											</div>
-										</div>
-										<div class="top-cart-item">
-											<div class="top-cart-item-image">
-												<a href="#"><img src="images/shop/small/6.jpg"
-														alt="Light Blue Denim Dress"></a>
-											</div>
-											<div class="top-cart-item-desc">
-												<div class="top-cart-item-desc-title">
-													<a href="#">Light Blue Denim Dress</a>
-													<span class="top-cart-item-price d-block">$24.99</span>
-												</div>
-												<div class="top-cart-item-quantity">x 3</div>
-											</div>
-										</div>
+										<table class="show-cart table">
+										</table>
 									</div>
 									<div class="top-cart-action">
-										<span class="top-checkout-price">$114.95</span>
-										<a href="#" class="button button-3d button-small m-0">ดูสินค้าในตะกร้า</a>
+										<span class="top-checkout-price total-cart"></span>
+										<a href="#" class="button button-3d button-small m-0"
+											onclick="orderDrugDetailCreate()">ชำระเงิน</a>
 									</div>
 								</div>
-							</div><!-- #top-cart end -->
+							</div>
+							<!-- #top-cart end -->
 						</div>
 
 						<div class="primary-menu-trigger">
@@ -493,6 +471,7 @@
 	<script src="js/functions.bundle.js"></script>
 	<script src="js/login.js"></script>
 	<script src="js/customer.js"></script>
+	<script src="js/order.js"></script>
 </body>
 
 </html>

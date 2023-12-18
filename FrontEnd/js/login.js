@@ -2,6 +2,7 @@ let role;
 handleLogin = async () => {
   var _user = document.getElementById("login-form-username").value;
   var _pass = document.getElementById("login-form-password").value;
+  document.getElementById("load").style.display = "flex";
   try {
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
@@ -19,7 +20,7 @@ handleLogin = async () => {
       redirect: "follow",
     };
 
-    const response = await fetch("http://localhost:90/phamacy/APIs/users/login", requestOptions)
+    const response = await fetch("https://api.wakeupcoding.com/pharmacy-api/users/login", requestOptions)
       .then((result) => {
         return result.json();
       })
@@ -28,8 +29,9 @@ handleLogin = async () => {
       });
     if (response.message === "successfully") {
       localStorage.setItem("token", response.token);
-      checkLoginStatus();
+      await checkLoginStatus();
     } else {
+      document.getElementById("load").style.display = "none";
       Swal.fire({
         icon: "error",
         title: "คำเตือน",
@@ -54,11 +56,11 @@ checkLoginStatus = async () => {
     redirect: "follow",
   };
 
-  await fetch("http://localhost:90/phamacy/APIs/users", requestOptions)
+  await fetch("https://api.wakeupcoding.com/pharmacy-api/users", requestOptions)
     .then(async (result) => {
       let response = await result.json();
       if (response.data) {
-        if (response.data.isAdmin === 1) {
+        if (response.data.isAdmin === "1") {
           setTimeout(() => {
             window.location.href = "admin/add.html";
           }, 1000);
@@ -71,5 +73,35 @@ checkLoginStatus = async () => {
     })
     .catch((error) => {
       return error;
+    });
+};
+
+logout = async () => {
+  var myHeaders = new Headers();
+  myHeaders.append("Content-Type", "application/json");
+
+  var raw = "";
+
+  var requestOptions = {
+    method: "POST",
+    headers: myHeaders,
+    body: raw,
+    redirect: "follow",
+  };
+
+  await fetch("https://api.wakeupcoding.com/pharmacy-api/users/logout", requestOptions)
+    .then(async (result) => {
+      let response = await result.json();
+      localStorage.clear();
+      Swal.fire({
+        icon: "info",
+        title: "กำลังออกจากระบบ",
+        text: response.message,
+      }).then((result) => {
+        window.location.href = "index.html";
+      });
+    })
+    .catch((error) => {
+      console.log("error", error);
     });
 };

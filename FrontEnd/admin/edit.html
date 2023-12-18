@@ -333,7 +333,7 @@
 
         async function getProduct() {
             var settings = {
-                "url": "http://localhost:90/phamacy/APIs/drugInformation",
+                "url": "https://api.wakeupcoding.com/pharmacy-api/drugInformation",
                 "method": "GET",
                 "timeout": 0,
                 "headers": {
@@ -462,7 +462,7 @@
                 redirect: 'follow'
             };
 
-            await fetch(`http://localhost:90/phamacy/APIs/drugInformation/update/${id}`, requestOptions)
+            await fetch(`https://api.wakeupcoding.com/pharmacy-api/drugInformation/update/${id}`, requestOptions)
                 .then(async (result) => {
                     let response = await result.json();
                     Swal.fire({

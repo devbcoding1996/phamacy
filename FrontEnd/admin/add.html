@@ -287,7 +287,7 @@
                 redirect: 'follow'
             };
 
-            await fetch("http://localhost:90/phamacy/APIs/drugInformation/create", requestOptions)
+            await fetch("https://api.wakeupcoding.com/pharmacy-api/drugInformation/create", requestOptions)
                 .then(async (result) => {
                     let response = await result.json();
                     Swal.fire({
