@@ -1,3 +1,4 @@
+var orderId;
 orderDrugCreate = async () => {
   console.log("shoppingCart.totalCart()", shoppingCart.totalCart());
   if (shoppingCart.totalCart() > 0) {
@@ -8,14 +9,14 @@ orderDrugCreate = async () => {
       localStorage.clear();
       shoppingCart.clearCart();
       shoppingCart.removeItemFromCartAll();
-      return false;
-      // Swal.fire({
-      //   icon: "warning",
-      //   title: "โปรดเข้าสู่ระบบ",
-      //   text: "Unauthorized, please, verify your token",
-      // }).then((result) => {
-      //   return false;
-      // });
+
+      Swal.fire({
+        icon: "warning",
+        title: "โปรดเข้าสู่ระบบ",
+        text: "Unauthorized, please, verify your token",
+      }).then((result) => {
+        return false;
+      });
     }
     myHeaders.append("Content-Type", "application/json");
     myHeaders.append("Authorization", `Bearer ${token}`);
@@ -36,22 +37,22 @@ orderDrugCreate = async () => {
         let response = await result.json();
         console.log("response", response);
         if (response.orderId) {
+          orderId = response.orderId;
           localStorage.setItem("orderId", response.orderId);
+          document.getElementById("payment").disabled = false;
         }
       })
       .catch((error) => {
         console.log("error", error);
       });
+  } else {
+    Swal.fire({
+      icon: "warning",
+      title: "คำเตือน",
+      text: "โปรดเพิ่มสินค้นในตะกร้า",
+    });
   }
-  // else {
-  //   Swal.fire({
-  //     icon: "warning",
-  //     title: "คำเตือน",
-  //     text: "โปรดเพิ่มสินค้นในตะกร้า",
-  //   });
-  // }
 };
-document.getElementById("top-cart-trigger").addEventListener("click", orderDrugCreate);
 
 orderDrugDetailCreate = async () => {
   var myHeaders = new Headers();
@@ -85,7 +86,9 @@ orderDrugDetailCreate = async () => {
       let response = await result.json();
       console.log("response", response);
       setTimeout(() => {
-        window.location.href = "payment.html";
+        window.location.href = `payment.html?orderId=${orderId}`;
+        shoppingCart.clearCart();
+        shoppingCart.removeItemFromCartAll();
       }, 2000);
     })
     .catch((error) => {
@@ -250,7 +253,7 @@ $(".clear-cart").click(function () {
 });
 
 function displayCart() {
-  orderDrugCreate();
+  // orderDrugCreate();
   shoppingCart.setOrderIdForItem(localStorage.getItem("orderId"));
   var cartArray = shoppingCart.listCart();
   var output = "";
@@ -272,7 +275,7 @@ function displayCart() {
     `;
   }
   $(".show-cart").html(output);
-  $(".total-cart").html(shoppingCart.totalCart());
+  $(".total-cart").html(`${shoppingCart.totalCart()}฿`);
   $(".total-count").html(shoppingCart.totalCount());
 }
 
@@ -327,3 +330,4 @@ $("#search_field").on("keyup", function () {
       }
     });
 });
+

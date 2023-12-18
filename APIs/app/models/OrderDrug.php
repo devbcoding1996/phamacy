@@ -169,7 +169,16 @@ class OrderDrug extends Database
       $stmt->execute();
       
       if($stmt->rowCount() > 0){
-       return $stmt->fetch(PDO::FETCH_ASSOC);
+        $orderDrug = $stmt->fetch(PDO::FETCH_ASSOC);
+        $checkArray = [
+              "id" => $orderDrug['id'],
+              "customerId" => intval($orderDrug['customer_id']),
+              "total" => floatval($orderDrug['total']),
+              "status" => $this->checkNull($orderDrug['status']),
+              "orderDate" => $this->checkNull($orderDrug['order_date']),
+              "orderUpdate" => $this->checkNull($orderDrug['order_update'])
+            ];
+       return $checkArray;
       }
     } catch (PDOException $err) {
       return false;
