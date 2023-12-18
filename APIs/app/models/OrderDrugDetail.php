@@ -104,15 +104,41 @@ class OrderDrugDetail extends Database
   public function listById($id)
   {
     try {
-      $stmt = $this->pdo->prepare("SELECT * FROM order_drug_detail WHERE order_id = :order_id");
+      $stmt = $this->pdo->prepare("SELECT order_drug_detail.*,
+      drug_information.name as d_if_name,
+      drug_information.drug_type_id,
+      drug_information.category_id,
+      drug_information.package_id
+      FROM order_drug_detail 
+      INNER JOIN drug_information ON(order_drug_detail.drug_info_id = drug_information.id)
+      WHERE order_id = :order_id");
       // Bind the parameters
       $stmt->bindParam(':order_id', $id);
 
       // Execute the SELECT statement
       $stmt->execute();
+      $res = [];
       
       if($stmt->rowCount() > 0){
-        return $stmt->fetch(PDO::FETCH_ASSOC);
+        $or_detail = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        foreach ($or_detail as $info) {
+            $checkArray = [
+              "id" => $info['id'],
+              "orderId" => $this->checkNull($info['order_id']),
+              "drugInfoId" => $this->checkNull($info['drug_info_id']),
+              "drugInfoName" => $info['d_if_name'],
+              "drugTypeId" => $this->checkNull($info['drug_type_id']),
+              "categoryId" => $this->checkNull($info['category_id']),
+              "packageId" => $this->checkNull($info['package_id']),
+              "quantity" => intval($info['quantity']),
+              "value" => floatval($info['value']),
+              "total" => floatval($info['total']),
+              "orderDate" => $this->checkNull($info['order_date']),
+              "orderUpdate" => $this->checkNull($info['order_update'])
+            ];
+            array_push($res,$checkArray);
+        }
+        return $res;
       } else {
         return false;
       }
