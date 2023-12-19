@@ -98,7 +98,7 @@ class User extends Database
       $stmt->execute();
 
       if ($user = $stmt->fetch()) {
-          return $user['isAdmin'] === 1;
+          return $user['isAdmin'] == 1;
       }
 
       return false;

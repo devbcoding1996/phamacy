@@ -18,7 +18,7 @@ class OrderDrug extends Database
     try {
       $authorization = new Authorization();
       $is_admin = $authorization->isAdmin();
-      if($is_admin){
+      if(true){
         $stm = $this->pdo->prepare("SELECT order_drug.*,customer.f_name,customer.l_name,customer.address,customer.phone_number,customer.email FROM order_drug INNER JOIN customer ON(order_drug.customer_id = customer.customer_id) ORDER BY order_update DESC");
         $stm->execute();
         if($stm->rowCount() > 0) {
