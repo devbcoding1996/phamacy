@@ -101,12 +101,12 @@ class Customer extends Database
     }
   }
 
-  public function listById($data)
+  public function listById($id)
   {
     try {
-      $stmt = $this->pdo->prepare("SELECT * FROM customer WHERE id = :id");
+      $stmt = $this->pdo->prepare("SELECT * FROM customer WHERE customer_id = :id");
       // Bind the parameters
-      $stmt->bindParam(':id', $data[0]);
+      $stmt->bindParam(':id', $id);
 
       // Execute the SELECT statement
       $stmt->execute();
