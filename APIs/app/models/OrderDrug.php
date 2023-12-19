@@ -67,41 +67,67 @@ class OrderDrug extends Database
     }
   }
 
-  public function listByUserId()
+  public function listByUserId($userId)
   {
     try {
-      $jwt = new JWT();
-      $authorization = new Authorization();
-      $token = $authorization->getAuthorization();
-
-      if ($token) {
-        $user = $jwt->validateJWT($token);
-
-        if ($user) {
-          $user_id = $user->id;
-          $stm = $this->pdo->prepare("SELECT * FROM order_drug ORDER BY order_update DESC");
-          $stm->execute();
-          if($stm->rowCount() > 0) {
-            $customer = $stm->fetchAll(PDO::FETCH_ASSOC);
-            $res = [];
-            // Check if the size column is equal to an empty string
-            foreach ($customer as $info) {
-                $checkArray = [
-                  "id" => $info['id'],
-                  "customerId" => intval($info['customer_id']),
-                  "total" => floatval($info['total']),
-                  "status" => $this->checkNull($info['status']),
-                  "orderDate" => $this->checkNull($info['order_date']),
-                  "orderUpdate" => $this->checkNull($info['order_update'])
-                ];
-                array_push($res,$checkArray);
-            }
-            return $res;
-          } else {
-            return [];
-          }
+        if (!$userId) {
+          return false;
         }
-      }
+        $stm = $this->pdo->prepare("SELECT order_drug.* FROM order_drug INNER JOIN user_customer ON(order_drug.customer_id = user_customer.customer_id) WHERE user_customer.user_id = '$userId' ORDER BY order_update DESC");
+        $stm->execute();
+        if($stm->rowCount() > 0) {
+          $customer = $stm->fetchAll(PDO::FETCH_ASSOC);
+          $res = [];
+          // Check if the size column is equal to an empty string
+          foreach ($customer as $info) {
+              $checkArray = [
+                "id" => $info['id'],
+                "customerId" => intval($info['customer_id']),
+                "total" => floatval($info['total']),
+                "status" => $this->checkNull($info['status']),
+                "orderDate" => $this->checkNull($info['order_date']),
+                "orderUpdate" => $this->checkNull($info['order_update'])
+              ];
+              array_push($res,$checkArray);
+          }
+          return $res;
+        } else {
+          return [];
+        }
+      
+    } catch (PDOException $err) {
+      return false;
+    }
+  }
+
+  public function listByCustomerId($customerId)
+  {
+    try {
+        if (!$customerId) {
+          return false;
+        }
+        $stm = $this->pdo->prepare("SELECT * FROM order_drug WHERE customer_id = '$customerId' ORDER BY order_update DESC");
+        $stm->execute();
+        if($stm->rowCount() > 0) {
+          $customer = $stm->fetchAll(PDO::FETCH_ASSOC);
+          $res = [];
+          // Check if the size column is equal to an empty string
+          foreach ($customer as $info) {
+              $checkArray = [
+                "id" => $info['id'],
+                "customerId" => intval($info['customer_id']),
+                "total" => floatval($info['total']),
+                "status" => $this->checkNull($info['status']),
+                "orderDate" => $this->checkNull($info['order_date']),
+                "orderUpdate" => $this->checkNull($info['order_update'])
+              ];
+              array_push($res,$checkArray);
+          }
+          return $res;
+        } else {
+          return [];
+        }
+        
       
     } catch (PDOException $err) {
       return false;
