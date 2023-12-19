@@ -13,7 +13,7 @@ class OrderDrug extends Database
   {
     return empty($val)? "" : $val;
   }
-  public function list()
+  public function list($userId)
   {
     try {
       $authorization = new Authorization();
