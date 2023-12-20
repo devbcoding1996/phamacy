@@ -38,7 +38,8 @@ orderDrugCreate = async () => {
         console.log("response", response);
         if (response.orderId) {
           orderId = response.orderId;
-          localStorage.setItem("orderId", response.orderId);
+          await localStorage.setItem("orderId", response.orderId);
+          await displayCart();
           document.getElementById("payment").disabled = false;
         }
       })
@@ -330,4 +331,3 @@ $("#search_field").on("keyup", function () {
       }
     });
 });
-
