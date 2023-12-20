@@ -44,6 +44,7 @@ $routes = [
 
   '/customer'             => 'CustomerService@index',
   '/customer/create'      => 'CustomerService@create',
+  '/customer/listUserId'      => 'CustomerService@listByUserId',
   '/customer/list/{id}'   => 'CustomerService@listById',
   '/customer/update/{id}' => 'CustomerService@update',
   '/customer/remove/{id}' => 'CustomerService@remove',
@@ -59,6 +60,7 @@ $routes = [
   '/orderDrug'             => 'OrderDrugService@index',
   '/orderDrug/create'      => 'OrderDrugService@create',
   '/orderDrug/listUserId'  => 'OrderDrugService@listByUserId',
+  '/orderDrug/listCustomerId/{id}'  => 'OrderDrugService@listByCustomerId',
   '/orderDrug/list/{id}'   => 'OrderDrugService@listById',
   '/orderDrug/update'      => 'OrderDrugService@update',
   '/orderDrug/remove/{id}' => 'OrderDrugService@remove',

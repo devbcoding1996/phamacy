@@ -1,3 +1,43 @@
+customerList = async (id) => {
+  var myHeaders = new Headers();
+  let token = localStorage.getItem("token");
+
+  myHeaders.append("Content-Type", "application/json");
+  myHeaders.append("Authorization", `Bearer ${token}`);
+
+  var requestOptions = {
+    method: "GET",
+    headers: myHeaders,
+    redirect: "follow",
+  };
+
+  await fetch(`https://api.wakeupcoding.com/pharmacy-api/customer/list/${id}`, requestOptions)
+    .then(async (result) => {
+      let response = await result.json();
+      console.log("response", response);
+      if (response) {
+        localStorage.setItem("customer_id", response.customer.customer_id);
+        document.getElementById("top-account").innerHTML = "";
+        document.getElementById("top-account").innerHTML = `
+            <div class="dropdown">
+                <a href="#" class="dropdown-toggle" role="button" id="hasLogin"
+                    data-bs-toggle="dropdown" aria-expanded="false">
+                    คุณ ${response.customer.f_name} ${response.customer.l_name}
+                </a>
+
+                <ul class="dropdown-menu" aria-labelledby="hasLogin">
+                    <li><a class="dropdown-item" href="history.html">ประวัติคำสั่งซื้อ</a></li>
+                    <li><a class="dropdown-item" href="#" onclick="logout()">ออกจากระบบ</a></li>
+                </ul>
+            </div>
+        `;
+      }
+    })
+    .catch((error) => {
+      console.log("error", error);
+    });
+};
+
 callListCustomer = async () => {
   var myHeaders = new Headers();
   let token = localStorage.getItem("token");
@@ -17,20 +57,7 @@ callListCustomer = async () => {
         console.log("response", response);
         if (response) {
           localStorage.setItem("customer_id", response.userCustomer.customer_id);
-          document.getElementById("top-account").innerHTML = "";
-          document.getElementById("top-account").innerHTML = `
-                <div class="dropdown">
-                    <a href="#" class="dropdown-toggle" role="button" id="hasLogin"
-                        data-bs-toggle="dropdown" aria-expanded="false">
-                        คุณ ทดสอบ ทดสอบ
-                    </a>
-
-                    <ul class="dropdown-menu" aria-labelledby="hasLogin">
-                        <li><a class="dropdown-item" href="history.html">ประวัติคำสั่งซื้อ</a></li>
-                        <li><a class="dropdown-item" href="#" onclick="logout()">ออกจากระบบ</a></li>
-                    </ul>
-                </div>
-            `;
+          customerList(response.userCustomer.customer_id);
         }
       })
       .catch((error) => {

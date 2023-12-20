@@ -19,7 +19,6 @@ class Authorization
   public function isAdmin()
   {
       $is_admin = $_COOKIE['isAdmin'];
-
       return $is_admin === 'true';
   }
 }

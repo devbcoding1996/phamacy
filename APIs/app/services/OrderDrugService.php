@@ -60,7 +60,47 @@ class OrderDrugService extends Requests
         $user = $jwt->validateJWT($token);
 
         if ($user) {
-          $resList = $orderDrug->list($user->id);
+          $resList = $orderDrug->listByUserId($user->id);
+          $result = [
+            'quantity' => count($resList),
+            'orderDrug' => $resList
+          ];
+
+        } else {
+          http_response_code(401);
+          $result['error'] = "Unauthorized, please, verify your token";
+        }
+      } else {
+        http_response_code(401);
+        $result['error'] = "Unauthorized, please, verify your token";
+      }
+    } else {
+      http_response_code(405);
+      $result['error'] = "HTTP Method not allowed";
+    }
+
+    echo json_encode($result);
+  }
+
+  public function listByCustomerId($id)
+  {
+    $method = $this->getMethod();
+
+    $orderDrug = new OrderDrug();
+
+    $jwt = new JWT();
+    $authorization = new Authorization();
+
+    $result = [];
+
+    if ($method == 'GET') {
+      $token = $authorization->getAuthorization();
+
+      if ($token) {
+        $user = $jwt->validateJWT($token);
+        $customerId = $id[0];   
+        if ($user) {
+          $resList = $orderDrug->listByCustomerId($customerId);
           $result = [
             'quantity' => count($resList),
             'orderDrug' => $resList
