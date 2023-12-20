@@ -50,7 +50,7 @@ $routes = [
 
   '/userCustomer'             => 'UserCustomerService@index',
   '/userCustomer/create'      => 'UserCustomerService@create',
-  '/userCustomer/listCustomerId'   => 'UserCustomerService@listByCustomerId',
+  '/userCustomer/listCustomerId/{id}'   => 'UserCustomerService@listByCustomerId',
   '/userCustomer/list/{id}'   => 'UserCustomerService@listById',
   '/userCustomer/update/{id}' => 'UserCustomerService@update',
   '/userCustomer/updateStatus' => 'UserCustomerService@updateStatus',
