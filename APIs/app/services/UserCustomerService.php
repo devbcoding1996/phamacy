@@ -156,9 +156,8 @@ class UserCustomerService extends Requests
         $user = $jwt->validateJWT($token);
 
         if ($user) {
-          $customer_id = $id[0];
 
-          $userCustomer_exists = $userCustomer->listCustomerId($customer_id);
+          $userCustomer_exists = $userCustomer->listCustomerId($user->id);
 
           if ($userCustomer_exists) {
             $result['userCustomer'] = $userCustomer_exists;

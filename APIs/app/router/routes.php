@@ -44,13 +44,14 @@ $routes = [
 
   '/customer'             => 'CustomerService@index',
   '/customer/create'      => 'CustomerService@create',
+  '/customer/listUserId'      => 'CustomerService@listByUserId',
   '/customer/list/{id}'   => 'CustomerService@listById',
   '/customer/update/{id}' => 'CustomerService@update',
   '/customer/remove/{id}' => 'CustomerService@remove',
 
   '/userCustomer'             => 'UserCustomerService@index',
   '/userCustomer/create'      => 'UserCustomerService@create',
-  '/userCustomer/listCustomerId/{id}'   => 'UserCustomerService@listByCustomerId',
+  '/userCustomer/listCustomerId'   => 'UserCustomerService@listByCustomerId',
   '/userCustomer/list/{id}'   => 'UserCustomerService@listById',
   '/userCustomer/update/{id}' => 'UserCustomerService@update',
   '/userCustomer/updateStatus' => 'UserCustomerService@updateStatus',

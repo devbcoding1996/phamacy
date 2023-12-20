@@ -66,9 +66,10 @@ class CustomerService extends Requests
 
             $create_customer = $customer->create([$body['fName'],$body['lName'],$body['address'],$body['phoneNumber'],$body['email'],$body['discount'],"Active",$user->id]);
 
-            if ($create_customer) {
+            if ($create_customer["status"]) {
               http_response_code(200);
               $result['message'] = "Customer created";
+              $result['customerId'] = $create_customer["lastIndex"];
             } else {
               http_response_code(406);
               $result['error'] = "Sorry, something went wrog, verify the fields";
@@ -114,6 +115,47 @@ class CustomerService extends Requests
 
           $customer_id = $id[0];
           $customer_exists = $customer->listById($customer_id);
+
+          if ($customer_exists) {
+            $result['customer'] = $customer_exists;
+          } else {
+            http_response_code(404);
+            $result['error'] = "Customer not found";
+          }
+        } else {
+          http_response_code(401);
+          $result['error'] = "Unauthorized, please, verify your token";
+        }
+      } else {
+        http_response_code(401);
+        $result['error'] = "Unauthorized, please, verify your token";
+      }
+    } else {
+      http_response_code(405);
+      $result['error'] = "HTTP Method not allowed";
+    }
+
+    echo json_encode($result);
+  }
+    public function listByUserId()
+  {
+    $method = $this->getMethod();
+
+    $customer = new Customer();
+
+    $jwt = new JWT();
+    $authorization = new Authorization();
+
+    $result = [];
+
+    if ($method == 'GET') {
+      $token = $authorization->getAuthorization();
+
+      if ($token) {
+        $user = $jwt->validateJWT($token);
+
+        if ($user) {
+          $customer_exists = $customer->listByUserId($user->id);
 
           if ($customer_exists) {
             $result['customer'] = $customer_exists;
