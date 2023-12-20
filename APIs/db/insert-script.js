@@ -23,12 +23,12 @@ function createInsertStatement(jsonData) {
     insertStatement += `  (\n`;
     insertStatement += `    '${data.name}',\n`;
     insertStatement += `    '${data.size}',\n`;
-    insertStatement += `    '${data.use_medicine}',\n`;
+    insertStatement += `    '${data.usemedicine}',\n`;
     insertStatement += `    ${data.contraindications ? `'${data.contraindications}',\n` : 'NULL,\n'}`;
     insertStatement += `    '${data.properties}',\n`;
-    insertStatement += `    ${data.drug_type_id || null},\n`;
-    insertStatement += `    ${data.category_id || null},\n`;
-    insertStatement += `    ${data.package_id || null},\n`;
+    insertStatement += `    ${data.drugtypeid || null},\n`;
+    insertStatement += `    ${data.categoryid || null},\n`;
+    insertStatement += `    ${data.packageid || null},\n`;
     insertStatement += `    ${data.quantity || null},\n`;
     insertStatement += `    '',\n`;
     insertStatement += `    '',\n`;

@@ -95,7 +95,7 @@ class Customer extends Database
       $userCustomer = new UserCustomer();
       $create_userCustomer = $userCustomer->create([$data[7],$last_index]);
 
-      return true;
+      return ["status"=>$stmt->rowCount() > 0,"lastIndex" => $last_index];
     } catch (PDOException $err) {
       return false;
     }
@@ -107,12 +107,22 @@ class Customer extends Database
       $stmt = $this->pdo->prepare("SELECT * FROM customer WHERE customer_id = :id");
       // Bind the parameters
       $stmt->bindParam(':id', $id);
-
       // Execute the SELECT statement
       $stmt->execute();
       
       if($stmt->rowCount() > 0){
-        return $stmt->fetch(PDO::FETCH_ASSOC);
+        $info = $stmt->fetch(PDO::FETCH_ASSOC);
+        $checkArray = [
+              "id" => $info['customer_id'],
+              "fName" => $this->checkNull($info['f_name']),
+              "lName" => $this->checkNull($info['l_name']),
+              "address" => $this->checkNull($info['address']),
+              "phoneNumber" => $this->checkNull($info['phone_number']),
+              "email" => $this->checkNull($info['email']),
+              "discount" => $this->checkNull($info['discount']),
+              "status" => $this->checkNull($info['status'])
+            ];
+        return $checkArray;
       } else {
         return false;
       }
@@ -121,18 +131,34 @@ class Customer extends Database
     }
   }
 
-  public function listByName($data)
+  public function listByUserId($id)
   {
     try {
-      $stmt = $this->pdo->prepare("SELECT * FROM customer WHERE `name` = LIKE '%:name%'");
+      $stmt = $this->pdo->prepare("SELECT customer.*,user_customer.status as default_status FROM customer INNER JOIN user_customer ON(customer.customer_id = user_customer.customer_id)  WHERE user_customer.user_id = :id");
       // Bind the parameters
-      $stmt->bindParam(':name', $data[0]);
-
+      $stmt->bindParam(':id', $id);
       // Execute the SELECT statement
       $stmt->execute();
       
       if($stmt->rowCount() > 0){
-        return $stmt->fetch(PDO::FETCH_ASSOC);
+       $customer = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $res = [];
+        // Check if the size column is equal to an empty string
+        foreach ($customer as $info) {
+            $checkArray = [
+              "id" => $info['customer_id'],
+              "fName" => $this->checkNull($info['f_name']),
+              "lName" => $this->checkNull($info['l_name']),
+              "address" => $this->checkNull($info['address']),
+              "phoneNumber" => $this->checkNull($info['phone_number']),
+              "email" => $this->checkNull($info['email']),
+              "discount" => $this->checkNull($info['discount']),
+              "status" => $this->checkNull($info['status']),
+              "defaultStatus" => $this->checkNull($info['default_status'])
+            ];
+            array_push($res,$checkArray);
+        }
+        return $res;
       } else {
         return false;
       }
@@ -140,26 +166,6 @@ class Customer extends Database
       return false;
     }
   }
-
-  public function listByKeyword($data)
-  {
-    try {
-      $stmt = $this->pdo->prepare("SELECT * FROM customer WHERE keyword = LIKE '%:keyword%'");
-      // Bind the parameters
-      $stmt->bindParam(':keyword', $data[0]);
-
-      // Execute the SELECT statement
-      $stmt->execute();
-      
-      if($stmt->rowCount() > 0){
-        return $stmt->fetch(PDO::FETCH_ASSOC);
-      } else {
-        return false;
-      }
-    } catch (PDOException $err) {
-      return false;
-    }
-  }  
 
   public function update($data) 
   {
