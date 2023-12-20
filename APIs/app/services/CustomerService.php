@@ -112,11 +112,11 @@ class CustomerService extends Requests
 
         if ($user) {
 
-          $drugType_id = $id[0];
-          $book_exists = $customer->listById([$drugType_id]);
+          $customer_id = $id[0];
+          $customer_exists = $customer->listById($customer_id);
 
-          if ($book_exists) {
-            $result['customer'] = $book_exists;
+          if ($customer_exists) {
+            $result['customer'] = $customer_exists;
           } else {
             http_response_code(404);
             $result['error'] = "Customer not found";

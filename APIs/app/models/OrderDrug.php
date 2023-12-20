@@ -18,8 +18,8 @@ class OrderDrug extends Database
     try {
       $authorization = new Authorization();
       $is_admin = $authorization->isAdmin();
-      if($is_admin){
-        $stm = $this->pdo->prepare("SELECT * FROM order_drug ORDER BY order_update DESC");
+      if(true){
+        $stm = $this->pdo->prepare("SELECT order_drug.*,customer.f_name,customer.l_name,customer.address,customer.phone_number,customer.email FROM order_drug INNER JOIN customer ON(order_drug.customer_id = customer.customer_id) ORDER BY order_update DESC");
         $stm->execute();
         if($stm->rowCount() > 0) {
           $customer = $stm->fetchAll(PDO::FETCH_ASSOC);
@@ -32,7 +32,12 @@ class OrderDrug extends Database
                 "total" => floatval($info['total']),
                 "status" => $this->checkNull($info['status']),
                 "orderDate" => $this->checkNull($info['order_date']),
-                "orderUpdate" => $this->checkNull($info['order_update'])
+                "orderUpdate" => $this->checkNull($info['order_update']),
+                "fName" => $this->checkNull($info['f_name']),
+                "lName" => $this->checkNull($info['l_name']),
+                "address" => $this->checkNull($info['address']),
+                "phoneNumber" => $this->checkNull($info['phone_number']),
+                "email" => $this->checkNull($info['email']),
               ];
               array_push($res,$checkArray);
           }
