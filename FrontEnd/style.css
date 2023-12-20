@@ -19111,7 +19111,7 @@ body:not(.top-search-open) .top-search-parent .header-misc > *:not(#top-search) 
 
 
 .loading-container {
-  position: absolute;
+  position: fixed;
   z-index: 100000;
   background: #000000bf;
   width: 100%;

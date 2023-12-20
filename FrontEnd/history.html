@@ -273,12 +273,14 @@
         function status(st) {
             if (st === 'C') return `<span class="text-danger">ยกเลิก</span>`;
             if (st === 'S') return `<span class="text-success">สำเร็จ</span>`;
-            if (st === 'OD') return `<span class="text-primary">รอชำระเงิน</span>`;
+            if (st === 'WP') return `<span class="text-primary">รอชำระเงิน</span>`;
+            if (st === 'OD') return `<span class="text-secondary">ออเดอร์</span>`;
         }
         function color(st) {
             if (st === 'C') return `#dc3545`;
             if (st === 'S') return `#198754`;
-            if (st === 'OD') return `#007bff`;
+            if (st === 'WP') return `#007bff`;
+            if (st === 'OD') return `#6c757d`;
         }
         function setDate(d) {
             const currentDate = new Date(d);

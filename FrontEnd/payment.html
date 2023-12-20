@@ -164,8 +164,20 @@
                     <div class="fancy-title title-border mt-4 title-center">
                         <h4>ชำระเงิน</h4>
                     </div>
-
+                    <div class="my-3">
+                        <div class="form-check">
+                            <input id="newAddress" name="address" type="radio" class="form-check-input"
+                                onclick="handleAddress('new')" checked required>
+                            <label class="form-check-label" for="newAddress">เพิ่มที่อยู่ใหม่</label>
+                        </div>
+                        <div class="form-check">
+                            <input id="oldAddress" name="address" type="radio" class="form-check-input"
+                                onclick="handleAddress('old')" required>
+                            <label class="form-check-label" for="oldAddress">ใช้ที่อยู่ปัจจุบัน</label>
+                        </div>
+                    </div>
                     <div class="row g-5">
+
                         <div class="col-md-5 col-lg-4 order-md-last">
                             <h4 class="d-flex justify-content-between align-items-center mb-3 show-count">
                                 <span class="text-primary">สินค้าของคุณ</span>
