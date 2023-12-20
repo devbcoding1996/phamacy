@@ -126,10 +126,10 @@ class UserService extends Requests
             "token" => $jwt->generateJWT(["id" => $user])
           ];
 
-          //ฟังก์ชัน setcookie() จะตั้งค่าค่า isAdmin เป็นค่า true หรือ false ลงใน Cookies โดยมีเวลาหมดอายุ 1 ชั่วโมง และใช้ได้กับทุกเส้นทางในเว็บไซต์
+          //ฟังก์ชัน setcookie() จะตั้งค่าค่า isAdmin เป็นค่า true หรือ false ลงใน Cookies โดยมีเวลาหมดอายุ 3 ชั่วโมง และใช้ได้กับทุกเส้นทางในเว็บไซต์
           $cookies = array();
           $cookies['isAdmin'] = $this->isAdmin($email) ? 'true' : 'false';
-          setcookie('isAdmin', $cookies['isAdmin'], time() + 3600, '/');
+          setcookie('isAdmin', $cookies['isAdmin'], time() + 10800, '/');
 
         } else {
           http_response_code(401);
