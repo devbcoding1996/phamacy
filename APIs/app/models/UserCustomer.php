@@ -16,7 +16,7 @@ class UserCustomer extends Database
       $authorization = new Authorization();
       $is_admin = $authorization->isAdmin();
       if($is_admin){
-        $stm = $this->pdo->prepare("SELECT * FROM user_customer ORDER BY uc_id DESC");
+        $stm = $this->pdo->prepare("SELECT * FROM user_customer ORDER BY customer_id DESC");
         $stm->execute();
         if($stm->rowCount() > 0) {
           return $stm->fetchAll(PDO::FETCH_ASSOC);
@@ -24,7 +24,7 @@ class UserCustomer extends Database
           return [];
         }
       }
-      $stm = $this->pdo->prepare("SELECT * FROM user_customer WHERE user_id='$userId' ORDER BY uc_id DESC");
+      $stm = $this->pdo->prepare("SELECT * FROM user_customer WHERE user_id='$userId' ORDER BY customer_id DESC");
       $stm->execute();
       if($stm->rowCount() > 0) {
         return $stm->fetchAll(PDO::FETCH_ASSOC);
