@@ -162,7 +162,6 @@ class DrugInformation extends Database
   {
     try {
       $stm = $this->pdo->prepare("SELECT * FROM drug_information WHERE keyword LIKE '%?%'");
-      var_dump($stm);exit();
       $stm->execute([$keyword]);
       
       
