@@ -252,9 +252,9 @@ class CustomerService extends Requests
 
         if ($user) {
 
-          $drug_type_id = $id[0];
+          $customer_id = $id[0];
 
-          $delete_customer = $customer->remove([$drug_type_id,]);
+          $delete_customer = $customer->remove($customer_id);
 
           if ($delete_customer) {
             $result['message'] = "Customer deleted";

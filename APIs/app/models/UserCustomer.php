@@ -97,7 +97,7 @@ class UserCustomer extends Database
   public function listByName($data)
   {
     try {
-      $stmt = $this->pdo->prepare("SELECT * FROM user_customer WHERE `name` = LIKE '%:name%'");
+      $stmt = $this->pdo->prepare("SELECT * FROM user_customer WHERE `name` LIKE '%:name%'");
       // Bind the parameters
       $stmt->bindParam(':name', $data[0]);
 
@@ -117,7 +117,7 @@ class UserCustomer extends Database
   public function listByKeyword($data)
   {
     try {
-      $stmt = $this->pdo->prepare("SELECT * FROM user_customer WHERE keyword = LIKE '%:keyword%'");
+      $stmt = $this->pdo->prepare("SELECT * FROM user_customer WHERE keyword LIKE '%:keyword%'");
       // Bind the parameters
       $stmt->bindParam(':keyword', $data[0]);
 
@@ -204,9 +204,9 @@ class UserCustomer extends Database
   public function remove($data) 
   {
     try {
-      $stmt = $this->pdo->prepare("DELETE FROM user_customer WHERE uc_id = :uc_id");
+      $stmt = $this->pdo->prepare("DELETE FROM user_customer WHERE customer_id = :id");
       // Bind the parameters
-      $stmt->bindParam(':uc_id', $data[0]);
+      $stmt->bindParam(':id', $data);
 
       // Execute the DELETE statement
       $stmt->execute();

@@ -145,7 +145,7 @@ class DrugInformation extends Database
   public function listByName($name)
   {
     try {
-      $stm = $this->pdo->prepare("SELECT * FROM drug_information WHERE `name` = LIKE '?%'");
+      $stm = $this->pdo->prepare("SELECT * FROM drug_information WHERE `name` LIKE '%?%'");
       $stm->execute([$name]);
       
       if($stm->rowCount() > 0){
@@ -161,8 +161,10 @@ class DrugInformation extends Database
   public function listByKeyword($keyword)
   {
     try {
-      $stm = $this->pdo->prepare("SELECT * FROM drug_information WHERE keyword = LIKE '?%'");
+      $stm = $this->pdo->prepare("SELECT * FROM drug_information WHERE keyword LIKE '%?%'");
+      var_dump($stm);exit();
       $stm->execute([$keyword]);
+      
       
       if($stm->rowCount() > 0){
         return $stm->fetch(PDO::FETCH_ASSOC);
