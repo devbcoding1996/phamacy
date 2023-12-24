@@ -309,9 +309,9 @@ class UserCustomerService extends Requests
 
         if ($user) {
 
-          $uc_id = $id[0];
+          $customer_id = $id[0];
 
-          $delete_userCustomer = $userCustomer->remove([$uc_id]);
+          $delete_userCustomer = $userCustomer->remove($customer_id);
 
           if ($delete_userCustomer) {
             $result['message'] = "UserCustomer deleted";

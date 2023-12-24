@@ -66,7 +66,7 @@ class DrugType extends Database
   public function listByName($data)
   {
     try {
-      $stmt = $this->pdo->prepare("SELECT * FROM drug_type WHERE `name` = LIKE '%:name%'");
+      $stmt = $this->pdo->prepare("SELECT * FROM drug_type WHERE `name` LIKE '%:name%'");
       // Bind the parameters
       $stmt->bindParam(':name', $data[0]);
 
@@ -86,7 +86,7 @@ class DrugType extends Database
   public function listByKeyword($data)
   {
     try {
-      $stmt = $this->pdo->prepare("SELECT * FROM drug_type WHERE keyword = LIKE '%:keyword%'");
+      $stmt = $this->pdo->prepare("SELECT * FROM drug_type WHERE keyword LIKE '%:keyword%'");
       // Bind the parameters
       $stmt->bindParam(':keyword', $data[0]);
 

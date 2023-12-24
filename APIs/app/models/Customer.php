@@ -171,7 +171,7 @@ class Customer extends Database
   {
     try {
       // Prepare the UPDATE statement
-      $sql = "UPDATE customer SET `name` = :name WHERE id = :id";
+      $sql = "UPDATE customer SET `name` = :name WHERE customer_id = :id";
       $stmt = $this->pdo->prepare($sql);
 
       // Bind the parameters
@@ -194,9 +194,9 @@ class Customer extends Database
   public function remove($data) 
   {
     try {
-      $stmt = $this->pdo->prepare("DELETE FROM customer WHERE id = :id");
+      $stmt = $this->pdo->prepare("DELETE FROM customer WHERE customer_id = :id");
       // Bind the parameters
-      $stmt->bindParam(':id', $data[0]);
+      $stmt->bindParam(':id', $data);
 
       // Execute the DELETE statement
       $stmt->execute();
