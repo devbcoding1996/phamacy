@@ -286,7 +286,7 @@
                 redirect: 'follow'
             };
 
-            let response = await fetch("https://api.wakeupcoding.com/pharmacy-api/drugInformation", requestOptions)
+            let response = await fetch("https://api.wakeupcoding.com/pharmacy-api/drugInformation/listProductAll", requestOptions)
                 .then((result) => {
                     return result.json()
                 })
