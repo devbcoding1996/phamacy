@@ -215,6 +215,15 @@
                     </div>
                 </div>
 
+
+                <!-- Modal -->
+                <div class="modal fade" id="exampleModalList" tabindex="-1" aria-labelledby="exampleModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content" id="contentModal">
+                        </div>
+                    </div>
+                </div>
                 <div class="clear"></div>
             </div>
         </section><!-- #content end -->
@@ -292,58 +301,34 @@
                             img = './images/default-image.jpg'
                         }
                         document.getElementById('show-all-product').innerHTML += `
-                            <div class="col-lg-3 col-md-3 col-6 px-2 target">
-                                <div class="product">
-                                    <div class="product-image">
-                                        <a href="#"><img src="${img}" class="fit-image" alt="Image 1"></a>
-                                    </div>
-                                    <div class="product-desc">
-                                        <div class="product-title mb-1">
-                                            <h3><a href="#">ชื่อยา ${element.name}</a></h3>
+                                <div class="col-lg-3 col-md-3 col-6 px-2 target">
+                                    <div class="product">
+                                        <div class="product-image">
+                                            <a href="#"><img src="${img}" class="fit-image" alt="Image 1"></a>
                                         </div>
-                                        <div class="product-price font-primary">
-                                            <ins>ขนาด ${element.size}</ins>
+                                        <div class="product-desc">
+                                            <div class="product-title mb-1">
+                                                <h3><a href="#">ชื่อยา ${element.name}</a></h3>
+                                            </div>
+                                            <div class="product-price font-primary">
+                                                <ins>ขนาด ${element.size}</ins>
+                                            </div>
+                                            <div class="product-price font-primary">
+                                                <ins>ประเภท ${element.keyword}</ins>
+                                            </div>
+                                            <div class="product-price font-primary">
+                                                <ins>สรรพคุณ <a href="#" class="text-primary" data-bs-toggle="modal" data-bs-target="#exampleModalList" onclick="showModalDetail(${element.id})">ดูเพิ่มเติม...</a></ins>
+                                            </div>
+                                            <div class="product-price font-primary">
+                                                <ins>ราคา ${element.price}฿</ins>
+                                            </div>
+                                            <div class="featured-content-list">
+                                                <button type="button" data-name="${element.name}" data-price="${element.price}" data-id="${element.id}" onclick="addItem(event)" class="btn btn-dark w-100">Add to cart</button>
+                                            </div>
                                         </div>
-                                        <div class="product-price font-primary">
-                                            <ins>ประเภท ${element.keyword}</ins>
-                                        </div>
-                                        <div class="product-price font-primary">
-                                            <ins>สรรพคุณ <a href="#" class="text-primary" data-bs-toggle="modal" data-bs-target="#exampleModal${element.categoryId}">ดูเพิ่มเติม...</a></ins>
-                                        </div>
-                                        <div class="product-price font-primary">
-                                            <ins>ราคา ${element.price}฿</ins>
-                                        </div>
-                                        <div class="featured-content-list">
-                                            <button type="button" data-name="${element.name}" data-price="${element.price}" data-id="${element.id}" onclick="addItem(event)" class="btn btn-dark w-100">Add to cart</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Modal -->
-                            <div class="modal fade" id="exampleModal${element.categoryId}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">ชื่อยา ${element.name}</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <img src="${img}" alt="Image 1">
-                                        <h4 class="m-0">สรรพคุณ</h4>
-                                        <h5 class="fw-light">${element.properties}</h5>
-                                        <h4 class="m-0">วิธีใช้</h4>
-                                        <h5 class="fw-light">${element.useMedicine}</h5>
-                                        <h4 class="m-0">ข้อควรระวัง</h4>
-                                        <h5 class="fw-light">${element.contraindications}</h5>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ปิด</button>
-                                    </div>
                                     </div>
                                 </div>
-                            </div>
-                        `;
+                            `;
                     }
                 });
 
@@ -353,6 +338,65 @@
             checkKeyword();
         }
         getProduct();
+
+        showModalDetail = async (id) => {
+            let modal = '';
+            let img = '';
+            var myHeaders = new Headers();
+            let token = localStorage.getItem("token");
+            myHeaders.append("Content-Type", "application/json");
+            myHeaders.append("Authorization", `Bearer ${token}`);
+
+            var requestOptions = {
+                method: 'GET',
+                headers: myHeaders,
+                redirect: 'follow'
+            };
+
+            await fetch("https://api.wakeupcoding.com/pharmacy-api/drugInformation/list/" + id, requestOptions)
+                .then(async (result) => {
+                    let response = await result.json();
+                    console.log('response', response)
+                    response = response.drugInfo[0];
+                    if (response) {
+                        if (response.linkImages) {
+                        } else {
+                            img = './images/default-image.jpg'
+                        }
+                        document.getElementById('contentModal').innerHTML = `
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">ชื่อยา ${response.name}</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <img src="${img}" alt="Image 1">
+                                <h4 class="m-0 mt-2">ประเภท</h4>
+                                <h5 class="fw-light">${response.keyword}</h5>
+                                <h4 class="m-0">สรรพคุณ</h4>
+                                <h5 class="fw-light">${response.properties}</h5>
+                                <h4 class="m-0">วิธีใช้</h4>
+                                <h5 class="fw-light">${response.useMedicine}</h5>
+                                <h4 class="m-0">ข้อควรระวัง</h4>
+                                <h5 class="fw-light">${response.contraindications}</h5>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ปิด</button>
+                            </div>
+                        `;
+
+                    }
+                })
+                .catch((error) => {
+                    console.log("error", error);
+                    Swal.fire({
+                        icon: "error",
+                        title: "ผิดพลาด",
+                        text: error.error,
+                    });
+                });
+
+        }
     </script>
 
 </body>
