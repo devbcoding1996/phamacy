@@ -368,9 +368,8 @@
             let modal = '';
             let img = '';
             var myHeaders = new Headers();
-            let token = localStorage.getItem("token");
             myHeaders.append("Content-Type", "application/json");
-            myHeaders.append("Authorization", `Bearer ${token}`);
+            myHeaders.append("Authorization", "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6ImI4MDdlYjIwLThiNWMtMTFlZS04NDNhLTM4ZjNhYjkwNDlhNSJ9.FmqfsoNTzR9yPraGKiv62TbD9CIGeP5N51Nk3UHv0Yo");
 
             var requestOptions = {
                 method: 'GET',
