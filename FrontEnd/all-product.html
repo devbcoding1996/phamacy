@@ -251,17 +251,44 @@
             console.log('param:', param);
 
             if (param) {
-                handleSearch(param)
+                handleSearchByKey(param)
+            } else {
+                getProduct();
             }
         }
 
-        handleSearch = (key) => {
-            if (!key) {
-                var input = document.getElementById("search");
-                var filter = input.value.toLowerCase();
-            } else {
-                var filter = key.toLowerCase();
+        async function handleSearchByKey(param) {
+            var myHeaders = new Headers();
+            myHeaders.append("Content-Type", "application/json");
+            myHeaders.append("Authorization", "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6IjEyNjAwMDQ0LTk3MmUtMTFlZS1hNWMwLTM4ZjNhYjkwNDlhNSJ9.vnYksLsBqA5EHiOmh7MC5vI5FIiRMR9o0y9j1Ut-h0c");
+            myHeaders.append("Cookie", "isAdmin=false");
+
+            var raw = JSON.stringify({
+                "keyWord": param
+            });
+
+            var requestOptions = {
+                method: 'POST',
+                headers: myHeaders,
+                body: raw,
+                redirect: 'follow'
+            };
+
+            let response = await fetch("https://api.wakeupcoding.com/pharmacy-api/drugInformation/listKeyword", requestOptions)
+                .then((result) => {
+                    return result.json()
+                })
+                .catch((error) => { console.log('error', error) });
+            if (response) {
+                response.drugInfo.forEach(element => {
+                    writeElement(element)
+                });
             }
+        }
+
+        function handleSearch(key) {
+            var input = document.getElementById("search");
+            var filter = input.value.toLowerCase();
             var nodes = document.getElementsByClassName('target');
 
             for (i = 0; i < nodes.length; i++) {
@@ -300,10 +327,8 @@
 
                 document.getElementById('load').style.display = 'none';
             }
-
-            checkKeyword();
         }
-        getProduct();
+        checkKeyword()
 
         function writeElement(element) {
             if (element) {
