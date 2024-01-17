@@ -198,6 +198,7 @@ class Customer extends Database
       // Bind the parameters
       $stmt->bindParam(':id', $data);
       //test
+      //test2
       // Execute the DELETE statement
       $stmt->execute();
       
