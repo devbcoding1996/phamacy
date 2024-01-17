@@ -197,7 +197,7 @@ class Customer extends Database
       $stmt = $this->pdo->prepare("DELETE FROM customer WHERE customer_id = :id");
       // Bind the parameters
       $stmt->bindParam(':id', $data);
-
+      //test
       // Execute the DELETE statement
       $stmt->execute();
       
