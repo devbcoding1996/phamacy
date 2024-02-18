@@ -223,6 +223,7 @@
 
     <script>
         var orderId = localStorage.getItem('customer_id')
+        // Function to fetch and display a list of orders for the current user
         orderDrugList = async () => {
             var myHeaders = new Headers();
             let token = localStorage.getItem("token");
@@ -235,12 +236,15 @@
                 headers: myHeaders,
                 redirect: "follow",
             };
-            if (!orderId) return false;
+
+            // Fetch the list of orders from the server
             await fetch(`https://api.wakeupcoding.com/pharmacy-api/orderDrug/listUserId`, requestOptions)
                 .then(async (result) => {
                     let response = await result.json();
                     console.log("response", response.orderDrug);
                     if (!response) return false;
+
+                    // Process each order and format it into HTML elements
                     response.orderDrug.forEach(element => {
                         order += `
                         <div class="d-flex text-muted pt-3">
@@ -262,6 +266,7 @@
                     `;
                     });
 
+                    // Inject the formatted HTML into the UI
                     $('.order-list').html(order)
                 })
                 .catch((error) => {
@@ -270,18 +275,23 @@
         };
         orderDrugList();
 
+        // Function to map order status to corresponding text
         function status(st) {
             if (st === 'C') return `<span class="text-danger">ยกเลิก</span>`;
             if (st === 'S') return `<span class="text-success">สำเร็จ</span>`;
             if (st === 'WP') return `<span class="text-primary">รอชำระเงิน</span>`;
             if (st === 'OD') return `<span class="text-secondary">ออเดอร์</span>`;
         }
+
+        // Function to map order status to corresponding color
         function color(st) {
             if (st === 'C') return `#dc3545`;
             if (st === 'S') return `#198754`;
             if (st === 'WP') return `#007bff`;
             if (st === 'OD') return `#6c757d`;
         }
+
+        // Function to format date
         function setDate(d) {
             const currentDate = new Date(d);
             const thaiDate = currentDate.toLocaleString('th-TH');

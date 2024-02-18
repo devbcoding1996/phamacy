@@ -224,6 +224,7 @@
     <script src="js/customer.js"></script>
     <script src="js/order.js"></script>
     <script>
+        // Function to fetch and display all addresses associated with the current user
         listAllAddress = async () => {
             var myHeaders = new Headers();
             let token = localStorage.getItem("token");
@@ -236,6 +237,7 @@
                 redirect: 'follow'
             };
 
+            // Fetch the list of addresses from the server
             await fetch("https://api.wakeupcoding.com/pharmacy-api/customer/listUserId", requestOptions)
                 .then(async (result) => {
                     let response = await result.json();
@@ -243,9 +245,13 @@
                     if (response) {
                         let main = "";
                         let del = "";
+                        // Process each address and format it into HTML elements
                         response.customer.forEach(element => {
+                            // Determine the main address link based on the default status
                             main = element.defaultStatus == 'Y' ? '<a href="#" class="text-success">ที่อยู่ปัจจุบัน</a>' : `<a href="#" class="text-primary" onclick="updateAddress(${element.id})">ใช้เป็นที่อยู่หลัก</a>`;
+                            // Determine the delete address link based on the default status
                             del = element.defaultStatus == 'Y' ? '' : `<a href="#" class="text-danger" onclick="deleteAddress(${element.id})">ลบที่อยู่</a>`;
+                            // Construct the HTML for each address
                             order += `
                                 <div class="d-flex text-muted pt-3">
                                     <svg class="bd-placeholder-img flex-shrink-0 me-2 rounded" width="32" height="32"
@@ -272,11 +278,13 @@
                             `;
                         });
 
+                        // Inject the formatted HTML into the UI
                         $('.order-list').html(order)
                     }
                 })
                 .catch((error) => {
                     console.log("error", error);
+                    // Display error message if fetching data fails
                     Swal.fire({
                         icon: "error",
                         title: "ผิดพลาด",
@@ -286,6 +294,7 @@
         }
         listAllAddress();
 
+        // Function to update the status of an address to be the main address
         updateAddress = async (id) => {
             var myHeaders = new Headers();
             let token = localStorage.getItem("token");
@@ -294,7 +303,7 @@
 
             var raw = JSON.stringify({
                 "id": id,
-                "status": "Y"
+                "status": "Y" // Setting the status to 'Y' to indicate it's the main address
             });
 
             var requestOptions = {
@@ -304,21 +313,25 @@
                 redirect: 'follow'
             };
 
+            // Making a PUT request to update the address status
             await fetch("https://api.wakeupcoding.com/pharmacy-api/userCustomer/updateStatus/", requestOptions)
                 .then(async (result) => {
                     let response = await result.json();
                     if (response) {
+                        // If the update is successful, display a success message
                         Swal.fire({
                             icon: "success",
                             title: "สำเร็จ",
                             text: response.message,
                         }).then(() => {
+                            // Reload the list of addresses to reflect the changes
                             listAllAddress();
                         });
                     }
                 })
                 .catch((error) => {
                     console.log("error", error);
+                    // Display an error message if the update fails
                     Swal.fire({
                         icon: "error",
                         title: "ผิดพลาด",
@@ -327,6 +340,7 @@
                 });
         }
 
+        // Function to delete an address
         deleteAddress = async (id) => {
             var myHeaders = new Headers();
             let token = localStorage.getItem("token");
@@ -339,21 +353,25 @@
                 redirect: 'follow'
             };
 
+            // Making a DELETE request to remove the address with the specified ID
             await fetch("https://api.wakeupcoding.com/pharmacy-api/userCustomer/remove/" + id, requestOptions)
                 .then(async (result) => {
                     let response = await result.json();
                     if (response) {
+                        // If the deletion is successful, display a success message
                         Swal.fire({
                             icon: "success",
                             title: "สำเร็จ",
                             text: response.message,
                         }).then(() => {
+                            // Reload the list of addresses to reflect the changes
                             listAllAddress();
                         });
                     }
                 })
                 .catch((error) => {
                     console.log("error", error);
+                    // Display an error message if the deletion fails
                     Swal.fire({
                         icon: "error",
                         title: "ผิดพลาด",
@@ -362,9 +380,10 @@
                 });
         }
 
+        // Function to set color based on status
         function color(st) {
-            if (st === 'Y') return `#198754`;
-            if (st === 'N') return `#6c757d`;
+            if (st === 'Y') return `#198754`; // Green color for 'Y' status (main address)
+            if (st === 'N') return `#6c757d`; // Gray color for 'N' status (not main address)
         }
     </script>
 </body>
