@@ -66,7 +66,7 @@ orDerDetailList = async (orderId) => {
               <div>
                   <h6 class="my-0 fw-normal">${no}. ${element.drugInfoName} <span class="text-danger fw-light">(${element.quantity})ชิ้น</span></h6>
               </div>
-              <span class="text-muted">${element.value}฿</span>
+              <span class="text-muted">${element.total}฿</span>
           </li>
         `;
 
@@ -77,7 +77,6 @@ orDerDetailList = async (orderId) => {
       });
 
       // Update HTML elements with order details and total
-      _total = total;
       $(".order-code").html(orderId);
       $(".show-cart").html(output);
       $(".total-cart").html(`${total.toFixed(2)}฿`);
