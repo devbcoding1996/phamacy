@@ -72,6 +72,7 @@ orDerDetailList = async (orderId) => {
 
         // Calculate total price
         total += element.total;
+        _total += element.total;
         quantity += element.quantity;
         no++;
       });
