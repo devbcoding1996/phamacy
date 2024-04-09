@@ -56,6 +56,177 @@ handleLogin = async () => {
   }
 };
 
+customerUpdateStatus = async (id, token) => {
+  try {
+    document.getElementById("load").style.display = "flex";
+    const myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+    myHeaders.append(
+      "Authorization",
+      `Bearer ${token}`
+    );
+
+    const raw = JSON.stringify({
+      id: id,
+      status: "Y",
+    });
+
+    const requestOptions = {
+      method: "PUT",
+      headers: myHeaders,
+      body: raw,
+      redirect: "follow",
+    };
+
+    const response = await fetch("https://api.wakeupcoding.com/pharmacy-api/userCustomer/updateStatus/", requestOptions)
+      .then((result) => {
+        return result.json(); // Parsing response JSON
+      })
+      .catch((error) => {
+        return error; // Catching any errors during fetch
+      });
+
+    // Handling register response
+    if (response.message == "UserCustomer updated") {
+      // Hiding loading spinner
+      document.getElementById("load").style.display = "none";
+      // Displaying error message
+      Swal.fire({
+        icon: "success",
+        title: "สำเร็จ",
+        text: "Register success",
+      }).then(() => {
+        var span = document.getElementsByClassName("mfp-close")[0];
+        span.click();
+      });
+    } else {
+      // Hiding loading spinner
+      document.getElementById("load").style.display = "none";
+      // Displaying error message
+      console.error("error", response.error);
+    }
+  } catch (error) {
+    console.error("Error:", error); // Logging any errors to console
+  }
+};
+
+customerCreate = async (fname, lname, address, tel, email, token) => {
+  try {
+    document.getElementById("load").style.display = "flex";
+    const myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+    myHeaders.append(
+      "Authorization",
+      `Bearer ${token}`
+    );
+
+    const raw = JSON.stringify({
+      fName: fname,
+      lName: lname,
+      address: address,
+      phoneNumber: tel,
+      email: email,
+      discount: 0,
+    });
+
+    const requestOptions = {
+      method: "POST",
+      headers: myHeaders,
+      body: raw,
+      redirect: "follow",
+    };
+
+    const response = await fetch("https://api.wakeupcoding.com/pharmacy-api/customer/create", requestOptions)
+      .then((result) => {
+        return result.json(); // Parsing response JSON
+      })
+      .catch((error) => {
+        return error; // Catching any errors during fetch
+      });
+
+    // Handling register response
+    if (response.customerId != "") {
+      // Hiding loading spinner
+      document.getElementById("load").style.display = "none";
+      await customerUpdateStatus(response.customerId, token);
+    } else {
+      // Hiding loading spinner
+      document.getElementById("load").style.display = "none";
+      // Displaying error message
+      console.error("error", response.error);
+    }
+  } catch (error) {
+    console.error("Error:", error); // Logging any errors to console
+  }
+};
+
+handleRegister = async () => {
+  // Displaying loading spinner
+  document.getElementById("load").style.display = "flex";
+  var _fname = document.getElementById("register-form-fname").value;
+  var _lname = document.getElementById("register-form-lname").value;
+  var _address = document.getElementById("register-form-address").value;
+  var _tel = document.getElementById("register-form-tel").value;
+  var _email = document.getElementById("register-form-email").value;
+  var _password = document.getElementById("register-form-password").value;
+  var _passwordAgain = document.getElementById("register-password-again").value;
+
+  if (_password != _passwordAgain) {
+    Swal.fire({
+      icon: "warning",
+      title: "คำเตือน",
+      text: "Password not match!",
+    });
+    document.getElementById("load").style.display = "none";
+    return;
+  }
+
+  try {
+    const myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+
+    const raw = JSON.stringify({
+      name: `${_fname} ${_lname}`,
+      mobileNumber: _tel,
+      email: _email,
+      password: _passwordAgain,
+    });
+
+    const requestOptions = {
+      method: "POST",
+      headers: myHeaders,
+      body: raw,
+      redirect: "follow",
+    };
+
+    const response = await fetch("https://api.wakeupcoding.com/pharmacy-api/users/create", requestOptions)
+      .then((result) => {
+        return result.json(); // Parsing response JSON
+      })
+      .catch((error) => {
+        return error; // Catching any errors during fetch
+      });
+
+    // Handling register response
+    if (response.token) {
+      // Hiding loading spinner
+      document.getElementById("load").style.display = "none";
+      await customerCreate(_fname, _lname, _address, _tel, _email, response.token);
+    } else {
+      // Hiding loading spinner
+      document.getElementById("load").style.display = "none";
+      // Displaying error message
+      Swal.fire({
+        icon: "error",
+        title: "คำเตือน",
+        text: response.error || "Register failed",
+      });
+    }
+  } catch (error) {
+    console.error("Error:", error); // Logging any errors to console
+  }
+};
+
 checkLoginStatus = async () => {
   // Setting up request headers
   var myHeaders = new Headers();

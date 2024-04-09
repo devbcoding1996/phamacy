@@ -86,7 +86,7 @@ callListCustomer = async () => {
     // Displaying login link if token doesn't exist
     document.getElementById("top-account").innerHTML = "";
     document.getElementById("top-account").innerHTML = `
-        <a href="#modal-register" id="noLogin" data-lightbox="inline">
+        <a href="#modal-login" id="noLogin" data-lightbox="inline">
             <i class="bi-person me-1 position-relative" style="top: 1px;"></i>
             <span class="d-none d-sm-inline-block font-primary fw-medium">เข้าสู่ระบบ</span>
         </a>
