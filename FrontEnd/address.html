@@ -157,6 +157,7 @@
                             </a>
                         </div><!-- #logo end -->
 
+
                         <div class="header-misc">
 
                             <!-- Top Search
@@ -179,14 +180,26 @@
                                         <table class="show-cart table">
                                         </table>
                                     </div>
+                                    <div class="p-2 mb-3 text-center">
+                                        <button class="button button-3d button-small m-0"
+                                            onclick="orderDrugCreate()">ตรวจสอบรายการสินค้า</button>
+                                    </div>
                                     <div class="top-cart-action">
                                         <span class="top-checkout-price total-cart"></span>
-                                        <a href="#" class="button button-3d button-small m-0"
-                                            onclick="orderDrugDetailCreate()">ชำระเงิน</a>
+                                        <button class="button button-3d button-small m-0" id="payment" disabled="true"
+                                            onclick="orderDrugDetailCreate()">ชำระเงิน</button>
                                     </div>
                                 </div>
                             </div>
                             <!-- #top-cart end -->
+
+                            <!-- Top Search
+							============================================= -->
+                            <div id="top-search" class="header-misc-icon">
+                                <a href="#" id="top-search-trigger"><i class="uil uil-search"></i><i
+                                        class="bi-x-lg"></i></a>
+                            </div><!-- #top-search end -->
+
                         </div>
 
                         <div class="primary-menu-trigger">
@@ -222,7 +235,6 @@
                                 </li>
                             </ul>
                         </nav><!-- #primary-menu end -->
-
                     </div>
                 </div>
             </div>
@@ -234,21 +246,12 @@
                 <!-- New Arrivals Men
 				============================================= -->
                 <div class="container">
-                    <div class="fancy-title title-border mt-4 title-center">
-                        <h4>ติดต่อเรา (CONTACT US)</h4>
-                    </div>
-
-                    <div class="row col-mb-30">
-                        <div class="col-lg-9 col-md-12 col-sm-12">
-                            <img src="./images/map.png" alt="" srcset="">
-                        </div>
-                        <div class="col-lg-3 col-md-12 col-sm-12 px-2">
-                            <h4 class="m-0">สถานที่ตั้ง</h4>
-                            <h5 class="m-0 fw-light">ร้านขายยา Narumon Pharmacy</h5>
-                            <h5 class="m-0 fw-light">61/8 ถนน เทศบาล 1 อำเภอเมืองสระบุรี สระบุรี 18000 ประเทศไทย</h5>
-                            <h5 class="m-0 fw-light">โทร: 028042973</h5>
-                            <h5 class="m-0 fw-light">Line: @NarumonPharmacyShop</h5>
-                        </div>
+                    <div class="my-3 p-3 bg-body rounded shadow-sm">
+                        <h4 class="border-bottom pb-2 mb-0">จัดการที่อยู่</h4>
+                        <main class="container">
+                            <div class="my-3 p-3 bg-body rounded shadow-sm order-list">
+                            </div>
+                        </main>
                     </div>
                 </div>
 
@@ -268,7 +271,169 @@
     <script src="js/login.js"></script>
     <script src="js/customer.js"></script>
     <script src="js/order.js"></script>
+    <script>
+        // Function to fetch and display all addresses associated with the current user
+        listAllAddress = async () => {
+            var myHeaders = new Headers();
+            let token = localStorage.getItem("token");
+            myHeaders.append("Content-Type", "application/json");
+            myHeaders.append("Authorization", `Bearer ${token}`);
 
+            var requestOptions = {
+                method: 'GET',
+                headers: myHeaders,
+                redirect: 'follow'
+            };
+
+            // Fetch the list of addresses from the server
+            await fetch("https://api.wakeupcoding.com/pharmacy-api/customer/listUserId", requestOptions)
+                .then(async (result) => {
+                    let response = await result.json();
+                    let order = "";
+                    if (response) {
+                        let main = "";
+                        let del = "";
+                        // Process each address and format it into HTML elements
+                        response.customer.forEach(element => {
+                            // Determine the main address link based on the default status
+                            main = element.defaultStatus == 'Y' ? '<a href="#" class="text-success">ที่อยู่ปัจจุบัน</a>' : `<a href="#" class="text-primary" onclick="updateAddress(${element.id})">ใช้เป็นที่อยู่หลัก</a>`;
+                            // Determine the delete address link based on the default status
+                            del = element.defaultStatus == 'Y' ? '' : `<a href="#" class="text-danger" onclick="deleteAddress(${element.id})">ลบที่อยู่</a>`;
+                            // Construct the HTML for each address
+                            order += `
+                                <div class="d-flex text-muted pt-3">
+                                    <svg class="bd-placeholder-img flex-shrink-0 me-2 rounded" width="32" height="32"
+                                        xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 32x32"
+                                        preserveAspectRatio="xMidYMid slice" focusable="false">
+                                        <title>Placeholder</title>
+                                        <rect width="100%" height="100%" fill="${color(element.defaultStatus)}"></rect><text x="50%" y="50%"
+                                            fill="${color(element.defaultStatus)}" dy=".3em">32x32</text>
+                                    </svg>
+
+                                    <div class="pb-3 mb-0 small lh-sm border-bottom w-100">
+                                        <div class="d-flex justify-content-between">
+                                            <strong class="d-block text-gray-dark">ชื่อ <span class="fw-light">${element.fName} ${element.lName}</span></strong>
+                                            ${main}
+                                        </div>
+                                        <strong class="d-block text-gray-dark">เบอร์ <span class="fw-light">${element.phoneNumber}</span></strong>
+                                        <div class="d-flex justify-content-between">
+                                        <strong class="d-block text-gray-dark">อีเมล์ <span class="fw-light">${element.email}</span></span></strong>
+                                            ${del}
+                                        </div>
+                                        <strong class="d-block text-gray-dark">ที่อยู่ <span class="fw-light">${element.address}</span></strong>
+                                    </div>
+                                </div>
+                            `;
+                        });
+
+                        // Inject the formatted HTML into the UI
+                        $('.order-list').html(order)
+                    }
+                })
+                .catch((error) => {
+                    console.log("error", error);
+                    // Display error message if fetching data fails
+                    Swal.fire({
+                        icon: "error",
+                        title: "ผิดพลาด",
+                        text: error.error,
+                    });
+                });
+        }
+        listAllAddress();
+
+        // Function to update the status of an address to be the main address
+        updateAddress = async (id) => {
+            var myHeaders = new Headers();
+            let token = localStorage.getItem("token");
+            myHeaders.append("Content-Type", "application/json");
+            myHeaders.append("Authorization", `Bearer ${token}`);
+
+            var raw = JSON.stringify({
+                "id": id,
+                "status": "Y" // Setting the status to 'Y' to indicate it's the main address
+            });
+
+            var requestOptions = {
+                method: 'PUT',
+                headers: myHeaders,
+                body: raw,
+                redirect: 'follow'
+            };
+
+            // Making a PUT request to update the address status
+            await fetch("https://api.wakeupcoding.com/pharmacy-api/userCustomer/updateStatus/", requestOptions)
+                .then(async (result) => {
+                    let response = await result.json();
+                    if (response) {
+                        // If the update is successful, display a success message
+                        Swal.fire({
+                            icon: "success",
+                            title: "สำเร็จ",
+                            text: response.message,
+                        }).then(() => {
+                            // Reload the list of addresses to reflect the changes
+                            listAllAddress();
+                        });
+                    }
+                })
+                .catch((error) => {
+                    console.log("error", error);
+                    // Display an error message if the update fails
+                    Swal.fire({
+                        icon: "error",
+                        title: "ผิดพลาด",
+                        text: error.error,
+                    });
+                });
+        }
+
+        // Function to delete an address
+        deleteAddress = async (id) => {
+            var myHeaders = new Headers();
+            let token = localStorage.getItem("token");
+            myHeaders.append("Content-Type", "application/json");
+            myHeaders.append("Authorization", `Bearer ${token}`);
+
+            var requestOptions = {
+                method: 'DELETE',
+                headers: myHeaders,
+                redirect: 'follow'
+            };
+
+            // Making a DELETE request to remove the address with the specified ID
+            await fetch("https://api.wakeupcoding.com/pharmacy-api/userCustomer/remove/" + id, requestOptions)
+                .then(async (result) => {
+                    let response = await result.json();
+                    if (response) {
+                        // If the deletion is successful, display a success message
+                        Swal.fire({
+                            icon: "success",
+                            title: "สำเร็จ",
+                            text: response.message,
+                        }).then(() => {
+                            // Reload the list of addresses to reflect the changes
+                            listAllAddress();
+                        });
+                    }
+                })
+                .catch((error) => {
+                    console.log("error", error);
+                    // Display an error message if the deletion fails
+                    Swal.fire({
+                        icon: "error",
+                        title: "ผิดพลาด",
+                        text: error.error,
+                    });
+                });
+        }
+
+        // Function to set color based on status
+        function color(st) {
+            if (st === 'Y') return `#198754`; // Green color for 'Y' status (main address)
+            if (st === 'N') return `#6c757d`; // Gray color for 'N' status (not main address)
+        }
+    </script>
 </body>
 
 </html>

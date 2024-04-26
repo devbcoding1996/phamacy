@@ -71,12 +71,18 @@ class UserService extends Requests
 
             if ($create_user) {
 
+              $jwt = new JWT();
+              $user = $user_model->signIn([$email, $password]);
+
               http_response_code(200);
               $result = [
                 "message" => "Created",
                 "login" => BASE_URL . "users/login"
               ];
 
+              if ($user) {
+                $result["token"] = $jwt->generateJWT(["id" => $user]);
+              }
             } else {
               http_response_code(406);
               $result['error'] = "Sorry, something went wrong, try again";

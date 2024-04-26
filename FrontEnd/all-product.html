@@ -66,7 +66,7 @@
 	============================================= -->
     <div id="wrapper">
         <!-- Login Modal -->
-        <div class="modal1 mfp-hide" id="modal-register">
+        <div class="modal1 mfp-hide" id="modal-login">
             <div class="card mx-auto" style="max-width: 540px;">
                 <div class="card-header py-3 bg-transparent text-center">
                     <h3 class="mb-0 fw-normal">สวัสดี, ยินดีต้อนรับกลับ</h3>
@@ -90,11 +90,59 @@
                         </div>
                     </div>
                 </div>
-                <div class="card-footer py-4 text-center">
-                    <p class="mb-0">ท่านมีบัญชีแล้วหรือยัง? <a href="#"><u>สมัครสมาชิก</u></a></p>
-                </div>
-            </div>
-        </div>
+				<div class="card-footer py-4 text-center">
+					<p class="mb-0">ท่านมีบัญชีแล้วหรือยัง? <a href="#modal-register" data-lightbox="inline"><u>สมัครสมาชิก</u></a></p>
+				</div>
+			</div>
+		</div>
+
+		<div class="modal1 mfp-hide" id="modal-register">
+			<div class="card mx-auto" style="max-width: 540px;">
+				<div class="card-header py-3 bg-transparent text-center">
+					<h3 class="mb-0 fw-normal">สมัครสมาชิก</h3>
+				</div>
+				<div class="card-body mx-auto py-5" style="max-width: 70%;">
+					<div class="mb-0 row">
+						<div class="col-12">
+							<input type="text" id="register-form-name" name="register-form-fname" value=""
+								class="form-control not-dark" placeholder="ชื่อ">
+						</div>
+						<div class="col-12 mt-4">
+							<input type="text" id="register-form-name" name="register-form-lname" value=""
+								class="form-control not-dark" placeholder="นามสกุล">
+						</div>
+						<div class="col-12 mt-4">
+							<textarea type="text" id="register-form-address" name="register-form-address" value=""
+								class="form-control not-dark" placeholder="ที่อยู่"></textarea>
+						</div>
+						<div class="col-12 mt-4">
+							<input type="text" id="register-form-tel" name="register-form-tel" value="" maxlength="10"
+								class="form-control not-dark" placeholder="เบอร์โทรศัพท์">
+						</div>
+						<div class="col-12 mt-4">
+							<input type="text" id="register-form-email" name="register-form-email" value=""
+								class="form-control not-dark" placeholder="อีเมล์">
+						</div>
+						<div class="col-12 mt-4">
+							<input type="password" id="register-form-password" name="register-form-password" value=""
+								class="form-control not-dark" placeholder="รหัสผ่าน">
+						</div>
+						<div class="col-12 mt-4">
+							<input type="password" id="register-password-again" name="register-password-again" value=""
+								class="form-control not-dark" placeholder="รหัสผ่าน">
+						</div>
+						<div class="col-12 mt-4">
+							<button class="button w-100 m-0" id="register-form-submit" name="register-form-submit"
+								onclick="handleRegister()">สมัครสมาชิก
+							</button>
+						</div>
+					</div>
+				</div>
+				<div class="card-footer py-4 text-center">
+					<p class="mb-0">ท่านมีบัญชีแล้วหรือยัง? <a href="#modal-login" data-lightbox="inline"><u>เข้าสู่ระบบ</u></a></p>
+				</div>
+			</div>
+		</div>
 
         <!-- Header
 		============================================= -->
@@ -215,6 +263,15 @@
                     </div>
                 </div>
 
+
+                <!-- Modal -->
+                <div class="modal fade" id="exampleModalList" tabindex="-1" aria-labelledby="exampleModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content" id="contentModal">
+                        </div>
+                    </div>
+                </div>
                 <div class="clear"></div>
             </div>
         </section><!-- #content end -->
@@ -242,17 +299,44 @@
             console.log('param:', param);
 
             if (param) {
-                handleSearch(param)
+                handleSearchByKey(param)
+            } else {
+                getProduct();
             }
         }
 
-        handleSearch = (key) => {
-            if (!key) {
-                var input = document.getElementById("search");
-                var filter = input.value.toLowerCase();
-            } else {
-                var filter = key.toLowerCase();
+        async function handleSearchByKey(param) {
+            var myHeaders = new Headers();
+            myHeaders.append("Content-Type", "application/json");
+            myHeaders.append("Authorization", "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6IjEyNjAwMDQ0LTk3MmUtMTFlZS1hNWMwLTM4ZjNhYjkwNDlhNSJ9.vnYksLsBqA5EHiOmh7MC5vI5FIiRMR9o0y9j1Ut-h0c");
+            myHeaders.append("Cookie", "isAdmin=false");
+
+            var raw = JSON.stringify({
+                "keyWord": param
+            });
+
+            var requestOptions = {
+                method: 'POST',
+                headers: myHeaders,
+                body: raw,
+                redirect: 'follow'
+            };
+
+            let response = await fetch("https://api.wakeupcoding.com/pharmacy-api/drugInformation/listKeyword", requestOptions)
+                .then((result) => {
+                    return result.json()
+                })
+                .catch((error) => { console.log('error', error) });
+            if (response) {
+                response.drugInfo.forEach(element => {
+                    writeElement(element)
+                });
             }
+        }
+
+        function handleSearch(key) {
+            var input = document.getElementById("search");
+            var filter = input.value.toLowerCase();
             var nodes = document.getElementsByClassName('target');
 
             for (i = 0; i < nodes.length; i++) {
@@ -265,6 +349,7 @@
         }
 
         getProduct = async () => {
+            document.getElementById('load').style.display = 'flex';
             var myHeaders = new Headers();
             myHeaders.append("Content-Type", "application/json");
             myHeaders.append("Authorization", "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6ImI4MDdlYjIwLThiNWMtMTFlZS04NDNhLTM4ZjNhYjkwNDlhNSJ9.FmqfsoNTzR9yPraGKiv62TbD9CIGeP5N51Nk3UHv0Yo");
@@ -276,7 +361,7 @@
                 redirect: 'follow'
             };
 
-            let response = await fetch("https://api.wakeupcoding.com/pharmacy-api/drugInformation", requestOptions)
+            let response = await fetch("https://api.wakeupcoding.com/pharmacy-api/drugInformation/listProductAll", requestOptions)
                 .then((result) => {
                     return result.json()
                 })
@@ -285,72 +370,106 @@
             if (response) {
                 let img;
                 response.drugInformation.forEach(element => {
-                    if (element.price) {
-                        if (element.linkImages) {
-                            img = element.linkImages
+                    writeElement(element)
+                });
+
+                document.getElementById('load').style.display = 'none';
+            }
+        }
+        checkKeyword()
+
+        function writeElement(element) {
+            if (element) {
+                document.getElementById('show-all-product').innerHTML += `
+                    <div class="col-lg-3 col-md-3 col-6 px-2 target">
+                        <div class="product">
+                            <div class="product-image">
+                                <a href="#"><img src="${(element.linkImages ? element.linkImages : './images/default-image.jpg')}" class="fit-image" alt="Image 1"></a>
+                            </div>
+                            <div class="product-desc">
+                                <div class="product-title mb-1">
+                                    <h3><a href="#">ชื่อยา ${element.name}</a></h3>
+                                </div>
+                                <div class="product-price font-primary">
+                                    <ins>ขนาด ${element.size}</ins>
+                                </div>
+                                <div class="product-price font-primary">
+                                    <ins>ประเภท ${element.keyword}</ins>
+                                </div>
+                                <div class="product-price font-primary">
+                                    <ins>สรรพคุณ <a href="#" class="text-primary" data-bs-toggle="modal" data-bs-target="#exampleModalList" onclick="showModalDetail(${element.id})">ดูเพิ่มเติม...</a></ins>
+                                </div>
+                                <div class="product-price font-primary">
+                                    <ins>ราคา ${element.price}฿</ins>
+                                </div>
+                                <div class="featured-content-list">
+                                    <button type="button" data-name="${element.name}" data-price="${element.price}" data-id="${element.id}" onclick="addItem(event)" class="btn btn-dark w-100">Add to cart</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+        }
+
+        showModalDetail = async (id) => {
+            let modal = '';
+            let img = '';
+            var myHeaders = new Headers();
+            myHeaders.append("Content-Type", "application/json");
+            myHeaders.append("Authorization", "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6ImI4MDdlYjIwLThiNWMtMTFlZS04NDNhLTM4ZjNhYjkwNDlhNSJ9.FmqfsoNTzR9yPraGKiv62TbD9CIGeP5N51Nk3UHv0Yo");
+
+            var requestOptions = {
+                method: 'GET',
+                headers: myHeaders,
+                redirect: 'follow'
+            };
+
+            await fetch("https://api.wakeupcoding.com/pharmacy-api/drugInformation/list/" + id, requestOptions)
+                .then(async (result) => {
+                    let response = await result.json();
+                    console.log('response', response)
+                    response = response.drugInfo[0];
+                    if (response) {
+                        if (response.linkImages) {
+                            img = response.linkImages;
                         } else {
                             img = './images/default-image.jpg'
                         }
-                        document.getElementById('show-all-product').innerHTML += `
-                            <div class="col-lg-2 col-md-3 col-6 px-2 target">
-                                <div class="product">
-                                    <div class="product-image">
-                                        <a href="#"><img src="${img}" class="fit-image" alt="Image 1"></a>
-                                    </div>
-                                    <div class="product-desc">
-                                        <div class="product-title mb-1">
-                                            <h3><a href="#">ชื่อยา ${element.name}</a></h3>
-                                        </div>
-                                        <div class="product-price font-primary">
-                                            <ins>ขนาด ${element.size}</ins>
-                                        </div>
-                                        <div class="product-price font-primary">
-                                            <ins>ประเภท ${element.keyword}</ins>
-                                        </div>
-                                        <div class="product-price font-primary">
-                                            <ins>สรรพคุณ <a href="#" class="text-primary" data-bs-toggle="modal" data-bs-target="#exampleModal${element.categoryId}">ดูเพิ่มเติม...</a></ins>
-                                        </div>
-                                        <div class="product-price font-primary">
-                                            <ins>ราคา ${element.price}฿</ins>
-                                        </div>
-                                        <div class="featured-content-list">
-                                            <button type="button" data-name="${element.name}" data-price="${element.price}" data-id="${element.id}" onclick="addItem(event)" class="btn btn-dark w-100">Add to cart</button>
-                                        </div>
-                                    </div>
-                                </div>
+                        document.getElementById('contentModal').innerHTML = `
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">ชื่อยา ${response.name}</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
                             </div>
-
-                            <!-- Modal -->
-                            <div class="modal fade" id="exampleModal${element.categoryId}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">ชื่อยา ${element.name}</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <img src="${img}" alt="Image 1">
-                                        <h4 class="m-0">สรรพคุณ</h4>
-                                        <h5 class="fw-light">${element.properties}</h5>
-                                        <h4 class="m-0">วิธีใช้</h4>
-                                        <h5 class="fw-light">${element.useMedicine}</h5>
-                                        <h4 class="m-0">ข้อควรระวัง</h4>
-                                        <h5 class="fw-light">${element.contraindications}</h5>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ปิด</button>
-                                    </div>
-                                    </div>
-                                </div>
+                            <div class="modal-body">
+                                <img src="${img}" alt="Image 1">
+                                <h4 class="m-0 mt-2">ประเภท</h4>
+                                <h5 class="fw-light">${response.keyword ? response.keyword : '<strong class="text-danger">ไม่มีข้อมูล</strong>'}</h5>
+                                <h4 class="m-0">สรรพคุณ</h4>
+                                <h5 class="fw-light">${response.properties ? response.properties : '<strong class="text-danger">ไม่มีข้อมูล</strong>'}</h5>
+                                <h4 class="m-0">วิธีใช้</h4>
+                                <h5 class="fw-light">${response.useMedicine ? response.useMedicine : '<strong class="text-danger">ไม่มีข้อมูล</strong>'}</h5>
+                                <h4 class="m-0">ข้อควรระวัง</h4>
+                                <h5 class="fw-light">${response.contraindications || response.contraindications === '-' ? response.contraindications : '<strong class="text-danger">ไม่มีข้อมูล</strong>'}</h5>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ปิด</button>
                             </div>
                         `;
-                    }
-                });
-            }
 
-            checkKeyword();
+                    }
+                })
+                .catch((error) => {
+                    console.log("error", error);
+                    Swal.fire({
+                        icon: "error",
+                        title: "ผิดพลาด",
+                        text: error.error,
+                    });
+                });
+
         }
-        getProduct();
     </script>
 
 </body>

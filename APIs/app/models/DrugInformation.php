@@ -145,11 +145,34 @@ class DrugInformation extends Database
   public function listByName($name)
   {
     try {
-      $stm = $this->pdo->prepare("SELECT * FROM drug_information WHERE `name` = LIKE '?%'");
-      $stm->execute([$name]);
+      $stm = $this->pdo->prepare("SELECT drug_information.*,drug_type.name as dt_name,category.name as c_name,package.name as p_name FROM drug_information INNER JOIN drug_type ON(drug_information.drug_type_id = drug_type.id ) INNER JOIN category ON(drug_information.category_id = category.id ) INNER JOIN package ON(drug_information.package_id = package.id ) WHERE drug_information.`name` LIKE '%$name%'");
+      $stm->execute();
       
       if($stm->rowCount() > 0){
-        return $stm->fetch(PDO::FETCH_ASSOC);
+        $drug_information = $stm->fetchAll(PDO::FETCH_ASSOC);
+        $res = [];
+        // Check if the size column is equal to an empty string
+        foreach ($drug_information as $info) {
+            $checkArray = [
+              "id" => $info['id'],
+              "name" => $this->checkNull($info['name']),
+              "size" => $this->checkNull($info['size']),
+              "useMedicine" => $this->checkNull($info['use_medicine']),
+              "contraindications" => $this->checkNull($info['contraindications']),
+              "properties" => $this->checkNull($info['properties']),
+              "drugTypeName" => $this->checkNull($info['dt_name']),
+              "categoryName" => $this->checkNull($info['c_name']),
+              "packageName" => $this->checkNull($info['p_name']),
+              "quantity" => intval($info['quantity']),
+              "productionDate" => $this->checkNull($info['production_date']),
+              "expirationDate" => $this->checkNull($info['expiration_date']),
+              "price" => floatval($info['price']),
+              "keyword" => $this->checkNull($info['keyword']),
+              "linkImages" => $this->checkNull($info['link_images']),
+            ];
+            array_push($res,$checkArray);
+        }
+        return $res;
       } else {
         return false;
       }
@@ -161,11 +184,34 @@ class DrugInformation extends Database
   public function listByKeyword($keyword)
   {
     try {
-      $stm = $this->pdo->prepare("SELECT * FROM drug_information WHERE keyword = LIKE '?%'");
-      $stm->execute([$keyword]);
+      $stm = $this->pdo->prepare("SELECT drug_information.*,drug_type.name as dt_name,category.name as c_name,package.name as p_name FROM drug_information INNER JOIN drug_type ON(drug_information.drug_type_id = drug_type.id ) INNER JOIN category ON(drug_information.category_id = category.id ) INNER JOIN package ON(drug_information.package_id = package.id ) WHERE drug_information.keyword LIKE '%$keyword%'");
+      $stm->execute();
       
       if($stm->rowCount() > 0){
-        return $stm->fetch(PDO::FETCH_ASSOC);
+        $drug_information = $stm->fetchAll(PDO::FETCH_ASSOC);
+        $res = [];
+        // Check if the size column is equal to an empty string
+        foreach ($drug_information as $info) {
+            $checkArray = [
+              "id" => $info['id'],
+              "name" => $this->checkNull($info['name']),
+              "size" => $this->checkNull($info['size']),
+              "useMedicine" => $this->checkNull($info['use_medicine']),
+              "contraindications" => $this->checkNull($info['contraindications']),
+              "properties" => $this->checkNull($info['properties']),
+              "drugTypeName" => $this->checkNull($info['dt_name']),
+              "categoryName" => $this->checkNull($info['c_name']),
+              "packageName" => $this->checkNull($info['p_name']),
+              "quantity" => intval($info['quantity']),
+              "productionDate" => $this->checkNull($info['production_date']),
+              "expirationDate" => $this->checkNull($info['expiration_date']),
+              "price" => floatval($info['price']),
+              "keyword" => $this->checkNull($info['keyword']),
+              "linkImages" => $this->checkNull($info['link_images']),
+            ];
+            array_push($res,$checkArray);
+        }
+        return $res;
       } else {
         return false;
       }

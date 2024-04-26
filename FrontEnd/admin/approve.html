@@ -109,6 +109,170 @@
             left: 0;
             top: 0
         }
+
+        /* START TOOLTIP STYLES */
+        [tooltip] {
+            position: relative;
+            cursor: zoom-in;
+            /* opinion 1 */
+        }
+
+        /* Applies to all tooltips */
+        [tooltip]::before,
+        [tooltip]::after {
+            text-transform: none;
+            /* opinion 2 */
+            font-size: .9em;
+            /* opinion 3 */
+            user-select: none;
+            pointer-events: none;
+            position: absolute;
+            display: none;
+            opacity: 0;
+            width: 100%;
+        }
+
+        [tooltip]::before {
+            content: '';
+            border: 5px solid transparent;
+            /* opinion 4 */
+            z-index: 1001;
+            /* absurdity 1 */
+        }
+
+        [tooltip]::after {
+            content: attr(tooltip);
+            /* magic! */
+
+            /* most of the rest of this is opinion */
+            font-family: Helvetica, sans-serif;
+
+            /* min-width: 3em;
+            max-width: 21em; */
+            /* white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis; */
+            padding: 1ch 1.5ch;
+            border-radius: .3ch;
+            box-shadow: 0 1em 2em -.5em rgba(0, 0, 0, 0.35);
+            background: #333;
+            color: #fff;
+            z-index: 1000;
+            width: 100%;
+            /* absurdity 2 */
+        }
+
+        /* Make the tooltips respond to hover */
+        [tooltip]:hover::before,
+        [tooltip]:hover::after {
+            display: block;
+        }
+
+        /* don't show empty tooltips */
+        [tooltip='']::before,
+        [tooltip='']::after {
+            display: none !important;
+        }
+
+        /* FLOW: UP */
+        [tooltip]:not([flow])::before,
+        [tooltip][flow^="up"]::before {
+            bottom: 100%;
+            border-bottom-width: 0;
+            border-top-color: #333;
+        }
+
+        [tooltip]:not([flow])::after,
+        [tooltip][flow^="up"]::after {
+            bottom: calc(100% + 5px);
+        }
+
+        [tooltip]:not([flow])::before,
+        [tooltip]:not([flow])::after,
+        [tooltip][flow^="up"]::before,
+        [tooltip][flow^="up"]::after {
+            left: 50%;
+            transform: translate(-50%, -.5em);
+        }
+
+        /* FLOW: DOWN */
+        [tooltip][flow^="down"]::before {
+            top: 100%;
+            border-top-width: 0;
+            border-bottom-color: #333;
+        }
+
+        [tooltip][flow^="down"]::after {
+            top: calc(100% + 5px);
+        }
+
+        [tooltip][flow^="down"]::before,
+        [tooltip][flow^="down"]::after {
+            left: 50%;
+            transform: translate(-50%, .5em);
+        }
+
+        /* FLOW: LEFT */
+        [tooltip][flow^="left"]::before {
+            top: 50%;
+            border-right-width: 0;
+            border-left-color: #333;
+            left: calc(0em - 5px);
+            transform: translate(-.5em, -50%);
+        }
+
+        [tooltip][flow^="left"]::after {
+            top: 50%;
+            right: calc(100% + 5px);
+            transform: translate(-.5em, -50%);
+        }
+
+        /* FLOW: RIGHT */
+        [tooltip][flow^="right"]::before {
+            top: 50%;
+            border-left-width: 0;
+            border-right-color: #333;
+            right: calc(0em - 5px);
+            transform: translate(.5em, -50%);
+        }
+
+        [tooltip][flow^="right"]::after {
+            top: 50%;
+            left: calc(100% + 5px);
+            transform: translate(.5em, -50%);
+        }
+
+        /* KEYFRAMES */
+        @keyframes tooltips-vert {
+            to {
+                opacity: .9;
+                transform: translate(-50%, 0);
+            }
+        }
+
+        @keyframes tooltips-horz {
+            to {
+                opacity: .9;
+                transform: translate(0, -50%);
+            }
+        }
+
+        /* FX All The Things */
+        [tooltip]:not([flow]):hover::before,
+        [tooltip]:not([flow]):hover::after,
+        [tooltip][flow^="up"]:hover::before,
+        [tooltip][flow^="up"]:hover::after,
+        [tooltip][flow^="down"]:hover::before,
+        [tooltip][flow^="down"]:hover::after {
+            animation: tooltips-vert 300ms ease-out forwards;
+        }
+
+        [tooltip][flow^="left"]:hover::before,
+        [tooltip][flow^="left"]:hover::after,
+        [tooltip][flow^="right"]:hover::before,
+        [tooltip][flow^="right"]:hover::after {
+            animation: tooltips-horz 300ms ease-out forwards;
+        }
     </style>
 
 
@@ -273,7 +437,7 @@
                     {
                         data: 'address',
                         render: function (data) {
-                            return data = `<div class="ellipsis">${data}</div>`
+                            return data = `<span tooltip="${data}"><div class="ellipsis">${data}</div></span>`
                         },
                     },
                     {
@@ -311,7 +475,7 @@
                     {
                         data: null,
                         render: function (data) {
-                            let disabled = data.status != 'OD' ? 'disabled' : '';
+                            let disabled = data.status != 'WP' ? 'disabled' : '';
                             return data = `
                                     <div class="d-flex">
                                         <button type="button" class="btn btn-sm btn-outline-success me-1" id="approve" ${disabled}>อนุมัติ</button>
@@ -377,8 +541,83 @@
         function status(st) {
             if (st === 'C') return `<span class="text-danger">ยกเลิก</span>`;
             if (st === 'S') return `<span class="text-success">สำเร็จ</span>`;
-            if (st === 'OD') return `<span class="text-primary">รอชำระเงิน</span>`;
+            if (st === 'WP') return `<span class="text-primary">รอชำระเงิน</span>`;
         }
+
+        let targetElm = null;
+        let tipDelay = 1000; // 1000 = 1 sec
+
+        function _(elm) {
+            return document.getElementById(elm);
+        }
+
+        function showTooltip(e) {
+            e.stopPropagation();
+            let tooltip = _('tooltip_container')
+            tooltip.style.left =
+                (e.pageX + tooltip.clientWidth + 10 < document.body.clientWidth)
+                    ? (e.pageX + 10 + "px")
+                    : (document.body.clientWidth + 5 - tooltip.clientWidth + "px");
+            tooltip.style.top =
+                (e.pageY + tooltip.clientHeight + 10 < document.body.clientHeight)
+                    ? (e.pageY + 0 + "px")
+                    : (document.body.clientHeight + 20 - tooltip.clientHeight + "px");
+
+            if (showTooltips == false) {
+                setTimeout(delayedShowTooltip, tipDelay);
+            }
+
+
+            try {
+                if (e.target.getAttribute('tooltip').length <= 0) {
+                    tooltip.classList.remove('visible_t');
+                }
+            } catch (e) {
+                //--
+                return;
+            }
+
+            tooltip.innerText = (e.target.getAttribute('tooltip'));
+            showTooltips = true;
+
+        }
+
+        let showTooltips = false;
+        function hideTooltip() {
+            let tooltip = _('tooltip_container');
+            tooltip.classList.remove('visible_t');
+            showTooltips = false;
+        }
+
+
+        if (_('tooltip_container') == null) {
+            let tpId = document.createElement('div');
+            tpId.setAttribute('id', 'tooltip_container');
+            document.body.appendChild(tpId);
+        }
+
+        function delayedShowTooltip() {
+            let tooltip = _('tooltip_container');
+            if (showTooltips) {
+                tooltip.classList.add('visible_t');
+            }
+        }
+
+
+        function addToolTips() {
+            let tooltips = document.querySelectorAll('[tooltip]');
+            for (var i = 0; i < tooltips.length; i++) {
+                tooltips[i].addEventListener('mousemove', showTooltip);
+            }
+            for (var i = 0; i < tooltips.length; i++) {
+                tooltips[i].addEventListener('mouseleave', hideTooltip);
+                tooltips[i].addEventListener('click', hideTooltip);
+            }
+
+        }
+
+        //Call this to add or update tooltip boundings
+        addToolTips();
     </script>
 </body>
 

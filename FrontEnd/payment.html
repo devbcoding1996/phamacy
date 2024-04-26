@@ -61,7 +61,7 @@
             </div>
         </div>
         <!-- Login Modal -->
-        <div class="modal1 mfp-hide" id="modal-register">
+        <div class="modal1 mfp-hide" id="modal-login">
             <div class="card mx-auto" style="max-width: 540px;">
                 <div class="card-header py-3 bg-transparent text-center">
                     <h3 class="mb-0 fw-normal">สวัสดี, ยินดีต้อนรับกลับ</h3>
@@ -85,11 +85,59 @@
                         </div>
                     </div>
                 </div>
-                <div class="card-footer py-4 text-center">
-                    <p class="mb-0">ท่านมีบัญชีแล้วหรือยัง? <a href="#"><u>สมัครสมาชิก</u></a></p>
-                </div>
-            </div>
-        </div>
+				<div class="card-footer py-4 text-center">
+					<p class="mb-0">ท่านมีบัญชีแล้วหรือยัง? <a href="#modal-register" data-lightbox="inline"><u>สมัครสมาชิก</u></a></p>
+				</div>
+			</div>
+		</div>
+
+		<div class="modal1 mfp-hide" id="modal-register">
+			<div class="card mx-auto" style="max-width: 540px;">
+				<div class="card-header py-3 bg-transparent text-center">
+					<h3 class="mb-0 fw-normal">สมัครสมาชิก</h3>
+				</div>
+				<div class="card-body mx-auto py-5" style="max-width: 70%;">
+					<div class="mb-0 row">
+						<div class="col-12">
+							<input type="text" id="register-form-name" name="register-form-fname" value=""
+								class="form-control not-dark" placeholder="ชื่อ">
+						</div>
+						<div class="col-12 mt-4">
+							<input type="text" id="register-form-name" name="register-form-lname" value=""
+								class="form-control not-dark" placeholder="นามสกุล">
+						</div>
+						<div class="col-12 mt-4">
+							<textarea type="text" id="register-form-address" name="register-form-address" value=""
+								class="form-control not-dark" placeholder="ที่อยู่"></textarea>
+						</div>
+						<div class="col-12 mt-4">
+							<input type="text" id="register-form-tel" name="register-form-tel" value="" maxlength="10"
+								class="form-control not-dark" placeholder="เบอร์โทรศัพท์">
+						</div>
+						<div class="col-12 mt-4">
+							<input type="text" id="register-form-email" name="register-form-email" value=""
+								class="form-control not-dark" placeholder="อีเมล์">
+						</div>
+						<div class="col-12 mt-4">
+							<input type="password" id="register-form-password" name="register-form-password" value=""
+								class="form-control not-dark" placeholder="รหัสผ่าน">
+						</div>
+						<div class="col-12 mt-4">
+							<input type="password" id="register-password-again" name="register-password-again" value=""
+								class="form-control not-dark" placeholder="รหัสผ่าน">
+						</div>
+						<div class="col-12 mt-4">
+							<button class="button w-100 m-0" id="register-form-submit" name="register-form-submit"
+								onclick="handleRegister()">สมัครสมาชิก
+							</button>
+						</div>
+					</div>
+				</div>
+				<div class="card-footer py-4 text-center">
+					<p class="mb-0">ท่านมีบัญชีแล้วหรือยัง? <a href="#modal-login" data-lightbox="inline"><u>เข้าสู่ระบบ</u></a></p>
+				</div>
+			</div>
+		</div>
 
         <!-- Header
 		============================================= -->
@@ -164,8 +212,20 @@
                     <div class="fancy-title title-border mt-4 title-center">
                         <h4>ชำระเงิน</h4>
                     </div>
-
+                    <div class="my-3">
+                        <div class="form-check">
+                            <input id="newAddress" name="address" type="radio" class="form-check-input"
+                                onclick="handleAddress('new')" checked required>
+                            <label class="form-check-label" for="newAddress">เพิ่มที่อยู่ใหม่</label>
+                        </div>
+                        <div class="form-check">
+                            <input id="oldAddress" name="address" type="radio" class="form-check-input"
+                                onclick="handleAddress('old')" required>
+                            <label class="form-check-label" for="oldAddress">ใช้ที่อยู่ปัจจุบัน</label>
+                        </div>
+                    </div>
                     <div class="row g-5">
+
                         <div class="col-md-5 col-lg-4 order-md-last">
                             <h4 class="d-flex justify-content-between align-items-center mb-3 show-count">
                                 <span class="text-primary">สินค้าของคุณ</span>
